@@ -13,43 +13,36 @@ const styles = StyleSheet.create({
     image: {
         width: 320,
         height: 320,
+
     },
     text: {
         color: 'rgba(255, 255, 255, 0.8)',
         backgroundColor: 'transparent',
         textAlign: 'center',
         paddingHorizontal: 16,
-    },
-    title: {
-        fontSize: 22,
-        color: 'white',
-        backgroundColor: 'transparent',
-        textAlign: 'center',
-        marginBottom: 16,
     }
 });
 
 const slides = [
   {
-    key: 'somethun',
-    title: 'Quick setup, good defaults',
-    text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
-    icon: 'ios-images-outline',
-    colors: ['#63E2FF', '#B066FE'],
+    key: 'welcome-0',
+    text: ' ',
+    colors: ['#ffffff', '#ffffff'],
   },
   {
-    key: 'somethun1',
-    title: 'Super customizable',
-    text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
-    icon: 'ios-options-outline',
-    colors: ['#A3A1FF', '#3A3897'],
+    key: 'welcome-1',
+    text: '8 locations of bandstands across edinburgh and musselburgh, existing or no longer in use, with accompanied sound, imagery + text',
+    colors: ['#ffffff', '#ffffff'],
   },
   {
-    key: 'somethun2',
-    title: 'No need to buy me beer',
-    text: 'Usage is all free',
-    icon: 'ios-beer-outline',
-    colors: ['#29ABE2', '#4F00BC'],
+    key: 'welcome-2',
+    text: 'wear your headphones to start',
+    colors: ['#ffffff', '#ffffff'],
+  },
+  {
+    key: 'welcome-3',
+    text: 'you will hear immersive sound as you walk around the park to help you locate each bandstand zone',
+    colors: ['#ffffff', '#ffffff'],
   },
 ];
 
@@ -69,9 +62,11 @@ export default class WelcomeScreen extends React.Component {
       colors={props.colors}
       start={{x: 0, y: .1}} end={{x: .1, y: 1}}
     >
-      <Ionicons style={{ backgroundColor: 'transparent' }} name={props.icon} size={200} color="white" />
       <View>
-        <Text style={styles.title}>{props.title}</Text>
+        <Image
+          source={require('../assets/images/welcome-01.jpg')}
+          style={styles.image}
+        />
         <Text style={styles.text}>{props.text}</Text>
       </View>
     </LinearGradient>
@@ -82,12 +77,10 @@ export default class WelcomeScreen extends React.Component {
         <AppIntroSlider
           slides={slides}
           renderItem={this._renderItem}
-          bottomButton
-          showPrevButton
-          showSkipButton
-          // hideNextButton
-          // hideDoneButton
-          // onSkip={() => console.log("skipped")}
+          dotColor='rgb(115,63,216)'
+          activeDotColor='rgb(255,255,255)'
+          hideNextButton
+          hideDoneButton
         />
     );
   }
