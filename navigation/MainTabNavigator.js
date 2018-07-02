@@ -4,11 +4,13 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import LocationsScreen from '../screens/LocationsScreen';
+import BandstandScreen from '../screens/BandstandScreen';
+import PlaylistScreen from '../screens/PlaylistScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: HomeScreen, 
 });
 
 HomeStack.navigationOptions = {
@@ -25,12 +27,12 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const Welcome = createStackNavigator({
+  Welcome: WelcomeScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+Welcome.navigationOptions = {
+  tabBarLabel: 'Welcome',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -39,12 +41,26 @@ LinksStack.navigationOptions = {
   ),
 };
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const Locations = createStackNavigator({
+  Locations: LocationsScreen,
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+Locations.navigationOptions = {
+  tabBarLabel: 'Locations',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
+const BandstandStack = createStackNavigator({
+  Bandstand: BandstandScreen,
+});
+
+BandstandStack.navigationOptions = {
+  tabBarLabel: 'Bandstand',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -53,8 +69,24 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+const PlaylistStack = createStackNavigator({
+  Playlist: PlaylistScreen,
+});
+
+PlaylistStack.navigationOptions = {
+  tabBarLabel: 'Playlist',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  Welcome,
+  Locations,
+  BandstandStack,
+  PlaylistScreen,
 });
