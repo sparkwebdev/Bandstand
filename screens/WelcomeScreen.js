@@ -1,7 +1,5 @@
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { View, StyleSheet, Text, Image } from 'react-native';
-import { LinearGradient } from 'expo';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 const styles = StyleSheet.create({
@@ -10,39 +8,46 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
-    image: {
-        width: 320,
-        height: 320,
-
+    imageContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
     },
-    text: {
-        color: 'rgba(255, 255, 255, 0.8)',
-        backgroundColor: 'transparent',
-        textAlign: 'center',
-        paddingHorizontal: 16,
+    image: {
+        // width: 320,
+        // height: 320,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '96%',
+        resizeMode: 'stretch',
     }
 });
 
 const slides = [
   {
     key: 'welcome-0',
-    text: ' ',
-    colors: ['#ffffff', '#ffffff'],
+    image: require('../assets/images/welcome-00.jpg'),
+    image2: require('../assets/images/welcome-00.png'),
   },
   {
     key: 'welcome-1',
-    text: '8 locations of bandstands across edinburgh and musselburgh, existing or no longer in use, with accompanied sound, imagery + text',
-    colors: ['#ffffff', '#ffffff'],
+    image: require('../assets/images/welcome-01.png'),
   },
   {
     key: 'welcome-2',
-    text: 'wear your headphones to start',
-    colors: ['#ffffff', '#ffffff'],
+    image: require('../assets/images/welcome-02.png'),
   },
   {
     key: 'welcome-3',
-    text: 'you will hear immersive sound as you walk around the park to help you locate each bandstand zone',
-    colors: ['#ffffff', '#ffffff'],
+    image: require('../assets/images/welcome-03.png'),
+  },
+  {
+    key: 'welcome-4 ',
+    image: require('../assets/images/welcome-04.png'),
   },
 ];
 
@@ -52,24 +57,19 @@ export default class WelcomeScreen extends React.Component {
   };
 
   _renderItem = props => (
-    <LinearGradient
+    <View
       style={[styles.mainContent, {
         paddingTop: props.topSpacer,
         paddingBottom: props.bottomSpacer,
         width: props.width,
         height: props.height,
       }]}
-      colors={props.colors}
-      start={{x: 0, y: .1}} end={{x: .1, y: 1}}
     >
-      <View>
-        <Image
-          source={require('../assets/images/welcome-01.jpg')}
-          style={styles.image}
-        />
-        <Text style={styles.text}>{props.text}</Text>
+      <View style={styles.imageContainer}>
+        <Image style={styles.image} source={props.image} />
+        <Image style={styles.image} source={props.image2} />
       </View>
-    </LinearGradient>
+    </View>
   );
 
   render() {
@@ -78,7 +78,7 @@ export default class WelcomeScreen extends React.Component {
           slides={slides}
           renderItem={this._renderItem}
           dotColor='rgb(115,63,216)'
-          activeDotColor='rgb(255,255,255)'
+          activeDotColor='rgb(255,255,0)'
           hideNextButton
           hideDoneButton
         />
