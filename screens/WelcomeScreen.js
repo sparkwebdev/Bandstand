@@ -4,17 +4,7 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 
 const styles = StyleSheet.create({
     mainContent: {
-        flex: 1,
-        // alignItems: 'flex-start',
-        // justifyContent: 'space-around',
         backgroundColor: "#ffffff",
-    },
-    imageContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
     },
     image: {
         position: 'absolute',
@@ -70,11 +60,9 @@ export default class WelcomeScreen extends React.Component {
         height: props.height,
       }]}
     >
-      <View style={styles.imageContainer}>
         {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
         {props.image2 ? <Image style={[styles.image, {resizeMode: props.image2ResizeMode,}]} source={props.image2} /> : null }
         {props.key === "welcome-4" ? <Text style={[styles.button]}>choose bandstand</Text> : null }
-      </View>
     </View>
   );
 
