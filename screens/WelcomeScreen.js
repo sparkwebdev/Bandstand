@@ -5,8 +5,9 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 const styles = StyleSheet.create({
     mainContent: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
+        // alignItems: 'flex-start',
+        // justifyContent: 'space-around',
+        backgroundColor: "#ffffff",
     },
     imageContainer: {
       position: 'absolute',
@@ -16,14 +17,12 @@ const styles = StyleSheet.create({
       height: '100%',
     },
     image: {
-        // width: 320,
-        // height: 320,
         position: 'absolute',
         top: 0,
         left: 0,
+        right: 0,
         width: '100%',
-        height: '96%',
-        resizeMode: 'stretch',
+        height: '100%',
     }
 });
 
@@ -31,43 +30,50 @@ const slides = [
   {
     key: 'welcome-0',
     image: require('../assets/images/welcome-00.jpg'),
+    imageResizeMode: 'cover',
     image2: require('../assets/images/welcome-00.png'),
+    image2ResizeMode: 'contain',
   },
   {
     key: 'welcome-1',
     image: require('../assets/images/welcome-01.png'),
+    imageResizeMode: 'contain',
   },
   {
     key: 'welcome-2',
     image: require('../assets/images/welcome-02.png'),
+    imageResizeMode: 'contain',
   },
   {
     key: 'welcome-3',
     image: require('../assets/images/welcome-03.png'),
+    imageResizeMode: 'contain',
   },
   {
-    key: 'welcome-4 ',
+    key: 'welcome-4',
     image: require('../assets/images/welcome-04.png'),
+    imageResizeMode: 'contain',
   },
 ];
 
 export default class WelcomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome',
+    header: null,
   };
 
   _renderItem = props => (
     <View
       style={[styles.mainContent, {
-        paddingTop: props.topSpacer,
-        paddingBottom: props.bottomSpacer,
+        // paddingTop: props.topSpacer,
+        // paddingBottom: props.bottomSpacer,
         width: props.width,
         height: props.height,
       }]}
     >
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={props.image} />
-        <Image style={styles.image} source={props.image2} />
+        {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
+        {props.image2 ? <Image style={[styles.image, {resizeMode: props.image2ResizeMode,}]} source={props.image2} /> : null }
+        {props.key === "welcome-4" ? <Text style={[styles.button]}>choose bandstand</Text> : null }
       </View>
     </View>
   );

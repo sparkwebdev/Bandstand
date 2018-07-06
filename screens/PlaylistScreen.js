@@ -1,16 +1,43 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default class PlaylistScreen extends React.Component {
   static navigationOptions = {
-    title: 'Playlist',
+    header: null,
   };
+
+  state = {
+    names: [
+       {
+          id: 0,
+          name: 'Ben',
+       },
+       {
+          id: 1,
+          name: 'Susan',
+       },
+       {
+          id: 2,
+          name: 'Robert',
+       },
+       {
+          id: 3,
+          name: 'Mary',
+       }
+    ]
+ }
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        
-      </ScrollView>
+      <View> 
+          {
+            this.state.names.map((item, index) => (
+              <Text style = {styles.text}>
+                {item.name}
+              </Text>
+            ))
+          }
+      </View>
     );
   }
 }

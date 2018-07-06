@@ -3,7 +3,7 @@ import { ExpoConfigView } from '@expo/samples';
 
 export default class BandstandScreen extends React.Component {
   static navigationOptions = {
-    title: 'app.json',
+    header: null,
   };
 
   render() {

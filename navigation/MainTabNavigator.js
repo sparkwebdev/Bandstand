@@ -3,35 +3,16 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LocationsScreen from '../screens/LocationsScreen';
 import BandstandScreen from '../screens/BandstandScreen';
 import PlaylistScreen from '../screens/PlaylistScreen';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen, 
-});
-
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
-};
-
-const Welcome = createStackNavigator({
+const WelcomeStack = createStackNavigator({
   Welcome: WelcomeScreen,
 });
 
-Welcome.navigationOptions = {
+WelcomeStack.navigationOptions = {
   tabBarLabel: 'Welcome',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -41,11 +22,11 @@ Welcome.navigationOptions = {
   ),
 };
 
-const Locations = createStackNavigator({
+const LocationsStack = createStackNavigator({
   Locations: LocationsScreen,
 });
 
-Locations.navigationOptions = {
+LocationsStack.navigationOptions = {
   tabBarLabel: 'Locations',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -84,9 +65,8 @@ PlaylistStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  Welcome,
-  Locations,
+  WelcomeStack,
+  LocationsStack,
   BandstandStack,
-  PlaylistScreen,
+  PlaylistStack,
 });
