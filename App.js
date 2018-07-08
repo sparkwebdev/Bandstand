@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
@@ -7,6 +7,20 @@ export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
   };
+
+  async saveKey(value) {
+    try {
+      await AsyncStorage.setItem('@MySuperStore:key', value);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
+  }
+
+  componentDidMount() {
+    let visited = [1, 3, 5];
+    const visitedStr = JSON.stringify(visited);
+    this.saveKey(visitedStr);
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
