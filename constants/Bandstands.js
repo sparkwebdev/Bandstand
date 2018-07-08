@@ -13,6 +13,7 @@ const bandStands = [
             sound: require('../assets/audio/01.mp3'),
             loop: require('../assets/audio/choir-01.mp3'),
         },
+        relDistanceFromPrev: 1,
         visited: false,
     },
     {
@@ -29,6 +30,7 @@ const bandStands = [
             sound: require('../assets/audio/02.mp3'),
             loop: require('../assets/audio/choir-02.mp3'),
         },
+        relDistanceFromPrev: 9,
         visited: true,
     },
     {
@@ -45,6 +47,7 @@ const bandStands = [
             sound: require('../assets/audio/01.mp3'),
             loop: require('../assets/audio/choir-01.mp3'),
         },
+        relDistanceFromPrev: 7,
         visited: false,
     },
     {
@@ -61,6 +64,7 @@ const bandStands = [
             sound: require('../assets/audio/02.mp3'),
             loop: require('../assets/audio/choir-02.mp3'),
         },
+        relDistanceFromPrev: 1,
         visited: false,
     },
     {
@@ -77,6 +81,7 @@ const bandStands = [
             sound: require('../assets/audio/02.mp3'),
             loop: require('../assets/audio/choir-02.mp3'),
         },
+        relDistanceFromPrev: 4,
         visited: false,
     },
     {
@@ -93,6 +98,7 @@ const bandStands = [
             sound: require('../assets/audio/01.mp3'),
             loop: require('../assets/audio/choir-01.mp3'),
         },
+        relDistanceFromPrev: 1,
         visited: false,
     },
     {
@@ -109,6 +115,7 @@ const bandStands = [
             sound: require('../assets/audio/02.mp3'),
             loop: require('../assets/audio/choir-02.mp3'),
         },
+        relDistanceFromPrev: 0,
         visited: false,
     }
 ];

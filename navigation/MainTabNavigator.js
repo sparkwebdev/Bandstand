@@ -5,7 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LocationsScreen from '../screens/LocationsScreen';
-import BandstandsScreen from '../screens/BandstandScreen';
+import BandstandsScreen from '../screens/BandstandsScreen';
 import BandstandScreen from '../screens/BandstandScreen';
 import PlaylistScreen from '../screens/PlaylistScreen';
 

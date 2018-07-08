@@ -1,11 +1,20 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity, View, Text, StyleSheet, AsyncStorage } from 'react-native';
-import { Constants, Audio } from 'expo';
+import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
+import Expo, { Asset, Audio, FileSystem, Font, Permissions } from 'expo';
 import bandStands from '../constants/Bandstands';
 
-const source = {
-  uri: 'https://freesound.org/data/previews/413/413854_4337854-hq.mp3',
-};
+class Icon {
+  constructor(module, width, height) {
+    this.module = module;
+    this.width = width;
+    this.height = height;
+    Asset.fromModule(this.module).downloadAsync();
+  }
+}
+
+const ICON_PLAY_BUTTON = new Icon(require('../assets/images/icon_play.png'), 34, 34);
+const ICON_PAUSE_BUTTON = new Icon(require('../assets/images/icon_pause.png'), 34, 34);
+const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 
 export default class PlaylistScreen extends React.Component {
   static navigationOptions = {
@@ -13,37 +22,22 @@ export default class PlaylistScreen extends React.Component {
   };
 
   state = {
-    playingStatus: "nosound",
-    visited: null
+    visited: null,
+    sound: null
   }
 
   componentDidMount() {
     this.getKey();
   }
-
+  
   async getKey() {
     try {
-      const value = await AsyncStorage.getItem('@MySuperStore:key');
+      const value = await AsyncStorage.getItem('@VisitedStore:key');
       let visited = JSON.parse(value);
       this.setState({visited: visited});
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
-  }
-
-  async _playRecording() {
-    const { sound } = await Audio.Sound.create(
-      source,
-      {
-        shouldPlay: true,
-        isLooping: true,
-      },
-      this._updateScreenForSoundStatus,
-    );
-    this.sound = sound;
-    this.setState({
-      playingStatus: 'playing'
-    });
   }
 
   hasVisited(id) {
@@ -54,82 +48,48 @@ export default class PlaylistScreen extends React.Component {
     }
     return false;
   }
-  
-  _updateScreenForSoundStatus = (status) => {
-    if (status.isPlaying && this.state.playingStatus !== "playing") {
-      this.setState({ playingStatus: "playing" });
-    } else if (!status.isPlaying && this.state.playingStatus === "playing") {
-      this.setState({ playingStatus: "donepause" });
-    }
-  };
-  
-  async _pauseAndPlayRecording() {
+
+  _onPlayPausePressed = () => {
     if (this.sound != null) {
-      if (this.state.playingStatus == 'playing') {
-        console.log('pausing...');
-        await this.sound.pauseAsync();
-        console.log('paused!');
-        this.setState({
-          playingStatus: 'donepause',
-        });
-      } else {
-        console.log('playing...');
-        await this.sound.playAsync();
-        console.log('playing!');
-        this.setState({
-          playingStatus: 'playing',
-        });
-      }
-    }
-  }
-  
-  _syncPauseAndPlayRecording() {
-    if (this.sound != null) {
-      if (this.state.playingStatus == 'playing') {
+      if (this.state.isPlaying) {
         this.sound.pauseAsync();
       } else {
         this.sound.playAsync();
       }
     }
-  }
-  
-  _playAndPause = () => {
-    switch (this.state.playingStatus) {
-      case 'nosound':
-        this._playRecording();
-        break;
-      case 'donepause':
-      case 'playing':
-        this._pauseAndPlayRecording();
-        break;
-    }
-  }
+  };
 
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <TouchableOpacity style={styles.button} onPress={this._playAndPause}>
-              <Text style={styles.buttonText}>
-                {this.state.playingStatus}
-              </Text>
-            </TouchableOpacity>
-        </View>
+      <ScrollView style={styles.container}>
         {
           bandStands.bandStands.map((item, index) => (
             <View key={index} style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
               <View style={[styles.description, this.hasVisited(item.id) ? styles.visited : null]}>
                 <Text>
-                  {item.title}
+                  {item.id}. {item.title}
                 </Text>
                 <Text>
                   Duration: {item.song.duration}
                 </Text>
               </View>
               <View style={styles.actions}>
-                {this.hasVisited(item.id) ? <Text>Song: {item.song.sound} </Text> : null}
-                {this.hasVisited(item.id) ? <Text>Loop: {item.song.loop} </Text> : null}
-                <Text>Visit: {item.id} </Text>
+                {this.hasVisited(item.id) ? 
+                  <TouchableHighlight
+                  //item.song.sound
+                    onPress={this._onPlayPausePressed}
+                    //disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
+                  >
+                  <Image style={styles.icon}
+                    source={this.state.isPlaying ? ICON_PAUSE_BUTTON.module : ICON_PLAY_BUTTON.module}
+                  />
+                  </TouchableHighlight>
+                : null}
+                <TouchableHighlight>
+                  <Image style={styles.icon}
+                    source={ICON_BANDSTAND.module}
+                  />
+                </TouchableHighlight>
               </View>
             </View>
           ))
@@ -142,21 +102,21 @@ export default class PlaylistScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    padding: 15,
     backgroundColor: '#fff',
   },
   box: {
     backgroundColor: '#fff',
     borderColor: "#62d3a2",
     borderWidth: 2,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  notvisited: {
+    borderColor: "#ccc",
   },
   description: {
     //Top: 10,
@@ -169,9 +129,6 @@ const styles = StyleSheet.create({
     borderLeftWidth: 10,
     width: "70%"
   },
-  notvisited: {
-    opacity: 0.5,
-  },
   visited: {
     borderLeftColor: "#62d3a2",
   },
@@ -182,7 +139,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
-    width: "30%"
+    width: "30%",
+    justifyContent: "flex-end"
+  },
+  icon: {
+    width: 34,
+    height: 34,
+    marginLeft: 10
   },
   button: {
     width: 256,

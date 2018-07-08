@@ -10,7 +10,7 @@ export default class App extends React.Component {
 
   async saveKey(value) {
     try {
-      await AsyncStorage.setItem('@MySuperStore:key', value);
+      await AsyncStorage.setItem('@VisitedStore:key', value);
     } catch (error) {
       console.log("Error saving data" + error);
     }

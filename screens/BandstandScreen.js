@@ -1,20 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
+import { Platform, View, StyleSheet, Text, Image } from 'react-native';
 
-const styles = StyleSheet.create({
-  mainContent: {
-      backgroundColor: "#ffffff",
-  },
-  image: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      width: '100%',
-      height: '100%',
-  }
-});
+import { BarCodeScanner, Constants, Location, Permissions } from 'expo';
 
 const slides = [
   {
@@ -49,6 +36,38 @@ export default class BandstandScreen extends React.Component {
     header: null,
   };
 
+  state = {
+    location: null,
+    errorMessage: null,
+    hasCameraPermission: null,
+  };
+
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({hasCameraPermission: status === 'granted'});
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
+  }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true
+    });
+    this.setState({ location });
+  };
+
   _renderItem = props => (
     <View
       style={[styles.mainContent, {
@@ -64,14 +83,68 @@ export default class BandstandScreen extends React.Component {
     </View>
   );
 
+  _handleBarCodeRead = ({ type, data }) => {
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  }
+
   render() {
-    return <AppIntroSlider
-      slides={slides}
-      renderItem={this._renderItem}
-      dotColor='rgb(115,63,216)'
-      activeDotColor='rgb(255,255,0)'
-      hideNextButton
-      hideDoneButton
-    />;
+    if (1 == 1) {
+      const { hasCameraPermission } = this.state;
+      let text = 'Waiting..';
+      if (this.state.errorMessage) {
+        text = this.state.errorMessage;
+      } else if (this.state.location) {
+        text = JSON.stringify(this.state.location);
+      }
+      if (hasCameraPermission === null) {
+        return <Text>Requesting for camera permission</Text>;
+      } else if (hasCameraPermission === false) {
+        return <Text>No access to camera</Text>;
+      } else {
+        return (
+          <View style={styles.container}>
+          <Text>{text}</Text>
+            <BarCodeScanner
+              onBarCodeRead={this._handleBarCodeRead}
+              style={styles.qr}
+            />
+          </View>
+        );
+      }
+    } else {
+      return (
+        <AppIntroSlider
+          slides={slides}
+          renderItem={this._renderItem}
+          dotColor='rgb(115,63,216)'
+          activeDotColor='rgb(255,255,0)'
+          hideNextButton
+          hideDoneButton
+        />
+      )
+    }
   }
 }
+
+const styles = StyleSheet.create({
+  mainContent: {
+      backgroundColor: "#ffffff",
+  },
+  image: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      width: '100%',
+      height: '100%',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 15,
+  },
+  qr: {
+    width: 200,
+    height: 200,
+  },
+});
