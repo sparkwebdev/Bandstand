@@ -5,6 +5,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LocationsScreen from '../screens/LocationsScreen';
+import BandstandsScreen from '../screens/BandstandScreen';
 import BandstandScreen from '../screens/BandstandScreen';
 import PlaylistScreen from '../screens/PlaylistScreen';
 
@@ -32,6 +33,20 @@ LocationsStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
+const BandstandsStack = createStackNavigator({
+  Bandstands: BandstandsScreen,
+});
+
+BandstandsStack.navigationOptions = {
+  tabBarLabel: 'Bandstands',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
     />
   ),
 };
@@ -67,6 +82,7 @@ PlaylistStack.navigationOptions = {
 export default createBottomTabNavigator({
   WelcomeStack,
   LocationsStack,
+  BandstandsStack,
   BandstandStack,
   PlaylistStack,
 });
