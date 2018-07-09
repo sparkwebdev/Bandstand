@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { AppLoading, Asset, Font, Icon, Notifications } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
@@ -18,6 +18,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     let visited = [1, 3, 5];
+    Notifications.setBadgeNumberAsync(visited.length);
     const visitedStr = JSON.stringify(visited);
     this.saveKey(visitedStr);
   }

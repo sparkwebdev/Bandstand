@@ -2,19 +2,6 @@ import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
-const styles = StyleSheet.create({
-    mainContent: {
-        backgroundColor: "#ffffff",
-    },
-    image: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        width: '100%',
-        height: '100%',
-    }
-});
 
 const slides = [
   {
@@ -62,7 +49,10 @@ export default class WelcomeScreen extends React.Component {
     >
         {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
         {props.image2 ? <Image style={[styles.image, {resizeMode: props.image2ResizeMode,}]} source={props.image2} /> : null }
-        {props.key === "welcome-4" ? <Text style={[styles.button]}>choose bandstand</Text> : null }
+        {props.key === "welcome-4" ? 
+        <Text style={[styles.button]} 
+        onPress={() => this.props.navigation.navigate('Bandstands')}>choose bandstand</Text>
+         : null }
     </View>
   );
 
@@ -79,3 +69,29 @@ export default class WelcomeScreen extends React.Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  mainContent: {
+      backgroundColor: "#ffffff",
+  },
+  image: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      width: '100%',
+      height: '100%',
+  },
+  button: {
+    backgroundColor: '#62d3a2',
+    color: "#7f47dd",
+    fontSize: 24,
+    position: 'absolute',
+    bottom: 200,
+    left: "20%",
+    width: '60%',
+    padding: 20,
+    textAlign: 'center',
+  }
+});

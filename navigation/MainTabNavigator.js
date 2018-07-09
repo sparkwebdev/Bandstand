@@ -23,6 +23,20 @@ WelcomeStack.navigationOptions = {
   ),
 };
 
+const BandstandsStack = createStackNavigator({
+  Bandstands: BandstandsScreen,
+});
+
+BandstandsStack.navigationOptions = {
+  tabBarLabel: 'Bandstands',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
 const LocationsStack = createStackNavigator({
   Locations: LocationsScreen,
 });
@@ -37,20 +51,6 @@ LocationsStack.navigationOptions = {
   ),
 };
 
-const BandstandsStack = createStackNavigator({
-  Bandstands: BandstandsScreen,
-});
-
-BandstandsStack.navigationOptions = {
-  tabBarLabel: 'Bandstands',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
-  ),
-};
-
 const BandstandStack = createStackNavigator({
   Bandstand: BandstandScreen,
 });
@@ -60,7 +60,7 @@ BandstandStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-link'}
     />
   ),
 };
@@ -81,8 +81,8 @@ PlaylistStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   WelcomeStack,
-  LocationsStack,
   BandstandsStack,
+  LocationsStack,
   BandstandStack,
   PlaylistStack,
 });
