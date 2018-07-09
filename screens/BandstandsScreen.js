@@ -53,18 +53,20 @@ export default class BandstandsScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-
         {
           bandStands.bandStands.map((item, index) => (
-            <View key={index} style={[styles.route, !this.hasVisited(item.id) ? styles.routenotvisited : null, item.id == 1 ? {paddingTop: 60} : null, item.id == bandStands.bandStands.length ? {paddingBottom: 100} : null]}>
-              <View style={[{paddingBottom: (5*item.relDistanceFromPrev)}]}>
+            <View key={index} style={[styles.route, !this.hasVisited(item.id) ? styles.routenotvisited : null, item.id == 1 ? {paddingTop: 60} : null, item.id == bandStands.bandStands.length ? {paddingBottom: 60} : null]}>
+              <View style={[{paddingBottom: (8*(item.milesFromPrev + 1))}]}>
                 <Image style={styles.marker}
                   source={this.hasVisited(item.id) ? ICON_BANDSTAND_ALT.module : ICON_BANDSTAND_ALT_2.module}
                 />
                 <View style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
                   <View style={[styles.description, this.hasVisited(item.id) ? styles.visited : null]}>
                     <Text style={styles.title}>
-                      {item.title}
+                      {item.title}<Text style={styles.subtitle}>, {item.location}</Text>
+                    </Text>
+                    <Text style={[styles.subtitle, styles.dates]}>
+                      {item.dates}
                     </Text>
                     <Text style={styles.subtitle}>
                       {item.description}
@@ -72,19 +74,21 @@ export default class BandstandsScreen extends React.Component {
                   </View>
                 </View>
               </View>
-              <View style={[{paddingBottom: (5*item.relDistanceFromPrev)}]}>
+              <View style={[{paddingBottom: (9*(item.milesFromPrev + 1))}]}>
                 {/* <Ionicons style={styles.ionicon} name="ios-arrow-up" size={10} color="#ddd" /> */}
                 <Text style={[styles.distance]}>
-                  {item.relDistanceFromPrev !== 0 ? item.relDistanceFromPrev + ' mile' : null}
-                  {item.relDistanceFromPrev !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
+                  {item.milesFromPrev !== 0 ? item.milesFromPrev + ' mile' : null}
+                  {item.milesFromPrev !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
+                  {item.timeFromPrev !== 0 ? ' ~ ' + item.timeFromPrev + ' min' : null}
+                  {item.milesFromPrev !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
                 </Text>
-                <Ionicons style={styles.ionicon} name="ios-arrow-down" size={10} color="#ddd" />
+                {item.milesFromPrev !== 0 ? 
+                  <Ionicons style={styles.ionicon} name="ios-arrow-down" size={10} color="#ddd" />
+                : null}
               </View>
             </View>
           ))
         }
-
-
       </ScrollView>
     );
   }
@@ -94,13 +98,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingLeft: 8,
+    marginLeft: 23,
+    paddingLeft: 25,
     paddingRight: 15,
-  },
-  route: {
     borderLeftColor: "#7f47dd",
     borderLeftWidth: 18,
-    marginLeft: 11,
+    overflow: 'visible',
+  },
+  route: {
+    // borderLeftColor: "#7f47dd",
+    // borderLeftWidth: 18,
+    marginLeft: -25,
   },
   box: {
     backgroundColor: '#fff',
@@ -114,8 +122,8 @@ const styles = StyleSheet.create({
     marginLeft: 8
   },
   notvisited: {
-    borderColor: "#777",
-    opacity: 0.5
+    borderColor: "#888",
+    opacity: 0.5,
   },
   description: {
     //Top: 10,
@@ -133,7 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   subtitle: {
+    fontWeight: 'normal',
     fontSize: 12,
+  },
+  dates: {
+    marginTop: 3,
+    marginBottom: 3,
   },
   visited: {
     borderLeftColor: "#62d3a2",
