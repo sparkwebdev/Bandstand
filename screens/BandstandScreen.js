@@ -1,45 +1,26 @@
 import React from 'react';
-import { Platform, View, StyleSheet, Text, Image } from 'react-native';
-
+import { Platform, View, StyleSheet, Text, Button, Image, AsyncStorage } from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
 import { BarCodeScanner, Constants, Location, Permissions } from 'expo';
+import bandStands from '../constants/Bandstands';
 
-const slides = [
-  {
-    key: 'bandstand-0',
-    image: require('../assets/images/bandstand-01-00.jpg'),
-    imageResizeMode: 'cover',
-  },
-  {
-    key: 'bandstand-1',
-    image: require('../assets/images/bandstand-01-01.jpg'),
-    imageResizeMode: 'cover',
-  },
-  {
-    key: 'bandstand-2',
-    image: require('../assets/images/bandstand-01-02.png'),
-    imageResizeMode: 'contain',
-  },
-  {
-    key: 'bandstand-3',
-    image: require('../assets/images/bandstand-01-03.png'),
-    imageResizeMode: 'contain',
-  },
-  {
-    key: 'bandstand-4',
-    image: require('../assets/images/bandstand-01-04.png'),
-    imageResizeMode: 'contain',
-  },
-];
+// const slides = bandStands.bandStands[0].slides;
 
 export default class BandstandScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+  
 
   state = {
     location: null,
     errorMessage: null,
     hasCameraPermission: null,
+    doingQR: false,
+    selectedBandstand: 1,
+    foundBandstand: 0,
+    flash: 'off',
+    visited: null,
   };
 
   async componentWillMount() {
@@ -51,6 +32,16 @@ export default class BandstandScreen extends React.Component {
       });
     } else {
       this._getLocationAsync();
+    }
+  }
+
+
+  componentDidMount() {
+    this.getKey();
+    const { navigation } = this.props;
+    const selectBandstand = navigation.getParam('itemId', 0);
+    if (selectBandstand) {
+      this.setSelectBandstand(selectBandstand);
     }
   }
 
@@ -84,11 +75,58 @@ export default class BandstandScreen extends React.Component {
   );
 
   _handleBarCodeRead = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    this.setQrState;
+    if (data) {
+      let id = data.substr(data.length - 1);
+      this.setFoundBandstand(id);
+      alert('Success!');
+    } else {
+      alert('Sorry not found');
+    }
+  }
+
+  setFoundBandstand = (id) => {
+    this.setState({
+      foundBandstand: id
+    });
+  }
+
+  setSelectBandstand = (id) => {
+    this.setState({
+      selectedBandstand: id
+    });
+  }
+
+  hasVisited(id) {
+    if (this.state.visited !== null) {
+      if (this.state.visited.includes(id)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  setQrState = () => {
+    this.setState({
+      doingQR: !this.state.doingQR
+    });
+  }
+
+  
+  async getKey() {
+    try {
+      const value = await AsyncStorage.getItem('@VisitedStore:key');
+      let visited = JSON.parse(value);
+      this.setState({visited: visited});
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
   }
 
   render() {
-    if (1 == 1) {
+    let selected = this.state.selectedBandstand;
+
+    if (!this.hasVisited(selected)) {
       const { hasCameraPermission } = this.state;
       let text = 'Waiting..';
       if (this.state.errorMessage) {
@@ -96,25 +134,37 @@ export default class BandstandScreen extends React.Component {
       } else if (this.state.location) {
         text = JSON.stringify(this.state.location);
       }
-      if (hasCameraPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
-      } else if (hasCameraPermission === false) {
-        return <Text>No access to camera</Text>;
+      if (this.state.doingQR) {
+        if (hasCameraPermission === null) {
+          return <Text>Requesting for camera permission</Text>;
+        } else if (hasCameraPermission === false) {
+          return <Text>No access to camera</Text>;
+        } else {
+          return (
+            <View style={styles.container}>
+              <Text style={[styles.title]}>{bandStands.bandStands[this.state.selectedBandstand - 1].title}</Text>
+              <View style={styles.qrContainer}>
+                {this.state.doingQR ? <BarCodeScanner onBarCodeRead={this._handleBarCodeRead} style={styles.qr} /> : null}
+              </View>
+              <Text style={[styles.button]} onPress={this.setQrState}>back</Text>
+            </View>
+          );
+        }
       } else {
         return (
-          <View style={styles.container}>
-          <Text>{text}</Text>
-            <BarCodeScanner
-              onBarCodeRead={this._handleBarCodeRead}
-              style={styles.qr}
-            />
+          <View>
+            <Text style={[styles.title]}>{bandStands.bandStands[this.state.selectedBandstand - 1].title}</Text>
+            <Text style={[styles.description]}>{bandStands.bandStands[this.state.selectedBandstand - 1].description}</Text>
+            <Text>{text}</Text>
+            <Text style={[styles.title]}>You are very close!</Text>
+            <Text style={[styles.button]} onPress={this.setQrState}>scan code</Text>
           </View>
-        );
+        )
       }
     } else {
       return (
         <AppIntroSlider
-          slides={slides}
+          slides={bandStands.bandStands[this.state.selectedBandstand - 1].slides}
           renderItem={this._renderItem}
           dotColor='rgb(115,63,216)'
           activeDotColor='rgb(255,255,0)'
@@ -143,8 +193,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 15,
   },
-  qr: {
-    width: 200,
-    height: 200,
+  qrContainer: {
+    padding: 5,
+    borderColor: '#62d3a2',
+    borderWidth: 3,
+    marginBottom: 10,
   },
+  qr: {
+    width: "100%",
+    height: 320,
+  },
+  button: {
+    backgroundColor: '#62d3a2',
+    color: "#7f47dd",
+    fontSize: 24,
+    marginLeft: "20%",
+    width: '60%',
+    padding: 20,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 24,
+    padding: 10,
+    textAlign: 'center',
+  },
+  description: {
+    padding: 10,
+  }
 });

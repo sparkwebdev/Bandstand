@@ -18,6 +18,33 @@ const bandStands = [
             loop: require('../assets/audio/choir-01.mp3'),
         },
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 2,
@@ -38,6 +65,33 @@ const bandStands = [
             loop: require('../assets/audio/choir-02.mp3'),
         },
         visited: true,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-02-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-02-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-02-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-02-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-02-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 3,
@@ -58,6 +112,33 @@ const bandStands = [
             loop: require('../assets/audio/choir-01.mp3'),
         },
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-02-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-02-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-02-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-02-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-02-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 4,
@@ -78,6 +159,33 @@ const bandStands = [
         milesFromPrev: 1.4,
         timeFromPrev: 26,
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 5,
@@ -98,6 +206,33 @@ const bandStands = [
         milesFromPrev: 1.9,
         timeFromPrev: 38,
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 6,
@@ -118,6 +253,33 @@ const bandStands = [
         milesFromPrev: 1.1,
         timeFromPrev: 21,
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 7,
@@ -138,6 +300,33 @@ const bandStands = [
         milesFromPrev: 2.7,
         timeFromPrev: 52,
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     },
     {
         id: 8,
@@ -158,6 +347,33 @@ const bandStands = [
         milesFromPrev: 0,
         timeFromPrev: 0,
         visited: false,
+        slides: [
+            {
+              key: '0',
+              image: require('../assets/images/bandstand-01-00.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '1',
+              image: require('../assets/images/bandstand-01-01.jpg'),
+              imageResizeMode: 'cover',
+            },
+            {
+              key: '2',
+              image: require('../assets/images/bandstand-01-02.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '3',
+              image: require('../assets/images/bandstand-01-03.png'),
+              imageResizeMode: 'contain',
+            },
+            {
+              key: '4',
+              image: require('../assets/images/bandstand-01-04.png'),
+              imageResizeMode: 'contain',
+            },
+          ]
     }
 ];
 

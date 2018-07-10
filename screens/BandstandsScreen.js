@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { ScrollView, TouchableWithoutFeedback, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
 import { Asset } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import bandStands from '../constants/Bandstands';
@@ -50,30 +50,45 @@ export default class BandstandsScreen extends React.Component {
     return false;
   }
 
+  _goToBandStand = ({ type, data }) => {
+    this.setQrState;
+    if (data) {
+      let id = data.substr(data.length - 1);
+      this.setFoundBandstand(id);
+      alert('Success!');
+    } else {
+      alert('Sorry not found');
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
         {
           bandStands.bandStands.map((item, index) => (
             <View key={index} style={[styles.route, !this.hasVisited(item.id) ? styles.routenotvisited : null, item.id == 1 ? {paddingTop: 60} : null, item.id == bandStands.bandStands.length ? {paddingBottom: 60} : null]}>
-              <View style={[{paddingBottom: (8*(item.milesFromPrev + 1))}]}>
-                <Image style={styles.marker}
-                  source={this.hasVisited(item.id) ? ICON_BANDSTAND_ALT.module : ICON_BANDSTAND_ALT_2.module}
-                />
-                <View style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
-                  <View style={[styles.description, this.hasVisited(item.id) ? styles.visited : null]}>
-                    <Text style={styles.title}>
-                      {item.title}<Text style={styles.subtitle}>, {item.location}</Text>
-                    </Text>
-                    <Text style={[styles.subtitle, styles.dates]}>
-                      {item.dates}
-                    </Text>
-                    <Text style={styles.subtitle}>
-                      {item.description}
-                    </Text>
+              <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Bandstand', {
+                  itemId: item.id,
+                })}>
+                <View style={[{paddingBottom: (8*(item.milesFromPrev + 1))}]}>
+                  <Image style={styles.marker}
+                    source={this.hasVisited(item.id) ? ICON_BANDSTAND_ALT.module : ICON_BANDSTAND_ALT_2.module}
+                  />
+                  <View style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
+                    <View style={[styles.description, this.hasVisited(item.id) ? styles.visited : null]}>
+                      <Text style={styles.title}>
+                        {item.title}<Text style={styles.subtitle}>, {item.location}</Text>
+                      </Text>
+                      <Text style={[styles.subtitle, styles.dates]}>
+                        {item.dates}
+                      </Text>
+                      <Text style={styles.subtitle}>
+                        {item.description}
+                      </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
+              </TouchableWithoutFeedback>
               <View style={[{paddingBottom: (9*(item.milesFromPrev + 1))}]}>
                 {/* <Ionicons style={styles.ionicon} name="ios-arrow-up" size={10} color="#ddd" /> */}
                 <Text style={[styles.distance]}>
