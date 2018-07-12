@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
-import Expo, { Asset, Audio, Video, FileSystem, Font, Permissions } from 'expo';
+import { ScrollView, TouchableHighlight, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
+import Expo, { Asset } from 'expo';
 import bandStands from '../constants/Bandstands';
 
 class Icon {
@@ -17,22 +17,12 @@ const ICON_PAUSE_BUTTON = new Icon(require('../assets/images/icon_pause.png'), 3
 const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 
 export default class PlaylistScreen extends React.Component {
-
-
-  onPress = () => {
-    this.setState({
-      count: this.state.count+1,
-      currentlyPlaying: require('../assets/audio/choir-02.mp3')
-    })
-  }
   static navigationOptions = {
     header: null,
   };
 
   state = {
     visited: null,
-    sound: null,
-    currentlyPlaying: require('../assets/audio/choir-01.mp3'),
     count: 0
   }
 
@@ -59,43 +49,9 @@ export default class PlaylistScreen extends React.Component {
     return false;
   }
 
-  _onPlayPausePressed = () => {
-    if (this.sound != null) {
-      if (this.state.isPlaying) {
-        this.sound.pauseAsync();
-      } else {
-        this.sound.playAsync();
-      }
-    }
-  };
-
   render() {
     return (
       <ScrollView style={styles.container}>
-
-      <View>
-
-        <TouchableHighlight
-         style={styles.button}
-         onPress={this.onPress}
-        >
-         <Text> Touch Here </Text>
-        </TouchableHighlight>
-        <View style={[styles.countContainer]}>
-          <Text style={[styles.countText]}>
-            { this.state.count !== 0 ? this.state.count: null}
-          </Text>
-        </View>
-        <Video
-          source={this.state.currentlyPlaying}
-          resizeMode="cover"
-          style={{ width: "100%", height: 45, marginBottom: 20 }}
-          isMuted = {false}
-          shouldPlay
-          useNativeControls
-          isLooping
-        />
-      </View>
         {
           bandStands.bandStands.map((item, index) => (
             <View key={index} style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
@@ -109,11 +65,7 @@ export default class PlaylistScreen extends React.Component {
               </View>
               <View style={styles.actions}>
                 {this.hasVisited(item.id) ? 
-                  <TouchableHighlight
-                  //item.song.sound
-                    //onPress={this._onTest(item)}
-                    //disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
-                  >
+                  <TouchableHighlight>
                   <Image style={styles.icon}
                     source={this.state.isPlaying ? ICON_PAUSE_BUTTON.module : ICON_PLAY_BUTTON.module}
                   />
