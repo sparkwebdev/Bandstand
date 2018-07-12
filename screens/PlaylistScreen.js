@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
-import Expo, { Asset, Audio, FileSystem, Font, Permissions } from 'expo';
+import Expo, { Asset, Audio, Video, FileSystem, Font, Permissions } from 'expo';
 import bandStands from '../constants/Bandstands';
 
 class Icon {
@@ -17,13 +17,23 @@ const ICON_PAUSE_BUTTON = new Icon(require('../assets/images/icon_pause.png'), 3
 const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 
 export default class PlaylistScreen extends React.Component {
+
+
+  onPress = () => {
+    this.setState({
+      count: this.state.count+1,
+      currentlyPlaying: require('../assets/audio/choir-02.mp3')
+    })
+  }
   static navigationOptions = {
     header: null,
   };
 
   state = {
     visited: null,
-    sound: null
+    sound: null,
+    currentlyPlaying: require('../assets/audio/choir-01.mp3'),
+    count: 0
   }
 
   componentDidMount() {
@@ -62,6 +72,30 @@ export default class PlaylistScreen extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
+
+      <View>
+
+        <TouchableHighlight
+         style={styles.button}
+         onPress={this.onPress}
+        >
+         <Text> Touch Here </Text>
+        </TouchableHighlight>
+        <View style={[styles.countContainer]}>
+          <Text style={[styles.countText]}>
+            { this.state.count !== 0 ? this.state.count: null}
+          </Text>
+        </View>
+        <Video
+          source={this.state.currentlyPlaying}
+          resizeMode="cover"
+          style={{ width: "100%", height: 45, marginBottom: 20 }}
+          isMuted = {false}
+          shouldPlay
+          useNativeControls
+          isLooping
+        />
+      </View>
         {
           bandStands.bandStands.map((item, index) => (
             <View key={index} style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
@@ -77,7 +111,7 @@ export default class PlaylistScreen extends React.Component {
                 {this.hasVisited(item.id) ? 
                   <TouchableHighlight
                   //item.song.sound
-                    onPress={this._onPlayPausePressed}
+                    //onPress={this._onTest(item)}
                     //disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
                   >
                   <Image style={styles.icon}
@@ -85,7 +119,9 @@ export default class PlaylistScreen extends React.Component {
                   />
                   </TouchableHighlight>
                 : null}
-                <TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Bandstand', {
+                  itemId: item.id,
+                })}>
                   <Image style={styles.icon}
                     source={ICON_BANDSTAND.module}
                   />
