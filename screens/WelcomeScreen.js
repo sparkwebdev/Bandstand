@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image } from 'react-native';
+import Expo, { Font } from 'expo';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 
-const slides = [
+const slides1 = [
   {
     key: 'welcome-0',
     image: require('../assets/images/welcome-00.jpg'),
@@ -32,11 +33,35 @@ const slides = [
     imageResizeMode: 'contain',
   },
 ];
+const slides2 = [
+  {
+    key: 'welcome-2',
+    image: require('../assets/images/welcome-02.png'),
+    imageResizeMode: 'contain',
+  },
+];
 
 export default class WelcomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewed: false,
+      fontLoaded: false,
+    };
+  }
+
   static navigationOptions = {
     header: null,
   };
+
+  componentDidMount() {
+    (async () => {
+      await Font.loadAsync({
+        'cutive-mono-regular': require('../assets/fonts/CutiveMono-Regular.ttf'),
+      });
+      this.setState({ fontLoaded: true });
+    })();
+  }
 
   _renderItem = props => (
     <View
@@ -50,16 +75,19 @@ export default class WelcomeScreen extends React.Component {
         {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
         {props.image2 ? <Image style={[styles.image, {resizeMode: props.image2ResizeMode,}]} source={props.image2} /> : null }
         {props.key === "welcome-4" ? 
-        <Text style={[styles.button]} 
-        onPress={() => this.props.navigation.navigate('Bandstands')}>choose bandstand</Text>
+        <Text style={[styles.button, { fontFamily: 'cutive-mono-regular' }]} 
+        onPress={() => {
+          this.setState({ viewed: true });
+          this.props.navigation.navigate('Bandstands');
+        }}>choose bandstand</Text>
          : null }
     </View>
   );
 
   render() {
-    return (
+    return !this.state.fontLoaded ? null : (
         <AppIntroSlider
-          slides={slides}
+          slides={this.state.viewed ? slides2 : slides1}
           renderItem={this._renderItem}
           dotColor='rgb(115,63,216)'
           activeDotColor='rgb(255,255,0)'

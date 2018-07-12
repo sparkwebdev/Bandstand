@@ -56,7 +56,6 @@ export default class PlaylistScreen extends React.Component {
 
 
   componentDidMount() {
-    console.log("WORKING...");
     this.getKey();
     Audio.setIsEnabledAsync(true);
     // Audio.setAudioModeAsync({
@@ -67,6 +66,10 @@ export default class PlaylistScreen extends React.Component {
     //   interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
     // });
     this._askForAudioPermission();
+  }
+
+  componentWillUnmount() {
+    //this.audioPlayer.unloadAsync()
   }
 
   _askForAudioPermission = async () => {
