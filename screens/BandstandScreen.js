@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, StyleSheet, Text, Button, Image, AsyncStorage } from 'react-native';
+import { ActivityIndicator, ScrollView, Platform, View, StyleSheet, Text, Button, Image, AsyncStorage } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { BarCodeScanner, Constants, Location, Permissions } from 'expo';
 import bandStands from '../constants/Bandstands';
@@ -13,31 +13,30 @@ export default class BandstandScreen extends React.Component {
   
 
   state = {
-    location: null,
-    errorMessage: null,
     hasCameraPermission: null,
     doingQR: false,
     selectedBandstand: 1,
     foundBandstand: 0,
     flash: 'off',
     visited: null,
+    watchLocation: null,
+    watchHeading: null,
+    subscription: null,
+    headingSubscription: null,
   };
 
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({hasCameraPermission: status === 'granted'});
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
   }
 
 
   componentDidMount() {
     this.getKey();
+  }
+
+
+  componentWillReceiveProps() {
     const { navigation } = this.props;
     const selectBandstand = navigation.getParam('itemId', 0);
     if (selectBandstand) {
@@ -45,19 +44,6 @@ export default class BandstandScreen extends React.Component {
     }
   }
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied',
-      });
-    }
-
-    let location = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true
-    });
-    this.setState({ location });
-  };
 
   _renderItem = props => (
     <View
@@ -78,8 +64,7 @@ export default class BandstandScreen extends React.Component {
     this.setQrState;
     if (data) {
       let id = data.substr(data.length - 1);
-      this.setFoundBandstand(id);
-      alert('Success!');
+      this.setFoundBandstand(Number(id));
     } else {
       alert('Sorry not found');
     }
@@ -89,12 +74,26 @@ export default class BandstandScreen extends React.Component {
     this.setState({
       foundBandstand: id
     });
+    var currentVisited = this.state.visited.filter(function(num) {
+      return num !== id;
+    });
+    currentVisited.push(id);
+    console.log(JSON.stringify(currentVisited));
+    this.saveKey(JSON.stringify(currentVisited));
   }
 
   setSelectBandstand = (id) => {
     this.setState({
       selectedBandstand: id
     });
+  }
+
+  async saveKey(value) {
+    try {
+      await AsyncStorage.setItem('@VisitedStore:key', value);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
   }
 
   hasVisited(id) {
@@ -123,17 +122,106 @@ export default class BandstandScreen extends React.Component {
     }
   }
 
+
+  _startWatchingLocation = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      return;
+    }
+
+    let subscription = await Location.watchPositionAsync(
+      {
+        enableHighAccuracy: true,
+        timeInterval: 1000,
+        distanceInterval: 1,
+      },
+      location => {
+        console.log(`Got location: ${JSON.stringify(location.coords)}`);
+        this.setState({ watchLocation: location });
+      }
+    );
+
+    this.setState({ subscription });
+  };
+
+  _stopWatchingLocation = async () => {
+    this.state.subscription.remove();
+    this.setState({ subscription: null, watchLocation: null });
+  };
+
+  _startWatchingHeading = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      return;
+    }
+
+    let subscription = await Location.watchHeadingAsync(heading => {
+      this.setState({ watchHeading: heading });
+    });
+    this.setState({ headingSubscription: subscription });
+  };
+
+  _stopWatchingHeading = async () => {
+    this.state.headingSubscription.remove();
+    this.setState({ headingSubscription: null, watchHeading: null });
+  };
+
+  renderWatchLocation = () => {
+    if (this.state.watchLocation) {
+      return (
+        <View>
+          <Text>
+            {this.state.polyfill
+              ? 'navigator.geolocation.watchPosition'
+              : 'Location.watchPositionAsync'}
+            :
+          </Text>
+          <Text>Latitude: {this.state.watchLocation.coords.latitude}</Text>
+          <Text>Longitude: {this.state.watchLocation.coords.longitude}</Text>
+          <Button onPress={this._stopWatchingLocation} title="Stop Watching Location" />
+        </View>
+      );
+    } else if (this.state.subscription) {
+      return (
+        <View style={{ padding: 10 }}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
+
+    return (
+      <Button
+        onPress={
+          this.state.polyfill
+            ? this._startWatchingLocationWithPolyfill
+            : this._startWatchingLocation
+        }
+        title="Watch my location"
+      />
+    );
+  };
+
+  renderWatchCompass = () => {
+    if (this.state.watchHeading) {
+      return (
+        <View>
+          <Text>Location.watchHeadingAsync:</Text>
+          <Text>Magnetic North: {this.state.watchHeading.magHeading}</Text>
+          <Text>True North: {this.state.watchHeading.trueHeading}</Text>
+          <Text>Accuracy: {this.state.watchHeading.accuracy}</Text>
+          <Button onPress={this._stopWatchingHeading} title="Stop Watching Heading" />
+        </View>
+      );
+    }
+
+    return <Button onPress={this._startWatchingHeading} title="Watch my heading (compass)" />;
+  };
+
   render() {
     let selected = this.state.selectedBandstand;
 
     if (!this.hasVisited(selected)) {
       const { hasCameraPermission } = this.state;
-      let text = 'Waiting..';
-      if (this.state.errorMessage) {
-        text = this.state.errorMessage;
-      } else if (this.state.location) {
-        text = JSON.stringify(this.state.location);
-      }
       if (this.state.doingQR) {
         if (hasCameraPermission === null) {
           return <Text>Requesting for camera permission</Text>;
@@ -155,7 +243,8 @@ export default class BandstandScreen extends React.Component {
           <View>
             <Text style={[styles.title]}>{bandStands.bandStands[this.state.selectedBandstand - 1].title}</Text>
             <Text style={[styles.description]}>{bandStands.bandStands[this.state.selectedBandstand - 1].description}</Text>
-            <Text>{text}</Text>
+            {this.renderWatchLocation()}
+            {this.renderWatchCompass()}
             <Text style={[styles.title]}>You are very close!</Text>
             <Text style={[styles.button]} onPress={this.setQrState}>scan code</Text>
           </View>
