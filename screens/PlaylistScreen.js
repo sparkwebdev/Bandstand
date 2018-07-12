@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, TouchableHighlight, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
-import Expo, { Asset } from 'expo';
+import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { Permissions, Asset, Audio } from 'expo';
 import bandStands from '../constants/Bandstands';
 
 class Icon {
@@ -15,20 +15,67 @@ class Icon {
 const ICON_PLAY_BUTTON = new Icon(require('../assets/images/icon_play.png'), 34, 34);
 const ICON_PAUSE_BUTTON = new Icon(require('../assets/images/icon_pause.png'), 34, 34);
 const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
-
+// const soundObject = new Expo.Audio.Sound();
+// try {
+//   soundObject.loadAsync(require('../assets/audio/01.mp3'));
+//   soundObject.playAsync();
+//   // Your sound is playing!
+// } catch (error) {
+//   // An error occurred!
+// }
 export default class PlaylistScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+  constructor(props) {
+    super(props)
 
-  state = {
-    visited: null,
-    count: 0
+    this.audioPlayer = new Audio.Sound();
+    this.recording = null;
+    this.sound = null;
+    this.isSeeking = false;
+    this.shouldPlayAtEndOfSeek = false;
+    this.state = {
+      haveRecordingPermissions: false,
+      isLoading: false,
+      isPlaybackAllowed: false,
+      muted: false,
+      soundPosition: null,
+      soundDuration: null,
+      recordingDuration: null,
+      shouldPlay: false,
+      isPlaying: false,
+      isRecording: false,
+      fontLoaded: false,
+      shouldCorrectPitch: true,
+      volume: 1.0,
+      rate: 1.0,
+      visited: null,
+    }
   }
+
 
   componentDidMount() {
+    console.log("WORKING...");
     this.getKey();
+    Audio.setIsEnabledAsync(true);
+    // Audio.setAudioModeAsync({
+    //   allowsRecordingIOS: true,
+    //   interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+    //   playsInSilentLockedModeIOS: false,
+    //   shouldDuckAndroid: true,
+    //   interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    // });
+    this._askForAudioPermission();
   }
+
+  _askForAudioPermission = async () => {
+    const response = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    this.setState({
+      haveRecordingPermissions: response.status === 'granted',
+    });
+    console.log("PERMISSION:", JSON.stringify(this.state.haveRecordingPermissions));
+  };
   
   async getKey() {
     try {
@@ -49,6 +96,23 @@ export default class PlaylistScreen extends React.Component {
     return false;
   }
 
+  _onPlayPausePressed = async () => {
+    if (this.state.isPlaying) {
+      console.log("pausing");
+      this.audioPlayer.pauseAsync();
+      this.state.isPlaying = false;
+    } else {
+      try {
+        await this.audioPlayer.unloadAsync()
+        await this.audioPlayer.loadAsync(require("../assets/audio/choir-01.mp3"));
+        await this.audioPlayer.playAsync();
+        this.state.isPlaying = true;
+      } catch (err) {
+        console.warn("Couldn't Play audio", err);
+      }
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -65,7 +129,7 @@ export default class PlaylistScreen extends React.Component {
               </View>
               <View style={styles.actions}>
                 {this.hasVisited(item.id) ? 
-                  <TouchableHighlight>
+                  <TouchableHighlight onPress={this._onPlayPausePressed}>
                   <Image style={styles.icon}
                     source={this.state.isPlaying ? ICON_PAUSE_BUTTON.module : ICON_PLAY_BUTTON.module}
                   />
