@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TouchableHighlight, TouchableOpacity, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { ScrollView, TouchableHighlight, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
 import { Permissions, Asset, Audio } from 'expo';
 import bandStands from '../constants/Bandstands';
 

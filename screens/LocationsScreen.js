@@ -7,96 +7,91 @@ import {
   Animated,
   Image,
   Dimensions,
+  TouchableHighlight,
+  AsyncStorage,
 } from "react-native";
+import { Asset } from 'expo';
+import bandStands from '../constants/Bandstands';
+
+class Icon {
+  constructor(module, width, height) {
+    this.module = module;
+    this.width = width;
+    this.height = height;
+    Asset.fromModule(this.module).downloadAsync();
+  }
+}
+
+const ICON_MARKER = new Icon(require('../assets/images/icon_bandstand_alt_3.png'), 34, 34);
+const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 
 //import MapView from "react-native-maps";
 import { MapView } from 'expo';
 
 const { width, height } = Dimensions.get("window");
 
-const CARD_HEIGHT = height / 3.5;
-const CARD_WIDTH = CARD_HEIGHT - 40;
+// const CARD_HEIGHT = height / 3.5;
+// const CARD_WIDTH = CARD_HEIGHT + 40;
+const CARD_HEIGHT = 65;
+const CARD_WIDTH = width / 1.65;
+
 
 export default class LocationsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
-  state = {
-    markers: [
-      {
+
+  constructor(props) {
+    super(props);
+    this.markers = bandStands.bandStands.map(function(bandstand) {
+      return {
+        id: bandstand.id,
         coordinate: {
-          latitude: 55.950526,
-          longitude: -3.200066,
+          latitude: bandstand.coords.lat,
+          longitude: bandstand.coords.lng,
         },
-        title: "1. Ross Theatre",
-        description: "West Princes Street Gardens",
-        image: require('../assets/images/bandstand-01.jpg'),
+        title: bandstand.title,
+        location: bandstand.location,
+        dates: bandstand.dates,
+        image: bandstand.slides.image,
+      }
+    });
+    this.state = {
+      visited: null,
+      viewed: false,
+      fontLoaded: false,
+      markers: this.markers,
+      region: {
+        latitude: 55.930526,
+        longitude: -3.150066,
+        latitudeDelta: 0.25,
+        longitudeDelta: 0.25,
       },
-      {
-        coordinate: {
-          latitude: 55.941304,
-          longitude: -3.191872,
-        },
-        title: "2. Meadows",
-        description: "In situ 1908 to 1953",
-        image: require('../assets/images/bandstand-02.jpg'),
-      },
-      {
-        coordinate: {
-          latitude: 55.941519,
-          longitude: -3.253753,
-        },
-        title: "3. Saughton Park",
-        description: "erected 1908, re-erected 2018",
-        image: require('../assets/images/bandstand-01.jpg'),
-      },
-      {
-        coordinate: {
-          latitude: 55.975007,
-          longitude: -3.193481,
-        },
-        title: "4. Victoria Park, Leith",
-        description: "no dates available",
-        image: require('../assets/images/bandstand-02.jpg'),
-      },
-      {
-        coordinate: {
-          latitude: 55.970744,
-          longitude: -3.165750,
-        },
-        title: "5. Leith Links",
-        description: "erected early 1900s",
-        image: require('../assets/images/bandstand-01.jpg'),
-      },
-      {
-        coordinate: {
-          latitude: 55.951358,
-          longitude: -3.104938,
-        },
-        title: "6. Portobello Prom, John Street",
-        description: "dates unclear/ early 1900s in situ",
-        image: require('../assets/images/bandstand-02.jpg'),
-      },
-      {
-        coordinate: {
-          latitude: 55.939633,
-          longitude: -3.051714,
-        },
-        title: "7. Inveresk Park, Musselburgh",
-        description: "dates unclear/ early 1900s in situ",
-        image: require('../assets/images/bandstand-01.jpg'),
-      },
-    ],
-    region: {
-      latitude: 55.930526,
-      longitude: -3.150066,
-      latitudeDelta: 0.25,
-      longitudeDelta: 0.25,
-    },
-  };
+    };
+  }
+
+  async getKey() {
+    try {
+      const value = await AsyncStorage.getItem('@VisitedStore:key');
+      let visited = JSON.parse(value);
+      this.setState({visited: visited});
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
+  }
+
+  hasVisited(id) {
+    if (this.state.visited !== null) {
+      if (this.state.visited.includes(id)) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   componentWillMount() {
+    this.getKey();
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
@@ -139,12 +134,12 @@ export default class LocationsScreen extends React.Component {
       ];
       const scale = this.animation.interpolate({
         inputRange,
-        outputRange: [1, 2.5, 1],
+        outputRange: [1, 1.5, 1],
         extrapolate: "clamp",
       });
       const opacity = this.animation.interpolate({
         inputRange,
-        outputRange: [0.35, 1, 0.35],
+        outputRange: [0.5, 1, 0.5],
         extrapolate: "clamp",
       });
       return { scale, opacity };
@@ -169,9 +164,8 @@ export default class LocationsScreen extends React.Component {
             };
             return (
               <MapView.Marker key={index} coordinate={marker.coordinate}>
-                <Animated.View style={[styles.markerWrap, opacityStyle]}>
-                  <Animated.View style={[styles.ring, scaleStyle]} />
-                  <View style={styles.marker} />
+                <Animated.View style={[styles.markerWrap, opacityStyle, scaleStyle]}>
+                  <Image style={[styles.icon]} source={ICON_MARKER.module} />
                 </Animated.View>
               </MapView.Marker>
             );
@@ -198,17 +192,24 @@ export default class LocationsScreen extends React.Component {
           contentContainerStyle={styles.endPadding}
         >
           {this.state.markers.map((marker, index) => (
-            <View style={styles.card} key={index}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode="cover"
-              />
-              <View style={styles.textContent}>
+            <View style={[styles.card, !this.hasVisited(marker.id) ? styles.notvisited : null]} key={index}>
+              <View style={[styles.textContent, !this.hasVisited(marker.id) ? styles.notvisited : null]}>
                 <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
                 <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.description}
+                  {marker.location}
                 </Text>
+                <Text numberOfLines={1} style={styles.cardDescription}>
+                  {marker.dates}
+                </Text>
+              </View>
+              <View style={styles.actions}>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Bandstand', {
+                  itemId: marker.id,
+                })}>
+                  <Image style={styles.icon}
+                    source={ICON_BANDSTAND.module}
+                  />
+                </TouchableHighlight>
               </View>
             </View>
           ))}
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     position: "absolute",
-    bottom: 10,
+    bottom: 15,
     left: 0,
     right: 0,
   },
@@ -233,17 +234,32 @@ const styles = StyleSheet.create({
     paddingRight: width - CARD_WIDTH,
   },
   card: {
-    padding: 3,
+    //padding: 3,
     //elevation: 2,
     backgroundColor: "#fff",
-    marginLeft: 10,
-    marginRight: 5,
-    shadowColor: "#000",
-    shadowRadius: 0,
-    shadowOpacity: 0.65,
-    shadowOffset: { x: 0, y: -2 },
+    marginLeft: 15,
+    //shadowColor: "#000",
+    //shadowRadius: 0,
+    //shadowOpacity: 0.65,
+    //shadowOffset: { x: 0, y: -2 },
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
+    borderColor: "#62d3a2",
+    borderWidth: 2,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  description: {
+    width: "80%"
+  },
+  actions: {
+    width: "20%",
+    alignSelf: "center",
+  },
+  notvisited: {
+    borderColor: "#ccc",
   },
   cardImage: {
     flex: 3,
@@ -252,17 +268,18 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   textContent: {
+    width: "30%",
     flex: 1,
     borderColor: "#62d3a2",
-    borderTopWidth: 3,
+    borderLeftWidth: 8,
+    paddingLeft: 5,
   },
   cardtitle: {
-    fontSize: 12,
+    fontSize: 14,
     paddingLeft: 5,
     paddingRight: 5,
     marginTop: 5,
     fontWeight: "bold",
-    color: "#7f47dd",
     marginBottom: 0,
   },
   cardDescription: {
@@ -289,6 +306,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderWidth: 1,
     borderColor: "rgba(127,71,221, 0.75)",
+  },
+  icon: {
+    width: 34,
+    height: 34,
   },
 });
 
