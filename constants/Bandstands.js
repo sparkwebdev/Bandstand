@@ -54,8 +54,10 @@ const bandStands = [
         description: "Erected in 1908, and was dismantled in 1950 (A duplicate of the one at Saughton Park). There is a record of it being scrapped in 1953. One of the few cast iron bandstands.",
         image: require('../assets/images/bandstand-02.jpg'),
         coords: {
-            lat: 55.942616,
-            lng: -3.191422,
+            lat: 55.833417,
+            lng: -4.279887,
+            // lat: 55.942616,
+            // lng: -3.191422,
         },
         milesFromPrev: 2.6,
         timeFromPrev: 50,
@@ -148,8 +150,10 @@ const bandStands = [
         description: "The park first opened to the public in 1898. The bandstand is recorded as being installed between 1906 and 1910, with conflict about the precise date, and no evidence of when taken down.",
         image: require('../assets/images/bandstand-02.jpg'),
         coords: {
-            lat: 55.975364,
-            lng: -3.192939,
+          lat: 55.857080,
+          lng: -4.264364,
+          // lat: 55.975364,
+          // lng: -3.192939,
         },
         song: {
             duration: "3:08",
@@ -242,8 +246,8 @@ const bandStands = [
         description: "Many of the buildings from the 1908 Scottish National Exhibition held in Saughton Park were moved to Marine Gardens at Seafield (the Lothian Buses depot now on the previous site).  Marine Gardens was in operation from 1909 until 1915.",
         image: require('../assets/images/bandstand-02.jpg'),
         coords: {
-            lat: 55.961963,
-            lng: -3.125264,
+            lat: 55.864966,
+            lng: -4.254369,
         },
         song: {
             duration: "2:34",

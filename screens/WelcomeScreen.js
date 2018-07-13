@@ -57,7 +57,7 @@ export default class WelcomeScreen extends React.Component {
   componentDidMount() {
     (async () => {
       await Font.loadAsync({
-        'cutive-mono-regular': require('../assets/fonts/CutiveMono-Regular.ttf'),
+        'Source Code Pro': require('../assets/fonts/SourceCodePro-Light.ttf'),
       });
       this.setState({ fontLoaded: true });
     })();
@@ -75,7 +75,7 @@ export default class WelcomeScreen extends React.Component {
         {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
         {props.image2 ? <Image style={[styles.image, {resizeMode: props.image2ResizeMode,}]} source={props.image2} /> : null }
         {props.key === "welcome-4" ? 
-        <Text style={[styles.button, { fontFamily: 'cutive-mono-regular' }]} 
+        <Text style={[styles.button, { fontFamily: 'Source Code Pro' }]} 
         onPress={() => {
           this.setState({ viewed: true });
           this.props.navigation.navigate('Bandstands');
