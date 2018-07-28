@@ -20,6 +20,7 @@ const bandStands = [{
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
+    lyrics: 'In the<br />City Side<br />Just arrived',
     visited: false,
     slides: [{
         key: '0',
@@ -70,6 +71,7 @@ const bandStands = [{
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
+    lyrics: 'Growing and grazing fields<br />Used to reside<br />Walked now',
     visited: true,
     slides: [{
         key: '0',
@@ -120,6 +122,7 @@ const bandStands = [{
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
+    lyrics: 'Im returning<br />Back from<br />30 years away',
     visited: false,
     slides: [{
         key: '0',
@@ -163,13 +166,14 @@ const bandStands = [{
       lat: 55.857080, // Steven's work office
       lng: -4.264364,
     },
+    milesFromPrev: 1.4,
+    timeFromPrev: 26,
     song: {
       duration: "3:08",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
-    milesFromPrev: 1.4,
-    timeFromPrev: 26,
+    lyrics: 'Horns<br />Playing<br />Beside',
     visited: false,
     slides: [{
         key: '0',
@@ -213,13 +217,14 @@ const bandStands = [{
       lat: 55.862466, // Queen Street Station, Glasgow
       lng: -4.251156,
     },
+    milesFromPrev: 1.9,
+    timeFromPrev: 38,
     song: {
       duration: "4:11",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
-    milesFromPrev: 1.9,
-    timeFromPrev: 38,
+    lyrics: 'On roaming<br />Sundays<br />I stroll I listen',
     visited: false,
     slides: [{
         key: '0',
@@ -263,13 +268,14 @@ const bandStands = [{
       lat: 55.865584, // Citizen M Glasgow
       lng: -4.256428,
     },
+    milesFromPrev: 1.1,
+    timeFromPrev: 21,
     song: {
       duration: "2:34",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
-    milesFromPrev: 1.1,
-    timeFromPrev: 21,
+    lyrics: 'Oh I do<br />Like<br />To think of<br />Pleasures past',
     visited: false,
     slides: [{
         key: '0',
@@ -313,13 +319,14 @@ const bandStands = [{
       lat: 55.831421, // Langside Hall, Glasgow
       lng: -4.277751,
     },
+    milesFromPrev: 2.7,
+    timeFromPrev: 52,
     song: {
       duration: "2:34",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
-    milesFromPrev: 2.7,
-    timeFromPrev: 52,
+    lyrics: 'On the<br />Sea<br />Side<br />I dip my toe',
     visited: false,
     slides: [{
         key: '0',
@@ -363,13 +370,14 @@ const bandStands = [{
       lat: 55.831073, // Queens Park Monument, Glasgow
       lng: -4.270193,
     },
+    milesFromPrev: 0,
+    timeFromPrev: 0,
     song: {
       duration: "3:08",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
-    milesFromPrev: 0,
-    timeFromPrev: 0,
+    lyrics: 'When the sun goes down<br />Im gloamin.<br />And gleaming',
     visited: false,
     slides: [{
         key: '0',
@@ -383,17 +391,17 @@ const bandStands = [{
       },
       {
         key: '2',
-        image: require('../assets/images/bandstand-01-02.png'),
+        image: require('../assets/images/bandstand-01-02.jpg'),
         imageResizeMode: 'contain',
       },
       {
         key: '3',
-        image: require('../assets/images/bandstand-01-03.png'),
+        image: require('../assets/images/bandstand-01-03.jpg'),
         imageResizeMode: 'contain',
       },
       {
         key: '4',
-        image: require('../assets/images/bandstand-01-04.png'),
+        image: require('../assets/images/bandstand-01-04.jpg'),
         imageResizeMode: 'contain',
       },
     ]
