@@ -56,6 +56,7 @@ export default class App extends React.Component {
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
         'space-mono': require('./assets/fonts/SourceCodePro-Light.ttf'),
+        'space-mono-bold': require('./assets/fonts/SourceCodePro-Medium.ttf'),
       }),
     ]);
   };
