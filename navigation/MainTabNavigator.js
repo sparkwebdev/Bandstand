@@ -8,6 +8,7 @@ import LocationsScreen from '../screens/LocationsScreen';
 import BandstandsScreen from '../screens/BandstandsScreen';
 import BandstandScreen from '../screens/BandstandScreen';
 import PlaylistScreen from '../screens/PlaylistScreen';
+import EventsScreen from '../screens/EventsScreen';
 
 const WelcomeStack = createStackNavigator({
   Welcome: WelcomeScreen,
@@ -79,10 +80,25 @@ PlaylistStack.navigationOptions = {
   ),
 };
 
+const EventsStack = createStackNavigator({
+  Events: EventsScreen,
+});
+
+EventsStack.navigationOptions = {
+  tabBarLabel: 'Events',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-link'}
+    />
+  ),
+};
+
 export default createBottomTabNavigator({
   WelcomeStack,
   BandstandsStack,
   LocationsStack,
   BandstandStack,
   PlaylistStack,
+  EventsStack,
 });
