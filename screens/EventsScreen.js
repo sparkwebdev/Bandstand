@@ -19,6 +19,14 @@ export default class SettingsScreen extends React.Component {
       <ScrollView style={styles.container}>
         <MonoTextBold style={styles.title}>Events</MonoTextBold>
         <View style={styles.paragraph}>
+          <MonoTextBold style={styles.strong}>Sat 1st Sept, 3pm</MonoTextBold>
+          <MonoText>
+            site of Portobello Prom’s old bandstand (Community Garden),{"\n"}
+            John Street{"\n"}
+            Edinburgh EH15 2EB
+          </MonoText>
+        </View>
+        <View style={styles.paragraph}>
           <MonoTextBold style={styles.strong}>Weds 5th Sept, 8pm</MonoTextBold>
           <MonoText>
             The Skylark, 243 Portobello High Street,{"\n"}
@@ -35,16 +43,6 @@ export default class SettingsScreen extends React.Component {
             Princes Street Gardens,{"\n"}
             Edinburgh EH2 2HG{"\n"}
             (live performances from Ross Whyte & Portobello Community Choir)
-          </MonoText>
-        </View>
-        <View style={styles.paragraph}>
-          <MonoTextBold style={styles.strong}>Weds 5th Sept, 8pm</MonoTextBold>
-          <MonoText>
-            The Skylark, 243 Portobello High Street,{"\n"}
-            Edinburgh EH15 2AW{"\n"}
-            (livemix from Ross Whyte with recordings of the composition together
-            with collected archive sound and film to accompany Bandstand Project
-            exhibition)
           </MonoText>
         </View>
         <View style={styles.paragraph}>
