@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
-import Expo, { WebBrowser } from "expo";
+
+import NavigationHelpers from "../helpers/NavigationHelpers";
 
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
@@ -8,10 +9,6 @@ import { MonoTextBold } from "../components/StyledTextBold";
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
     header: null
-  };
-
-  _handleLinkPress = () => {
-    WebBrowser.openBrowserAsync("http://www.artwalkporty.co.uk");
   };
 
   render() {
@@ -50,7 +47,12 @@ export default class SettingsScreen extends React.Component {
             You can also download a copy of the event newspaper from our
             website:
           </MonoText>
-          <MonoTextBold style={styles.link} onPress={this._handleLinkPress}>
+          <MonoTextBold
+            style={styles.link}
+            onPress={() =>
+              NavigationHelpers.openWebPage("http://www.artwalkporty.co.uk")
+            }
+          >
             artwalkporty.co.uk
           </MonoTextBold>
         </View>
