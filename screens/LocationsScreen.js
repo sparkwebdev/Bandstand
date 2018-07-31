@@ -71,7 +71,7 @@ export default class LocationsScreen extends React.Component {
     };
   }
 
-  async getKey() {
+  async getVisited() {
     try {
       const value = await AsyncStorage.getItem('@VisitedStore:key');
       let visited = JSON.parse(value);
@@ -91,7 +91,7 @@ export default class LocationsScreen extends React.Component {
   }
 
   componentWillMount() {
-    this.getKey();
+    this.getVisited();
     this.index = 0;
     this.animation = new Animated.Value(0);
   }

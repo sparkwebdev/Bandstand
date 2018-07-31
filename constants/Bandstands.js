@@ -13,15 +13,14 @@ const bandStands = [{
       lat: 55.833428, // Steven's home office
       lng: -4.281125,
     },
-    milesFromPrev: 1,
-    timeFromPrev: 21,
+    milesToNext: 1,
+    timeToNext: 21,
     song: {
       duration: "4:18",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
     lyrics: 'In the<br />City Side<br />Just arrived',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -64,8 +63,8 @@ const bandStands = [{
       lat: 55.833976, // Crossmyloof train station
       lng: -4.284329,
     },
-    milesFromPrev: 2.6,
-    timeFromPrev: 50,
+    milesToNext: 2.6,
+    timeToNext: 50,
     song: {
       duration: "4:11",
       sound: require('../assets/audio/02.mp3'),
@@ -115,15 +114,14 @@ const bandStands = [{
       lat: 55.859112,  // Central Train Station
       lng: -4.258109,
     },
-    milesFromPrev: 4.4,
-    timeFromPrev: 87,
+    milesToNext: 4.4,
+    timeToNext: 87,
     song: {
       duration: "2:34",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
     lyrics: 'Im returning<br />Back from<br />30 years away',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-02-00.jpg'),
@@ -162,19 +160,18 @@ const bandStands = [{
       lat: 55.975364,
       lng: -3.192939,
     },
-    coords: {
+    coordsTest: {
       lat: 55.857080, // Steven's work office
       lng: -4.264364,
     },
-    milesFromPrev: 1.4,
-    timeFromPrev: 26,
+    milesToNext: 1.4,
+    timeToNext: 26,
     song: {
       duration: "3:08",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
     lyrics: 'Horns<br />Playing<br />Beside',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -217,15 +214,14 @@ const bandStands = [{
       lat: 55.862466, // Queen Street Station, Glasgow
       lng: -4.251156,
     },
-    milesFromPrev: 1.9,
-    timeFromPrev: 38,
+    milesToNext: 1.9,
+    timeToNext: 38,
     song: {
       duration: "4:11",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
     lyrics: 'On roaming<br />Sundays<br />I stroll I listen',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -261,22 +257,21 @@ const bandStands = [{
     description: "Many of the buildings from the 1908 Scottish National Exhibition held in Saughton Park were moved to Marine Gardens at Seafield (the Lothian Buses depot now on the previous site).  Marine Gardens was in operation from 1909 until 1915.",
     image: require('../assets/images/bandstand-02.jpg'),
     coords: {
-      lat: 55.864966,
-      lng: -4.254369,
+      lat: 55.961963,
+      lng: -3.125264
     },
     coordsTest: {
       lat: 55.865584, // Citizen M Glasgow
       lng: -4.256428,
     },
-    milesFromPrev: 1.1,
-    timeFromPrev: 21,
+    milesToNext: 1.1,
+    timeToNext: 21,
     song: {
       duration: "2:34",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
     lyrics: 'Oh I do<br />Like<br />To think of<br />Pleasures past',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -319,15 +314,14 @@ const bandStands = [{
       lat: 55.831421, // Langside Hall, Glasgow
       lng: -4.277751,
     },
-    milesFromPrev: 2.7,
-    timeFromPrev: 52,
+    milesToNext: 2.7,
+    timeToNext: 52,
     song: {
       duration: "2:34",
       sound: require('../assets/audio/01.mp3'),
       loop: require('../assets/audio/choir-01.mp3'),
     },
     lyrics: 'On the<br />Sea<br />Side<br />I dip my toe',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -370,15 +364,14 @@ const bandStands = [{
       lat: 55.831073, // Queens Park Monument, Glasgow
       lng: -4.270193,
     },
-    milesFromPrev: 0,
-    timeFromPrev: 0,
+    milesToNext: 0,
+    timeToNext: 0,
     song: {
       duration: "3:08",
       sound: require('../assets/audio/02.mp3'),
       loop: require('../assets/audio/choir-02.mp3'),
     },
     lyrics: 'When the sun goes down<br />Im gloamin.<br />And gleaming',
-    visited: false,
     slides: [{
         key: '0',
         image: require('../assets/images/bandstand-01-00.jpg'),
@@ -391,17 +384,17 @@ const bandStands = [{
       },
       {
         key: '2',
-        image: require('../assets/images/bandstand-01-02.jpg'),
+        image: require('../assets/images/bandstand-01-02.png'),
         imageResizeMode: 'contain',
       },
       {
         key: '3',
-        image: require('../assets/images/bandstand-01-03.jpg'),
+        image: require('../assets/images/bandstand-01-03.png'),
         imageResizeMode: 'contain',
       },
       {
         key: '4',
-        image: require('../assets/images/bandstand-01-04.jpg'),
+        image: require('../assets/images/bandstand-01-04.png'),
         imageResizeMode: 'contain',
       },
     ]

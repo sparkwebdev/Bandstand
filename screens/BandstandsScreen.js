@@ -28,10 +28,10 @@ export default class BandstandsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.getKey();
+    this.getVisited();
   }
   
-  async getKey() {
+  async getVisited() {
     try {
       const value = await AsyncStorage.getItem('@VisitedStore:key');
       let visited = JSON.parse(value);
@@ -89,15 +89,14 @@ export default class BandstandsScreen extends React.Component {
                   </View>
                 </View>
               </TouchableWithoutFeedback>
-              <View style={[{paddingBottom: (9*(item.milesFromPrev + 1))}]}>
-                {/* <Ionicons style={styles.ionicon} name="ios-arrow-up" size={10} color="#ddd" /> */}
+              <View style={[{paddingBottom: (9*(item.milesToNext + 1))}]}>
                 <Text style={[styles.distance]}>
-                  {item.milesFromPrev !== 0 ? item.milesFromPrev + ' mile' : null}
-                  {item.milesFromPrev !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
-                  {item.timeFromPrev !== 0 ? ' ~ ' + item.timeFromPrev + ' min' : null}
-                  {item.milesFromPrev !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
+                  {item.milesToNext !== 0 ? item.milesToNext + ' mile' : null}
+                  {item.milesToNext !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
+                  {item.timeToNext !== 0 ? ' ~ ' + item.timeToNext + ' min' : null}
+                  {item.milesToNext !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
                 </Text>
-                {item.milesFromPrev !== 0 ? 
+                {item.milesToNext !== 0 ? 
                   <Ionicons style={styles.ionicon} name="ios-arrow-down" size={10} color="#ddd" />
                 : null}
               </View>

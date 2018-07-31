@@ -8,7 +8,7 @@ export default class App extends React.Component {
     isLoadingComplete: false,
   };
 
-  async saveKey(value) {
+  async saveVisited(value) {
     try {
       await AsyncStorage.setItem('@VisitedStore:key', value);
     } catch (error) {
@@ -17,10 +17,10 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    let visited = [1, 3, 5];
+    let visited = [1, 3, 5]; // Test Data
     Notifications.setBadgeNumberAsync(visited.length);
     const visitedStr = JSON.stringify(visited);
-    this.saveKey(visitedStr);
+    this.saveVisited(visitedStr);
   }
 
   render() {

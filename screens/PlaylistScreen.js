@@ -56,7 +56,7 @@ export default class PlaylistScreen extends React.Component {
 
 
   componentDidMount() {
-    this.getKey();
+    this.getVisited();
     Audio.setIsEnabledAsync(true);
     // Audio.setAudioModeAsync({
     //   allowsRecordingIOS: true,
@@ -80,7 +80,7 @@ export default class PlaylistScreen extends React.Component {
     console.log("PERMISSION:", JSON.stringify(this.state.haveRecordingPermissions));
   };
   
-  async getKey() {
+  async getVisited() {
     try {
       const value = await AsyncStorage.getItem('@VisitedStore:key');
       let visited = JSON.parse(value);

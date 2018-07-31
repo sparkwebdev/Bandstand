@@ -44,7 +44,7 @@ export default class BandstandScreen extends React.Component {
 
 
   componentDidMount() {
-    this.getKey();
+    this.getVisited();
     (async () => {
       await Font.loadAsync({
         'Source Code Pro': require('../assets/fonts/SourceCodePro-Light.ttf'),
@@ -123,7 +123,7 @@ export default class BandstandScreen extends React.Component {
     });
     currentVisited.push(id);
     console.log(JSON.stringify(currentVisited));
-    this.saveKey(JSON.stringify(currentVisited));
+    this.saveVisited(JSON.stringify(currentVisited));
   }
 
   setSelectBandstand = (id) => {
@@ -132,7 +132,7 @@ export default class BandstandScreen extends React.Component {
     });
   }
 
-  async saveKey(value) {
+  async saveVisited(value) {
     try {
       await AsyncStorage.setItem('@VisitedStore:key', value);
     } catch (error) {
@@ -189,7 +189,7 @@ export default class BandstandScreen extends React.Component {
     return [distKm.toFixed(2), distMiles.toFixed(1)];
   }
   
-  async getKey() {
+  async getVisited() {
     try {
       const value = await AsyncStorage.getItem('@VisitedStore:key');
       let visited = JSON.parse(value);
