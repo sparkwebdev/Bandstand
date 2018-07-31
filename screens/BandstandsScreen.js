@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, TouchableWithoutFeedback, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
-import { Asset } from 'expo';
+import Expo, { Font, Asset } from "expo";
 import { Ionicons } from '@expo/vector-icons';
 import bandStands from '../constants/Bandstands';
 
@@ -120,15 +120,15 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   route: {
-    // borderLeftColor: "#7f47dd",
-    // borderLeftWidth: 18,
     marginLeft: -25,
+  },
+  touchable: {
+    fontFamily: "Source Code Pro",
   },
   box: {
     backgroundColor: '#fff',
     borderColor: "#62d3a2",
     borderWidth: 2,
-    //marginBottom: 20,
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
@@ -140,27 +140,27 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   description: {
-    //Top: 10,
-    //marginBottom: 10,
     paddingTop: 15,
     paddingRight: 10,
     paddingBottom: 15,
     paddingLeft: 10,
     borderLeftColor: "#fff",
     borderLeftWidth: 10,
-    //width: "70%"
   },
   title: {
     fontWeight: 'bold',
     fontSize: 14,
+    fontFamily: "Source Code Pro",
   },
   subtitle: {
     fontWeight: 'normal',
     fontSize: 12,
+    fontFamily: "Source Code Pro",
   },
   dates: {
     marginTop: 3,
     marginBottom: 3,
+    fontFamily: "Source Code Pro",
   },
   visited: {
     borderLeftColor: "#62d3a2",
