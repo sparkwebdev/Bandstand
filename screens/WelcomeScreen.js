@@ -1,29 +1,23 @@
 import React from "react";
-import { View, StyleSheet, Text, Image, TouchableHighlight } from "react-native";
-import Expo, { Font } from "expo";
+import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+
+import NavigationHelpers from '../helpers/NavigationHelpers';
+
+import { MonoText } from "../components/StyledText";
+import { MonoTextBold } from "../components/StyledTextBold";
 
 export default class WelcomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      viewed: false,
-      fontLoaded: false
+      beenWelcomed: false
     };
   }
 
   static navigationOptions = {
     header: null
   };
-
-  componentDidMount() {
-    (async () => {
-      await Font.loadAsync({
-        "Source Code Pro": require("../assets/fonts/SourceCodePro-Light.ttf")
-      });
-      this.setState({ fontLoaded: true });
-    })();
-  }
 
   _renderItem = props => (
     <View
@@ -44,9 +38,9 @@ export default class WelcomeScreen extends React.Component {
   );
 
   render() {
-    return !this.state.fontLoaded ? null : (
+    return (
       <AppIntroSlider
-        slides={this.state.viewed ? slides2 : slides1}
+        slides={this.state.beenWelcomed ? slides1.slice(3, 4) : slides1 }
         renderItem={this._renderItem}
         dotColor="rgb(115,63,216)"
         activeDotColor="rgb(255,255,0)"
@@ -85,7 +79,6 @@ const styles = StyleSheet.create({
     display: "flex"
   },
   text: {
-    fontFamily: "Source Code Pro",
     fontSize: 18,
     lineHeight: 28,
     textAlign: "center"
@@ -102,6 +95,11 @@ const styles = StyleSheet.create({
     color: "#7f47dd",
     fontSize: 16,
     lineHeight: 21
+  },
+  link: {
+    color: "#7f47dd",
+    fontSize: 20,
+    marginBottom: 15
   },
   logos: {
     width: 280,
@@ -150,11 +148,11 @@ const slides1 = [
     content: (
       <View style={[styles.screenContainer, styles.screenContainerBottom]}>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textLarge]}>
+          <MonoTextBold style={[styles.text, styles.textLarge]}>
             as i walk{"\n"}
             i glimpse{"\n"}
             i hear
-          </Text>
+          </MonoTextBold>
         </View>
       </View>
     )
@@ -170,25 +168,25 @@ const slides1 = [
     content: (
       <View style={styles.screenContainer}>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.text01]}>
+          <MonoTextBold style={[styles.text, styles.text01]}>
             8 locations of bandstand soundspaces across edinburgh and
             musselburgh, with accompanied sound, imagery and text
-          </Text>
+          </MonoTextBold>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
+          <MonoText style={[styles.text, styles.textSmall]}>
             Marking the spaces of where bandstands once stood, and some that
             still do, this project brings together a sense of discovery through
             sound, to replicate the sense of hearing music playing at a
             bandstand in a public park.
-          </Text>
+          </MonoText>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
+          <MonoText style={[styles.text, styles.textSmall]}>
             Each location contains a marker representing as near as possible the
             location of the actual bandstand. Once you visit please use the QR
             code on the marker to find out more about that site.
-          </Text>
+          </MonoText>
         </View>
       </View>
     )
@@ -204,25 +202,25 @@ const slides1 = [
     content: (
       <View style={styles.screenContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
+          <MonoTextBold style={styles.text}>
             Commissioned and conceived by Art Walk Projects
-          </Text>
+          </MonoTextBold>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
+          <MonoText style={[styles.text, styles.textSmall]}>
             composition: ross whyte{"\n"}
             performed by: portobello community choir{"\n"}
             curation+lyrics: rosy naylor{"\n"}
             app creation: steven park
-          </Text>
+          </MonoText>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
+          <MonoText style={[styles.text, styles.textSmall]}>
             Ross Whyte is a Glasgow based composer and sound artist. His
             composition is inspired by the early 1900s era of seaside
             entertainment, relating to Portobello and of the work of Harry
             Lauder.
-          </Text>
+          </MonoText>
         </View>
       </View>
     )
@@ -238,32 +236,36 @@ const slides1 = [
     content: (
       <View style={styles.screenContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
+          <MonoTextBold style={styles.text}>
             This project is sponsored by The Royal Edinburgh Military Tattoo and
             The City of Edinburgh Council.
-          </Text>
+          </MonoTextBold>
           <Image
             style={styles.logos}
             source={require("../assets/images/screens/additional/sponsor-logos.jpg")}
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>Contacts:</Text>
+          <MonoTextBold style={styles.text}>Contacts:</MonoTextBold>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
-            www.artwalkprojects.co.uk{"\n"}
-            www.rosswhyte.com{"\n"}
-            www.stevenpark.co.uk
-          </Text>
+          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.artwalkprojects.co.uk')}>
+            artwalkprojects.co.uk
+          </MonoTextBold>
+          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.rosswhyte.com')}>
+          rosswhyte.com
+          </MonoTextBold>
+          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.stevenpark.co.uk')}>
+          stevenpark.co.uk
+          </MonoTextBold>
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>Enquiries:</Text>
+          <MonoTextBold style={styles.text}>Enquiries:</MonoTextBold>
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textSmall]}>
+          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openMailto('mailto:rosy@artwalkporty.co.uk')}>
             rosy@artwalkporty.co.uk
-          </Text>
+          </MonoTextBold>
         </View>
       </View>
     )
@@ -273,27 +275,23 @@ const slides1 = [
     content: (
       <View style={styles.screenContainer}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>
+          <MonoTextBold style={styles.text}>
             Get Started
-          </Text>
+          </MonoTextBold>
         </View>
         <View style={styles.textContainer}>
           <Image
             style={styles.headphones}
             source={require("../assets/images/screens/additional/headphones.png")}
           />
-          <Text style={[styles.text, styles.textBold]}>
-            wear your headphones to start
-          </Text>
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, styles.textBold]}>
-          listen to the immersive sound as you walk around each park, to help find each bandstand zone
-          </Text>
+          <MonoText style={[styles.text, styles.textBold]}>
+            wear your headphones to start{"\n"}
+            listen to the immersive sound as you walk around each park, to help find each bandstand zone
+          </MonoText>
         </View>
         <TouchableHighlight
           onPress={() => {
-            //this.setState({ viewed: true });
+            //this.setState({ beenWelcomed: true });
             this.props.navigation.navigate("Bandstands");
           }}
         >
@@ -304,12 +302,5 @@ const slides1 = [
         </TouchableHighlight>
       </View>
     )
-  }
-];
-const slides2 = [
-  {
-    key: "welcome-2"
-    // image: require('../assets/images/screens/welcome-02.png'),
-    // imageResizeMode: 'contain',
   }
 ];
