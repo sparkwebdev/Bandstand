@@ -22,7 +22,7 @@ class Icon {
   }
 }
 
-const ICON_MARKER = new Icon(require('../assets/images/icon_bandstand_alt_3.png'), 34, 34);
+const ICON_MARKER = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 
 //import MapView from "react-native-maps";
