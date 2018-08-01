@@ -13,7 +13,7 @@ const bandStands = [{
       lat: 55.833428, // Steven's home office
       lng: -4.281125,
     },
-    milesToNext: 1,
+    kmToNext: 1.6,
     timeToNext: 21,
     song: {
       duration: "4:18",
@@ -63,7 +63,7 @@ const bandStands = [{
       lat: 55.833976, // Crossmyloof train station
       lng: -4.284329,
     },
-    milesToNext: 2.6,
+    kmToNext: 4.2,
     timeToNext: 50,
     song: {
       duration: "4:11",
@@ -114,7 +114,7 @@ const bandStands = [{
       lat: 55.859112,  // Central Train Station
       lng: -4.258109,
     },
-    milesToNext: 4.4,
+    kmToNext: 7.1,
     timeToNext: 87,
     song: {
       duration: "2:34",
@@ -164,7 +164,7 @@ const bandStands = [{
       lat: 55.857080, // Steven's work office
       lng: -4.264364,
     },
-    milesToNext: 1.4,
+    kmToNext: 2.5,
     timeToNext: 26,
     song: {
       duration: "3:08",
@@ -214,7 +214,7 @@ const bandStands = [{
       lat: 55.862466, // Queen Street Station, Glasgow
       lng: -4.251156,
     },
-    milesToNext: 1.9,
+    kmToNext: 3.1,
     timeToNext: 38,
     song: {
       duration: "4:11",
@@ -264,7 +264,7 @@ const bandStands = [{
       lat: 55.865584, // Citizen M Glasgow
       lng: -4.256428,
     },
-    milesToNext: 1.1,
+    kmToNext: 1.8,
     timeToNext: 21,
     song: {
       duration: "2:34",
@@ -314,7 +314,7 @@ const bandStands = [{
       lat: 55.831421, // Langside Hall, Glasgow
       lng: -4.277751,
     },
-    milesToNext: 2.7,
+    kmToNext: 4.4,
     timeToNext: 52,
     song: {
       duration: "2:34",
@@ -364,7 +364,7 @@ const bandStands = [{
       lat: 55.831073, // Queens Park Monument, Glasgow
       lng: -4.270193,
     },
-    milesToNext: 0,
+    kmToNext: 0,
     timeToNext: 0,
     song: {
       duration: "3:08",
@@ -401,6 +401,4 @@ const bandStands = [{
   }
 ];
 
-export default {
-  bandStands
-};
+export default bandStands;
