@@ -1,6 +1,7 @@
 import React from "react";
 import { ScrollView, View, StyleSheet } from "react-native";
 
+import Colours from '../constants/Colors';
 import NavigationHelpers from "../helpers/NavigationHelpers";
 
 import { MonoText } from "../components/StyledText";
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   link: {
-    color: "#7f47dd",
+    color: Colours.brandPurple,
     fontSize: 20
   },
   paragraph: {
