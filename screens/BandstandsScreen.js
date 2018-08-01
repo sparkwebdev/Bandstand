@@ -1,21 +1,11 @@
 import React from 'react';
-import { ScrollView, TouchableWithoutFeedback, View, Text, Image, StyleSheet, AsyncStorage } from 'react-native';
-import Expo, { Font, Asset } from "expo";
-import { Ionicons } from '@expo/vector-icons';
+import { ScrollView, TouchableWithoutFeedback, View, Image, StyleSheet, AsyncStorage } from 'react-native';
+
+import Colours from '../constants/Colors';
 import bandStands from '../constants/Bandstands';
 
-class Icon {
-  constructor(module, width, height) {
-    this.module = module;
-    this.width = width;
-    this.height = height;
-    Asset.fromModule(this.module).downloadAsync();
-  }
-}
-
-const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
-const ICON_BANDSTAND_ALT = new Icon(require('../assets/images/icon_bandstand_alt.png'), 34, 34);
-const ICON_BANDSTAND_ALT_2 = new Icon(require('../assets/images/icon_bandstand_alt_2.png'), 34, 34);
+import { MonoText } from "../components/StyledText";
+import { MonoTextBold } from "../components/StyledTextBold";
 import BandstandDistance from "../components/BandstandDistance";
 
 export default class BandstandsScreen extends React.Component {
@@ -25,7 +15,6 @@ export default class BandstandsScreen extends React.Component {
 
   state = {
     visited: null,
-    sound: null
   }
 
   componentDidMount() {
@@ -51,41 +40,31 @@ export default class BandstandsScreen extends React.Component {
     return false;
   }
 
-  _goToBandStand = ({ type, data }) => {
-    this.setQrState;
-    if (data) {
-      let id = data.substr(data.length - 1);
-      this.setFoundBandstand(id);
-      alert('Success!');
-    } else {
-      alert('Sorry not found');
-    }
-  }
-
   render() {
     return (
       <ScrollView style={styles.container}>
         {
-          bandStands.bandStands.map((item, index) => (
-            <View key={index} style={[styles.route, !this.hasVisited(item.id) ? styles.routenotvisited : null, item.id == 1 ? {paddingTop: 60} : null, item.id == bandStands.bandStands.length ? {paddingBottom: 60} : null]}>
+          bandStands.map((item, index) => (
+            <View key={index} style={[styles.route, item.id == 1 ? {paddingTop: 60} : null, item.id == bandStands.length ? {paddingBottom: 60} : null]}>
               <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('Bandstand', {
                   itemId: item.id,
                 })}>
-                <View style={[{paddingBottom: (8*(item.milesFromPrev + 1))}]}>
+                <View style={[{paddingBottom: (9*(item.kmToNext + 3))}]}>
                   <Image style={styles.marker}
-                    source={this.hasVisited(item.id) ? ICON_BANDSTAND_ALT.module : ICON_BANDSTAND_ALT_2.module}
+                    source={this.hasVisited(item.id) ? require('../assets/images/icon_bandstand_alt.png') : require('../assets/images/icon_bandstand_alt_2.png')}
                   />
-                  <View style={[styles.box, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
-                    <View style={[styles.description, this.hasVisited(item.id) ? styles.visited : null]}>
-                      <Text style={styles.title}>
-                        {item.title}<Text style={styles.subtitle}>, {item.location}</Text>
-                      </Text>
-                      <Text style={[styles.subtitle, styles.dates]}>
-                        {item.dates}
-                      </Text>
-                      <Text style={styles.subtitle}>
-                        {item.description}
-                      </Text>
+                  <View style={[styles.card, (!this.hasVisited(item.id)) ? styles.notvisited : null]}>
+                    <View style={[styles.cardInner, this.hasVisited(item.id) ? styles.visited : null]}>
+                      <MonoTextBold style={styles.title}>
+                        {item.title}
+                      </MonoTextBold>
+                      <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
+                      <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
+                      <View style={styles.actions}>
+                      <MonoTextBold style={styles.link}>More Info</MonoTextBold>
+                      <MonoTextBold style={styles.link}>Link</MonoTextBold>
+                      </View>
+                      {/* <MonoText style={styles.description}>{item.description}</MonoText> */}
                     </View>
                   </View>
                 </View>
@@ -108,19 +87,16 @@ const styles = StyleSheet.create({
     marginLeft: 23,
     paddingLeft: 25,
     paddingRight: 15,
-    borderLeftColor: "#7f47dd",
+    borderLeftColor: Colours.brandPurple,
     borderLeftWidth: 18,
     overflow: 'visible',
   },
   route: {
     marginLeft: -25,
   },
-  touchable: {
-    fontFamily: "Source Code Pro",
-  },
-  box: {
+  card: {
     backgroundColor: '#fff',
-    borderColor: "#62d3a2",
+    borderColor: Colours.brandGreen,
     borderWidth: 2,
     flex: 1,
     display: 'flex',
@@ -128,50 +104,48 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginLeft: 8
   },
-  notvisited: {
-    borderColor: "#888",
-    opacity: 0.5,
-  },
-  description: {
+  cardInner: {
     paddingTop: 15,
-    paddingRight: 10,
+    paddingRight: 15,
     paddingBottom: 15,
-    paddingLeft: 10,
+    paddingLeft: 15,
     borderLeftColor: "#fff",
     borderLeftWidth: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    fontFamily: "Source Code Pro",
-  },
-  subtitle: {
-    fontWeight: 'normal',
-    fontSize: 12,
-    fontFamily: "Source Code Pro",
-  },
-  dates: {
-    marginTop: 3,
-    marginBottom: 3,
-    fontFamily: "Source Code Pro",
+    width: '100%',
   },
   visited: {
-    borderLeftColor: "#62d3a2",
+    borderLeftColor: Colours.brandGreen,
+  },
+  notvisited: {
+    borderColor: Colours.tone40,
+  },
+  title: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  subtitle: {
+    fontSize: 15,
+  },
+  dates: {
+    fontSize: 14,
+    marginTop: 5,
+    marginBottom: 10,
   },
   actions: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    //width: "30%",
-    justifyContent: "flex-end"
+    justifyContent: "space-between"
+  },
+  link: {
+    color: Colours.brandPurple,
+    fontSize: 15
   },
   marker: {
     width: 34,
     height: 34,
     position: "absolute",
     left: -26,
+    top: 14,
   },
 });
