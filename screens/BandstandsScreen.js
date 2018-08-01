@@ -16,6 +16,7 @@ class Icon {
 const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
 const ICON_BANDSTAND_ALT = new Icon(require('../assets/images/icon_bandstand_alt.png'), 34, 34);
 const ICON_BANDSTAND_ALT_2 = new Icon(require('../assets/images/icon_bandstand_alt_2.png'), 34, 34);
+import BandstandDistance from "../components/BandstandDistance";
 
 export default class BandstandsScreen extends React.Component {
   static navigationOptions = {
@@ -89,16 +90,8 @@ export default class BandstandsScreen extends React.Component {
                   </View>
                 </View>
               </TouchableWithoutFeedback>
-              <View style={[{paddingBottom: (9*(item.milesToNext + 1))}]}>
-                <Text style={[styles.distance]}>
-                  {item.milesToNext !== 0 ? item.milesToNext + ' mile' : null}
-                  {item.milesToNext !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
-                  {item.timeToNext !== 0 ? ' ~ ' + item.timeToNext + ' min' : null}
-                  {item.milesToNext !== 1 && item.id != bandStands.bandStands.length ? 's' : null}
-                </Text>
-                {item.milesToNext !== 0 ? 
-                  <Ionicons style={styles.ionicon} name="ios-arrow-down" size={10} color="#ddd" />
-                : null}
+              <View style={[{paddingBottom: (10*(item.kmToNext + 3))}]}>
+                {item.id !== bandStands.length ? <BandstandDistance kmToNext={item.kmToNext} timeToNext={item.timeToNext} /> : null}
               </View>
             </View>
           ))
@@ -180,20 +173,5 @@ const styles = StyleSheet.create({
     height: 34,
     position: "absolute",
     left: -26,
-    top: 12,
-  },
-  icon: {
-    width: 34,
-    height: 34,
-    marginLeft: 10,
-  },
-  distance: {
-    fontStyle: 'italic',
-    color: "#aaa",
-    fontSize: 12,
-    paddingLeft: 10,
-  },
-  ionicon: {
-    marginLeft: 10,
   },
 });
