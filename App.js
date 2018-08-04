@@ -6,21 +6,22 @@ import AppNavigator from './navigation/AppNavigator';
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    visited: []
   };
 
-  async saveVisited(value) {
-    try {
-      await AsyncStorage.setItem('@VisitedStore:key', value);
-    } catch (error) {
-      console.log("Error saving data" + error);
-    }
-  }
+  // saveVisited(value) {
+  //     AsyncStorage.setItem("visited", value);
+  //     this.setState({"visited": value});
+  // }
 
   componentDidMount() {
-    let visited = [1, 3, 5]; // Test Data
-    Notifications.setBadgeNumberAsync(visited.length);
+    visited = [2,3,5];
     const visitedStr = JSON.stringify(visited);
-    this.saveVisited(visitedStr);
+    AsyncStorage.setItem("visited", visitedStr);
+    AsyncStorage.getItem("visited").then((value) => {
+        this.setState({"visited": value});
+    }).done();
+    // Notifications.setBadgeNumberAsync(visited.length);
   }
 
   render() {
@@ -34,7 +35,7 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
+        <View style={styles.container} visited={this.state.visited}>
           {Platform.OS === 'ios' && <StatusBar hidden />}
           <AppNavigator />
         </View>
@@ -51,10 +52,11 @@ export default class App extends React.Component {
         require('./assets/images/screens/welcome-02.png'),
         require('./assets/images/screens/welcome-03.png'),
         require('./assets/images/screens/welcome-04.png'),
+        require('./assets/images/icon_bandstand_alt.png'),
+        require('./assets/images/icon_bandstand_alt_2.png'),
       ]),
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
+        ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
         'space-mono': require('./assets/fonts/SourceCodePro-Light.ttf'),
         'space-mono-bold': require('./assets/fonts/SourceCodePro-Medium.ttf'),
       }),

@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 
+import Colours from '../constants/Colors';
 import NavigationHelpers from '../helpers/NavigationHelpers';
 
 import { MonoText } from "../components/StyledText";
@@ -92,12 +93,12 @@ const styles = StyleSheet.create({
     lineHeight: 21
   },
   textBold: {
-    color: "#7f47dd",
+    color: Colours.brandPurple,
     fontSize: 16,
     lineHeight: 21
   },
   link: {
-    color: "#7f47dd",
+    color: Colours.brandPurple,
     fontSize: 20,
     marginBottom: 15
   },

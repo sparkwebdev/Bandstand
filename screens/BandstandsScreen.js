@@ -1,18 +1,10 @@
 import React from "react";
-import {
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
-  Image,
-  StyleSheet,
-  AsyncStorage
-} from "react-native";
+import { ScrollView, View, Image, StyleSheet } from "react-native";
 
 import Colours from "../constants/Colors";
 import bandStands from "../constants/Bandstands";
 
-import { MonoText } from "../components/StyledText";
-import { MonoTextBold } from "../components/StyledTextBold";
+import BandstandCard from "../components/BandstandCard";
 import BandstandDistance from "../components/BandstandDistance";
 
 export default class BandstandsScreen extends React.Component {
@@ -20,101 +12,47 @@ export default class BandstandsScreen extends React.Component {
     header: null
   };
 
-  state = {
-    visited: null
-  };
-
-  componentDidMount() {
-    this.getVisited();
-  }
-
-  async getVisited() {
-    try {
-      const value = await AsyncStorage.getItem("@VisitedStore:key");
-      let visited = JSON.parse(value);
-      this.setState({ visited: visited });
-    } catch (error) {
-      console.log("Error retrieving data" + error);
-    }
-  }
-
-  hasVisited(id) {
-    if (this.state.visited !== null) {
-      if (this.state.visited.includes(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   render() {
     return (
-      <ScrollView style={styles.container}>
-        {bandStands.map((item, index) => (
-          <View
-            key={index}
-            style={[
-              styles.route,
-              item.id == 1 ? { paddingTop: 60 } : null,
-              item.id == bandStands.length ? { paddingBottom: 60 } : null
-            ]}
-          >
-            <View style={[{ paddingBottom: 9 * (item.kmToNext + 3) }]}>
-              <Image
-                style={styles.marker}
-                source={
-                  this.hasVisited(item.id)
-                    ? require("../assets/images/icon_bandstand_alt.png")
-                    : require("../assets/images/icon_bandstand_alt_2.png")
-                }
-              />
-              <TouchableWithoutFeedback
-                onPress={() =>
-                  this.props.navigation.navigate("Bandstand", {
-                    itemId: item.id
-                  })
-                }
+      <ScrollView style={styles.container} visited={visited}>
+        {
+          bandStands.map((item, index) => {
+            let hasVisited = visited.includes(item.id);
+            return (
+              <View
+                key={index}
+                style={[
+                  styles.route,
+                  item.id == 1 ? { paddingTop: 60 } : null,
+                  item.id == bandStands.length ? { paddingBottom: 60 } : null
+                ]}
               >
-                <View
-                  style={[
-                    styles.card,
-                    !this.hasVisited(item.id) ? styles.notvisited : null
-                  ]}
-                >
-                  <View
-                    style={[
-                      styles.cardInner,
-                      this.hasVisited(item.id) ? styles.visited : null
-                    ]}
-                  >
-                    <MonoTextBold style={styles.title}>
-                      {item.title}
-                    </MonoTextBold>
-                    <MonoTextBold style={styles.subtitle}>
-                      {item.location}
-                    </MonoTextBold>
-                    <MonoTextBold style={styles.dates}>
-                      {item.dates}
-                    </MonoTextBold>
-                    <View style={styles.actions}>
-                      <MonoTextBold style={styles.link}>More Info</MonoTextBold>
-                      <MonoTextBold style={styles.link}>Link</MonoTextBold>
-                    </View>
-                    {/* <MonoText style={styles.description}>{item.description}</MonoText> */}
-                  </View>
+                <View style={[{ paddingBottom: 9 * (item.kmToNext + 3) }]}>
+                  <Image
+                    style={styles.marker}
+                    source={
+                      hasVisited
+                        ? require("../assets/images/icon_bandstand_alt.png")
+                        : require("../assets/images/icon_bandstand_alt_2.png")
+                    }
+                  />
+                  <BandstandCard
+                    item={item}
+                    hasVisited={hasVisited}
+                  />
                 </View>
-              </TouchableWithoutFeedback>
-            </View>
-            <View style={[{ paddingBottom: 10 * (item.kmToNext + 3) }]}>
-              {item.id !== bandStands.length ? (
-                <BandstandDistance
-                  kmToNext={item.kmToNext}
-                  timeToNext={item.timeToNext}
-                />
-              ) : null}
-            </View>
-          </View>
-        ))}
+                <View style={[{ paddingBottom: 10 * (item.kmToNext + 3) }]}>
+                  {item.id !== bandStands.length ? (
+                    <BandstandDistance
+                      kmToNext={item.kmToNext}
+                      timeToNext={item.timeToNext}
+                    />
+                  ) : null}
+                </View>
+              </View>
+            )
+          })
+        }
       </ScrollView>
     );
   }
@@ -133,53 +71,6 @@ const styles = StyleSheet.create({
   },
   route: {
     marginLeft: -25
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderColor: Colours.brandGreen,
-    borderWidth: 2,
-    flex: 1,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginLeft: 8
-  },
-  cardInner: {
-    paddingTop: 15,
-    paddingRight: 15,
-    paddingBottom: 15,
-    paddingLeft: 15,
-    borderLeftColor: "#fff",
-    borderLeftWidth: 10,
-    width: "100%"
-  },
-  visited: {
-    borderLeftColor: Colours.brandGreen
-  },
-  notvisited: {
-    borderColor: Colours.tone40
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 5
-  },
-  subtitle: {
-    fontSize: 15
-  },
-  dates: {
-    fontSize: 14,
-    marginTop: 5,
-    marginBottom: 10
-  },
-  actions: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  link: {
-    color: Colours.brandPurple,
-    fontSize: 15
   },
   marker: {
     width: 34,

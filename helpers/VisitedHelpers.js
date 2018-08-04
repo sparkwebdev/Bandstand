@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     AsyncStorage
 } from 'react-native';
@@ -22,19 +21,7 @@ async function saveVisited(value) {
     }
 }
 
-function hasVisited(id) {
-    let visited = getVisited();
-    let visitedString = JSON.parse(visited);
-    if (visitedString !== null) {
-        if (visitedString.includes(id)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 module.exports = {
     getVisited  :  getVisited,
     saveVisited :  saveVisited,
-    hasVisited  :  hasVisited,
 };
