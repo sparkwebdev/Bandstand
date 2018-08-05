@@ -8,8 +8,9 @@ import {
 import Colours from "../constants/Colors";
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
+import { withNavigation } from 'react-navigation';
 
-export default class BandstandCard extends React.Component {
+class BandstandCard extends React.Component {
   render() {
     const item = this.props.item;
     const hasVisited = this.props.hasVisited;
@@ -48,6 +49,8 @@ export default class BandstandCard extends React.Component {
     );
   }
 }
+
+export default withNavigation(BandstandCard);
 
 const styles = StyleSheet.create({
   card: {
