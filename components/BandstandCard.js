@@ -5,14 +5,19 @@ import {
   StyleSheet,
 } from "react-native";
 
+import BandstandCardPlayer from "./BandstandCardPlayer";
+
 import Colours from "../constants/Colors";
-import { MonoText } from "../components/StyledText";
-import { MonoTextBold } from "../components/StyledTextBold";
+import { MonoText } from "./StyledText";
+import { MonoTextBold } from "./StyledTextBold";
 
 export default class BandstandCard extends React.Component {
   render() {
     const item = this.props.item;
     const hasVisited = this.props.hasVisited;
+    const hasAudio = this.props.hasAudio;
+    const hasLink = this.props.hasLink;
+    const hasDescription = this.props.hasLink;
     return (
       <TouchableWithoutFeedback
           onPress={() =>
@@ -41,7 +46,15 @@ export default class BandstandCard extends React.Component {
                   <MonoTextBold style={styles.link}>More Info</MonoTextBold>
                   <MonoTextBold style={styles.link}>Link</MonoTextBold>
               </View> */}
-              <MonoText style={styles.description}>{item.description}</MonoText>
+              {hasDescription ? (
+                <MonoText style={styles.description}>{item.description}</MonoText>
+              ) : null}
+              {hasLink ? (
+                <MonoTextBold style={styles.link}>Link</MonoTextBold>
+              ) : null}
+              {hasVisited && hasAudio ? (
+                  <BandstandCardPlayer item={item} />
+              ) : null}
               </View>
           </View>
       </TouchableWithoutFeedback>

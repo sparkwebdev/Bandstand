@@ -152,9 +152,9 @@ export default class LocationsScreen extends React.Component {
             let hasVisited = visited.includes(marker.id);
             return (
               <BandstandCard
+                key={index}
                 item={marker}
                 hasVisited={hasVisited}
-                key={index}
                 style={{ width: CARD_WIDTH }}
               />
             )
