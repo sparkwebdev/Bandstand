@@ -5,15 +5,20 @@ import {
   StyleSheet,
 } from "react-native";
 
+import BandstandCardPlayer from "./BandstandCardPlayer";
+
 import Colours from "../constants/Colors";
-import { MonoText } from "../components/StyledText";
-import { MonoTextBold } from "../components/StyledTextBold";
+import { MonoText } from "./StyledText";
+import { MonoTextBold } from "./StyledTextBold";
 import { withNavigation } from 'react-navigation';
 
 class BandstandCard extends React.Component {
   render() {
     const item = this.props.item;
-    const hasVisited = this.props.hasVisited;
+    const hasVisited = this.props.hasVisited || false;
+    const hasAudio = this.props.hasAudio || false;
+    const hasLink = this.props.hasLink || false;
+    const hasDescription = this.props.hasLink || false;
     return (
       <TouchableWithoutFeedback
           onPress={() =>
@@ -38,11 +43,15 @@ class BandstandCard extends React.Component {
               <MonoTextBold style={styles.title}>{item.title}</MonoTextBold>
               <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
               <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
-              {/* <View style={styles.actions}>
-                  <MonoTextBold style={styles.link}>More Info</MonoTextBold>
-                  <MonoTextBold style={styles.link}>Link</MonoTextBold>
-              </View> */}
-              <MonoText style={styles.description}>{item.description}</MonoText>
+              {hasDescription ? (
+                <MonoText style={styles.description}>{item.description}</MonoText>
+              ) : null}
+              {hasLink ? (
+                <MonoTextBold style={styles.link}>Link</MonoTextBold>
+              ) : null}
+              {hasVisited && hasAudio ? (
+                  <BandstandCardPlayer item={item} />
+              ) : null}
               </View>
           </View>
       </TouchableWithoutFeedback>
