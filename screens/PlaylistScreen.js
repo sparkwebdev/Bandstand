@@ -1,9 +1,13 @@
 import React from "react";
 import {
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
   ScrollView,
   StyleSheet,
 } from "react-native";
-import { Permissions, Audio } from "expo";
+import { Audio } from "expo";
 import bandStands from "../constants/Bandstands";
 import BandstandCard from "../components/BandstandCard";
 
@@ -23,23 +27,9 @@ export default class PlaylistScreen extends React.Component {
     super(props);
 
     this.audioPlayer = new Audio.Sound();
-    this.recording = null;
-    this.sound = null;
-    this.isSeeking = false;
-    this.shouldPlayAtEndOfSeek = false;
     this.state = {
-      isLoading: false,
-      isPlaybackAllowed: false,
-      muted: false,
-      soundPosition: null,
-      soundDuration: null,
-      recordingDuration: null,
-      shouldPlay: false,
       isPlaying: false,
-      isRecording: false,
-      shouldCorrectPitch: true,
-      volume: 1.0,
-      rate: 1.0,
+      playing: null,
       visited: null
     };
   }
@@ -56,12 +46,12 @@ export default class PlaylistScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    //this.audioPlayer.unloadAsync()
+    console.log('unmounting');
+    this.audioPlayer.unloadAsync()
   }
 
-  _onPlayPausePressed = async () => {
+  onPressPlayPause = async (id, e) => {
     if (this.state.isPlaying) {
-      console.log("pausing");
       this.audioPlayer.pauseAsync();
       this.state.isPlaying = false;
     } else {
@@ -84,13 +74,15 @@ export default class PlaylistScreen extends React.Component {
         {bandStands.map((item, index) => {
           let hasVisited = visited.includes(item.id);
           return (
-            <BandstandCard
-              key={index}
-              item={item}
-              hasVisited={hasVisited}
-              hasLink={false}
-              hasAudio={true}
-            />
+            <TouchableHighlight onPress={(e) => this.onPressPlayPause(item.id, e)} key={index}>
+              <BandstandCard
+                // key={index}
+                item={item}
+                hasVisited={hasVisited}
+                hasLink={false}
+                hasAudio={true}
+              />
+            </TouchableHighlight>
           );
         })}
       </ScrollView>
