@@ -16,15 +16,16 @@ export default class BandstandCard extends React.Component {
     return (
       <TouchableWithoutFeedback
           onPress={() =>
-              this.props.navigation.navigate("Bandstand", {
+            this.props.navigation.navigate("Bandstand", {
               itemId: item.id
-              })
+            })
           }
           >
           <View
               style={[
               styles.card,
-              !hasVisited ? styles.notvisited : null
+              !hasVisited ? styles.notvisited : null,
+              this.props.style
               ]}
           >
               <View

@@ -1,68 +1,45 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   Animated,
   Image,
   Dimensions,
-  TouchableHighlight,
-  AsyncStorage,
 } from "react-native";
-import { Asset } from 'expo';
-import bandStands from '../constants/Bandstands';
-
-class Icon {
-  constructor(module, width, height) {
-    this.module = module;
-    this.width = width;
-    this.height = height;
-    Asset.fromModule(this.module).downloadAsync();
-  }
-}
-
-const ICON_MARKER = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
-const ICON_BANDSTAND = new Icon(require('../assets/images/icon_bandstand.png'), 34, 34);
-
-//import MapView from "react-native-maps";
 import { MapView } from 'expo';
 
-const { width, height } = Dimensions.get("window");
+import BandstandCard from "../components/BandstandCard";
 
-// const CARD_HEIGHT = height / 3.5;
-// const CARD_WIDTH = CARD_HEIGHT + 40;
-const CARD_HEIGHT = 65;
+import bandStands from "../constants/Bandstands";
+
+const { width } = Dimensions.get("window");
 const CARD_WIDTH = width / 1.65;
 
+const bandStandMarkers = bandStands.map(function(bandstand) {
+  return {
+    id: bandstand.id,
+    coordinate: {
+      latitude: bandstand.coords.lat,
+      longitude: bandstand.coords.lng,
+    },
+    title: bandstand.title,
+    location: bandstand.location,
+    dates: bandstand.dates,
+    image: bandstand.slides.image,
+  }
+});
 
 export default class LocationsScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
-
   constructor(props) {
     super(props);
-    this.markers = bandStands.bandStands.map(function(bandstand) {
-      return {
-        id: bandstand.id,
-        coordinate: {
-          latitude: bandstand.coords.lat,
-          longitude: bandstand.coords.lng,
-        },
-        title: bandstand.title,
-        location: bandstand.location,
-        dates: bandstand.dates,
-        image: bandstand.slides.image,
-      }
-    });
     this.state = {
-      visited: null,
-      viewed: false,
-      fontLoaded: false,
-      markers: this.markers,
-      region: {
+      markers: bandStandMarkers,
+      region: { // Set region around Edinburgh
         latitude: 55.930526,
         longitude: -3.150066,
         latitudeDelta: 0.25,
@@ -71,27 +48,7 @@ export default class LocationsScreen extends React.Component {
     };
   }
 
-  async getVisited() {
-    try {
-      const value = await AsyncStorage.getItem('@VisitedStore:key');
-      let visited = JSON.parse(value);
-      this.setState({visited: visited});
-    } catch (error) {
-      console.log("Error retrieving data" + error);
-    }
-  }
-
-  hasVisited(id) {
-    if (this.state.visited !== null) {
-      if (this.state.visited.includes(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   componentWillMount() {
-    this.getVisited();
     this.index = 0;
     this.animation = new Animated.Value(0);
   }
@@ -145,7 +102,7 @@ export default class LocationsScreen extends React.Component {
       return { scale, opacity };
     });
     return (
-      <View style={styles.container}>
+      <View style={styles.container} visited={visited}>
         <MapView
           ref={map => this.map = map}
           initialRegion={this.state.region}
@@ -165,7 +122,7 @@ export default class LocationsScreen extends React.Component {
             return (
               <MapView.Marker key={index} coordinate={marker.coordinate}>
                 <Animated.View style={[styles.markerWrap, opacityStyle, scaleStyle]}>
-                  <Image style={[styles.icon]} source={ICON_MARKER.module} />
+                  <Image style={[styles.icon]} source={require('../assets/images/icon_bandstand.png')} />
                 </Animated.View>
               </MapView.Marker>
             );
@@ -191,34 +148,22 @@ export default class LocationsScreen extends React.Component {
           style={styles.scrollView}
           contentContainerStyle={styles.endPadding}
         >
-          {this.state.markers.map((marker, index) => (
-            <View style={[styles.card, !this.hasVisited(marker.id) ? styles.notvisited : null]} key={index}>
-              <View style={[styles.textContent, !this.hasVisited(marker.id) ? styles.notvisited : null]}>
-                <Text numberOfLines={1} style={styles.cardtitle}>{marker.title}</Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.location}
-                </Text>
-                <Text numberOfLines={1} style={styles.cardDescription}>
-                  {marker.dates}
-                </Text>
-              </View>
-              <View style={styles.actions}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Bandstand', {
-                  itemId: marker.id,
-                })}>
-                  <Image style={styles.icon}
-                    source={ICON_BANDSTAND.module}
-                  />
-                </TouchableHighlight>
-              </View>
-            </View>
-          ))}
+          {this.state.markers.map((marker, index) => {
+            let hasVisited = visited.includes(marker.id);
+            return (
+              <BandstandCard
+                item={marker}
+                hasVisited={hasVisited}
+                key={index}
+                style={{ width: CARD_WIDTH }}
+              />
+            )
+          })}
         </Animated.ScrollView>
       </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -233,79 +178,9 @@ const styles = StyleSheet.create({
   endPadding: {
     paddingRight: width - CARD_WIDTH,
   },
-  card: {
-    //padding: 3,
-    //elevation: 2,
-    backgroundColor: "#fff",
-    marginLeft: 15,
-    //shadowColor: "#000",
-    //shadowRadius: 0,
-    //shadowOpacity: 0.65,
-    //shadowOffset: { x: 0, y: -2 },
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    borderColor: "#62d3a2",
-    borderWidth: 2,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  description: {
-    width: "80%"
-  },
-  actions: {
-    width: "20%",
-    alignSelf: "center",
-  },
-  notvisited: {
-    borderColor: "#ccc",
-  },
-  cardImage: {
-    flex: 3,
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-  },
-  textContent: {
-    width: "30%",
-    flex: 1,
-    borderColor: "#62d3a2",
-    borderLeftWidth: 8,
-    paddingLeft: 5,
-  },
-  cardtitle: {
-    fontSize: 14,
-    paddingLeft: 5,
-    paddingRight: 5,
-    marginTop: 5,
-    fontWeight: "bold",
-    marginBottom: 0,
-  },
-  cardDescription: {
-    fontSize: 12,
-    color: "#444",
-    paddingLeft: 5,
-    paddingRight: 5,
-  },
   markerWrap: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  marker: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "rgb(127,71,221)",
-  },
-  ring: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: "rgba(127,71,221, 0.5)",
-    position: "absolute",
-    borderWidth: 1,
-    borderColor: "rgba(127,71,221, 0.75)",
   },
   icon: {
     width: 34,
