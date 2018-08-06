@@ -17,8 +17,8 @@ const bandStands = [{
     timeToNext: 21,
     song: {
       duration: "4:18",
-      sound: require('../assets/audio/01.mp3'),
-      loop: require('../assets/audio/choir-01.mp3'),
+      loop: require('../assets/audio/01.mp3'),
+      sound: require('../assets/audio/choir-01.mp3'),
     },
     lyrics: 'In the<br />City Side<br />Just arrived',
     slides: [{
@@ -67,8 +67,8 @@ const bandStands = [{
     timeToNext: 50,
     song: {
       duration: "4:11",
-      sound: require('../assets/audio/02.mp3'),
-      loop: require('../assets/audio/choir-02.mp3'),
+      loop: require('../assets/audio/02.mp3'),
+      sound: require('../assets/audio/choir-02.mp3'),
     },
     lyrics: 'Growing and grazing fields<br />Used to reside<br />Walked now',
     visited: true,
@@ -118,8 +118,8 @@ const bandStands = [{
     timeToNext: 87,
     song: {
       duration: "2:34",
-      sound: require('../assets/audio/01.mp3'),
-      loop: require('../assets/audio/choir-01.mp3'),
+      loop: require('../assets/audio/01.mp3'),
+      sound: require('../assets/audio/choir-03.mp3'),
     },
     lyrics: 'Im returning<br />Back from<br />30 years away',
     slides: [{
@@ -168,8 +168,8 @@ const bandStands = [{
     timeToNext: 26,
     song: {
       duration: "3:08",
-      sound: require('../assets/audio/02.mp3'),
-      loop: require('../assets/audio/choir-02.mp3'),
+      loop: require('../assets/audio/02.mp3'),
+      sound: require('../assets/audio/choir-04.mp3'),
     },
     lyrics: 'Horns<br />Playing<br />Beside',
     slides: [{
@@ -218,8 +218,8 @@ const bandStands = [{
     timeToNext: 38,
     song: {
       duration: "4:11",
-      sound: require('../assets/audio/02.mp3'),
-      loop: require('../assets/audio/choir-02.mp3'),
+      loop: require('../assets/audio/02.mp3'),
+      sound: require('../assets/audio/choir-05.mp3'),
     },
     lyrics: 'On roaming<br />Sundays<br />I stroll I listen',
     slides: [{
@@ -268,8 +268,8 @@ const bandStands = [{
     timeToNext: 21,
     song: {
       duration: "2:34",
-      sound: require('../assets/audio/01.mp3'),
-      loop: require('../assets/audio/choir-01.mp3'),
+      loop: require('../assets/audio/01.mp3'),
+      sound: require('../assets/audio/choir-06.mp3'),
     },
     lyrics: 'Oh I do<br />Like<br />To think of<br />Pleasures past',
     slides: [{
@@ -318,8 +318,8 @@ const bandStands = [{
     timeToNext: 52,
     song: {
       duration: "2:34",
-      sound: require('../assets/audio/01.mp3'),
-      loop: require('../assets/audio/choir-01.mp3'),
+      loop: require('../assets/audio/01.mp3'),
+      sound: require('../assets/audio/choir-07.mp3'),
     },
     lyrics: 'On the<br />Sea<br />Side<br />I dip my toe',
     slides: [{
@@ -368,8 +368,8 @@ const bandStands = [{
     timeToNext: 0,
     song: {
       duration: "3:08",
-      sound: require('../assets/audio/02.mp3'),
-      loop: require('../assets/audio/choir-02.mp3'),
+      loop: require('../assets/audio/02.mp3'),
+      sound: require('../assets/audio/choir-08.mp3'),
     },
     lyrics: 'When the sun goes down<br />Im gloamin.<br />And gleaming',
     slides: [{
