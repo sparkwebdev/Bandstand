@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  View,
   Text,
-  Image,
   TouchableHighlight,
   ScrollView,
   StyleSheet,
@@ -11,14 +9,6 @@ import { Audio } from "expo";
 import bandStands from "../constants/Bandstands";
 import BandstandCard from "../components/BandstandCard";
 
-// const soundObject = new Expo.Audio.Sound();
-// try {
-//   soundObject.loadAsync(require('../assets/audio/01.mp3'));
-//   soundObject.playAsync();
-//   // Your sound is playing!
-// } catch (error) {
-//   // An error occurred!
-// }
 export default class PlaylistScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -28,9 +18,9 @@ export default class PlaylistScreen extends React.Component {
 
     this.audioPlayer = new Audio.Sound();
     this.state = {
+      currentlyPlaying: null,
       isPlaying: false,
-      playing: null,
-      visited: null
+      isPaused: false,
     };
   }
 
@@ -46,22 +36,30 @@ export default class PlaylistScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounting');
-    this.audioPlayer.unloadAsync()
+    console.log('componentWillUnmount');
+    this.audioPlayer.unloadAsync();
+    this.state.isPlaying = false;
+    this.state.currentlyPlaying = null;
   }
 
   onPressPlayPause = async (id, e) => {
-    if (this.state.isPlaying) {
+    if (!this.state.isPaused && this.state.currentlyPlaying === id) {
       this.audioPlayer.pauseAsync();
-      this.state.isPlaying = false;
+      this.state.isPaused = true;
+    } else if (this.state.currentlyPlaying === id) {
+      this.audioPlayer.playAsync();
+      this.state.isPaused = false;
     } else {
       try {
+        this.audioPlayer.stopAsync();
         await this.audioPlayer.unloadAsync();
         await this.audioPlayer.loadAsync(
-          require("../assets/audio/choir-01.mp3")
+          bandStands[id - 1].song.sound
         );
         await this.audioPlayer.playAsync();
         this.state.isPlaying = true;
+        this.state.isPaused = false;
+        this.state.currentlyPlaying = id;
       } catch (err) {
         console.warn("Couldn't Play audio", err);
       }
