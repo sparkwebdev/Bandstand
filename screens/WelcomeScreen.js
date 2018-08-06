@@ -20,7 +20,7 @@ export default class WelcomeScreen extends React.Component {
     header: null
   };
 
-  _renderItem = props => (
+  renderItem = props => (
     <View
       style={[
         styles.mainContent,
@@ -35,6 +35,19 @@ export default class WelcomeScreen extends React.Component {
       {props.bgImage ? props.bgImage : null}
       {props.bgImageOverlay ? props.bgImageOverlay : null}
       {props.content ? props.content : null}
+      {props.key === "welcome-5" ? 
+        <TouchableHighlight
+          onPress={() => {
+            this.setState({ beenWelcomed: true });
+            this.props.navigation.navigate("Bandstands");
+          }}
+        >
+          <Image
+            style={styles.btnChoose}
+            source={require("../assets/images/buttons/btn-choose.png")}
+          />
+        </TouchableHighlight>
+      : null}
     </View>
   );
 
@@ -42,7 +55,7 @@ export default class WelcomeScreen extends React.Component {
     return (
       <AppIntroSlider
         slides={this.state.beenWelcomed ? slides1.slice(3, 4) : slides1 }
-        renderItem={this._renderItem}
+        renderItem={this.renderItem}
         dotColor="rgb(115,63,216)"
         activeDotColor="rgb(255,255,0)"
         hideNextButton
@@ -111,7 +124,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 92,
     alignSelf: "center",
-    marginTop: 20
+    marginBottom: 140
   },
   headphones: {
     width: 120,
@@ -290,17 +303,6 @@ const slides1 = [
             listen to the immersive sound as you walk around each park, to help find each bandstand zone
           </MonoText>
         </View>
-        <TouchableHighlight
-          onPress={() => {
-            //this.setState({ beenWelcomed: true });
-            this.props.navigation.navigate("Bandstands");
-          }}
-        >
-          <Image
-            style={styles.btnChoose}
-            source={require("../assets/images/buttons/btn-choose.png")}
-          />
-        </TouchableHighlight>
       </View>
     )
   }

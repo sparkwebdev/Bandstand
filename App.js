@@ -57,6 +57,7 @@ export default class App extends React.Component {
         require('./assets/images/icon_bandstand_alt_2.png'),
         require('./assets/images/icon_play.png'),
         require('./assets/images/icon_pause.png'),
+        require('./assets/images/buttons/btn-choose.png'),
       ]),
       Font.loadAsync({
         ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
