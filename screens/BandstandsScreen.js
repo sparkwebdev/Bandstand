@@ -9,7 +9,15 @@ import BandstandDistance from "../components/BandstandDistance";
 
 export default class BandstandsScreen extends React.Component {
   static navigationOptions = {
-    header: null
+    title: 'Bandstands',
+    headerStyle: {
+      backgroundColor: '#ff0000',
+    },
+    headerTintColor: '#ccc',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    //header: null
   };
 
   render() {

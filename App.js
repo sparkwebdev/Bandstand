@@ -1,13 +1,19 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
-import { AppLoading, Asset, Font, Icon, Notifications } from 'expo';
+import { AppLoading, Asset, Font, Icon, Notifications, Audio } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-    visited: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      visited: [],
+      // sound: new Audio.Sound(),
+      // loop: new Audio.Sound()
+    };
+
+  }
 
   // saveVisited(value) {
   //     AsyncStorage.setItem("visited", value);
@@ -15,7 +21,7 @@ export default class App extends React.Component {
   // }
 
   componentDidMount() {
-    visited = [2,3,5];
+    visited = [7,8];
     const visitedStr = JSON.stringify(visited);
     AsyncStorage.setItem("visited", visitedStr);
     AsyncStorage.getItem("visited").then((value) => {
@@ -36,8 +42,9 @@ export default class App extends React.Component {
     } else {
       return (
         <View style={styles.container} visited={this.state.visited}>
-          {Platform.OS === 'ios' && <StatusBar hidden />}
-          <AppNavigator />
+          {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
+          {Platform.OS === 'ios'}
+          <AppNavigator onNavigationStateChange={()=>{console.log('now i should stop audio');}} />
         </View>
       );
     }

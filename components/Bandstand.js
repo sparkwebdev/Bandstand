@@ -46,10 +46,14 @@ export default class BandstandScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    this.audioPlayerLoop.unloadAsync();
-    this.audioPlayer.unloadAsync();
-    this.audioPlayer = null;
-    this.audioPlayerLoop = null;
+    // console.log('trying');
+    // console.log(this.audioPlayerLoop);
+    // this.audioPlayerLoop.unloadAsync();
+    // this.audioPlayer.unloadAsync();
+    // this.audioPlayerLoop.stopAsync();
+    // this.audioPlayer.stopAsync();
+    // this.audioPlayer = null;
+    // this.audioPlayerLoop = null;
   }
 
 
