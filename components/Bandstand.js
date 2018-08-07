@@ -16,14 +16,17 @@ export default class BandstandScreen extends React.Component {
     this.audioPlayer = new Audio.Sound();
     this.audioPlayerLoop = new Audio.Sound();
     this.state = {
+      selectedBandstand: null,
+      currentlyPlaying: null,
+      currentlyLooping: null,
+      isPlaying: false,
+      isPlayingLoop: false,
+
       // foundBandstand: 0,
 
       hasCameraPermission: null,
       doingQR: false,
       // flash: 'off',
-
-      isPlaying: false,
-      isPlayingLoop: false,
 
       gotNear: false,
       watchLocation: null,
@@ -42,45 +45,66 @@ export default class BandstandScreen extends React.Component {
     this.setState({hasCameraPermission: status === 'granted'});
   }
 
+  componentWillUnmount() {
+    this.audioPlayerLoop.unloadAsync();
+    this.audioPlayer.unloadAsync();
+    this.audioPlayer = null;
+    this.audioPlayerLoop = null;
+  }
 
-  componentDidMount() {
+
+  async componentDidMount() {
+    try {
+      await Audio.setAudioModeAsync({
+        playsInSilentModeIOS: true,
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      });
+      // this._loadAudio();
+    } catch (error) {
+      console.error(`Error setting the audio mode::: ${error}`);
+    }
     this.startWatchingLocation();
     this.startWatchingHeading();
-    this.playSounds();
+    this.playLoop(this.state.selectedBandstand);
   }
 
-
-  componentDidUpdate() {
-    // const { navigation } = this.props;
-    // const selectBandstand = navigation.getParam('itemId', 0);
-    // if (selectBandstand) {
-    //   this.setState({
-    //     selectedBandstand: selectBandstand
-    //   });
-    // }
-  }
-
-  playSounds = async () => {
-    if (this.state.isPlaying) {
-      this.audioPlayerLoop.pauseAsync();
-      this.audioPlayer.pauseAsync();
-      this.state.isPlayingLoop = false;
-      this.state.isPlaying = false;
-    } else if (this.state.distance < 100000000) {
+  playLoop = async (id) => {
       try {
-        await this.audioPlayerLoop.unloadAsync()
-        await this.audioPlayerLoop.loadAsync(require("../assets/audio/01.mp3"));
+        // await this.audioPlayerLoop.stopAsync();
+        await this.audioPlayerLoop.unloadAsync();
+        await this.audioPlayerLoop.loadAsync(
+          bandStands[id - 1].song.loop
+        );
         await this.audioPlayerLoop.setIsLoopingAsync(true);
-        await this.audioPlayerLoop.setVolumeAsync(0.6);
+        await this.audioPlayerLoop.setVolumeAsync(1);
+        // await this.audioPlayer.setAudioModeAsync({playsInSilentModeIOS: true});
         await this.audioPlayerLoop.playAsync();
-        await this.audioPlayer.loadAsync(require("../assets/audio/choir-01.mp3"));
-        await this.audioPlayer.setIsLoopingAsync(true);
-        await this.audioPlayer.setVolumeAsync(0);
         this.state.isPlayingLoop = true;
+        this.state.currentlyLooping = id;
+        this.playSound(this.state.selectedBandstand);
       } catch (err) {
         console.warn("Couldn't Play audio", err);
       }
-    }
+  }
+
+  playSound = async (id) => {
+      try {
+        // await this.audioPlayer.stopAsync();
+        await this.audioPlayer.unloadAsync();
+        await this.audioPlayer.loadAsync(
+          bandStands[id - 1].song.sound
+        );
+        await this.audioPlayer.setIsLoopingAsync(true);
+        await this.audioPlayer.setVolumeAsync(0.1);
+        await this.audioPlayer.playAsync();
+        this.state.isPlaying = true;
+        this.state.currentlyPlaying = id;
+      } catch (err) {
+        console.warn("Couldn't Play audio", err);
+      }
   }
 
   handleBarCodeRead = ({ type, data }) => {
@@ -150,7 +174,7 @@ export default class BandstandScreen extends React.Component {
     }
     let distKm = dist / 1000;
     let distMiles = distKm * 0.621371;
-    return [distKm.toFixed(2), distMiles.toFixed(1)];
+    return [distKm.toFixed(2), distMiles.toFixed(3)];
   }
 
 
@@ -241,6 +265,7 @@ export default class BandstandScreen extends React.Component {
   render() {
 
     const selectedBandstand = this.props.selectBandstand;
+    this.state.selectedBandstand = selectedBandstand;
     const item = bandStands[selectedBandstand - 1];
     const { hasCameraPermission } = this.state;
 
