@@ -1,6 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+import ActionButton from 'react-native-action-button';
+import BlurView from "../components/BlurView";
+import NavButton from "../navigation/NavButton";
 
 import Colours from '../constants/Colors';
 import NavigationHelpers from '../helpers/NavigationHelpers';
@@ -53,6 +56,7 @@ export default class WelcomeScreen extends React.Component {
 
   render() {
     return (
+      <View style={styles.container}>
       <AppIntroSlider
         slides={this.state.beenWelcomed ? slides1.slice(3, 4) : slides1 }
         renderItem={this.renderItem}
@@ -61,11 +65,16 @@ export default class WelcomeScreen extends React.Component {
         hideNextButton
         hideDoneButton
       />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   mainContent: {
     backgroundColor: "#fff",
     justifyContent: "center"
@@ -132,6 +141,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
     alignSelf: "center",
+  },
+  marker: {
+    width: 48,
+    height: 48,
   }
 });
 
@@ -303,6 +316,7 @@ const slides1 = [
             listen to the immersive sound as you walk around each park, to help find each bandstand zone
           </MonoText>
         </View>
+        <NavButton />
       </View>
     )
   }

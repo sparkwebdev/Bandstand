@@ -1,7 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
-import { AppLoading, Asset, Font, Icon, Notifications, Audio } from 'expo';
-import AppNavigator from './navigation/AppNavigator';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Image } from 'react-native';
+import { AppLoading, Asset, Font, Notifications, Audio } from 'expo';
+import Nav from "./navigation/Nav";
+import LoadingIndicator from "./navigation/LoadingIndicator";
+import NavButton from "./navigation/NavButton";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,11 +16,6 @@ export default class App extends React.Component {
     };
 
   }
-
-  // saveVisited(value) {
-  //     AsyncStorage.setItem("visited", value);
-  //     this.setState({"visited": value});
-  // }
 
   componentDidMount() {
     visited = [7,8];
@@ -33,18 +30,21 @@ export default class App extends React.Component {
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
+        <View style={styles.container}>
         <AppLoading
           startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
+          onError={this.handleLoadingError}
+          onFinish={this.handleFinishLoading}
         />
+        <LoadingIndicator />
+        </View>
       );
     } else {
       return (
         <View style={styles.container} visited={this.state.visited}>
           {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
           {Platform.OS === 'ios'}
-          <AppNavigator onNavigationStateChange={()=>{console.log('now i should stop audio');}} />
+          <Nav />
         </View>
       );
     }
@@ -62,32 +62,32 @@ export default class App extends React.Component {
         require('./assets/images/icon_bandstand.png'),
         require('./assets/images/icon_bandstand_alt.png'),
         require('./assets/images/icon_bandstand_alt_2.png'),
+        require('./assets/images/icon_bandstand_alt_3.png'),
         require('./assets/images/icon_play.png'),
         require('./assets/images/icon_pause.png'),
         require('./assets/images/buttons/btn-choose.png'),
       ]),
       Font.loadAsync({
-        ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
+        // ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
         'space-mono': require('./assets/fonts/SourceCodePro-Light.ttf'),
         'space-mono-bold': require('./assets/fonts/SourceCodePro-Medium.ttf'),
       }),
     ]);
   };
 
-  _handleLoadingError = error => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
+  handleLoadingError = error => {
     console.warn(error);
   };
 
-  _handleFinishLoading = () => {
+  handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
+  }
 });
