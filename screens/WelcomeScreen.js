@@ -1,13 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
-import ActionButton from 'react-native-action-button';
-import BlurView from "../components/BlurView";
-import NavButton from "../navigation/NavButton";
 
 import Colours from '../constants/Colors';
 import NavigationHelpers from '../helpers/NavigationHelpers';
 
+import Prompt from "../components/Prompt";
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 
@@ -15,6 +13,7 @@ export default class WelcomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      lastSLide: false,
       beenWelcomed: false
     };
   }
@@ -23,10 +22,16 @@ export default class WelcomeScreen extends React.Component {
     header: null
   };
 
+  onSlide = (a, b) => {
+    // User finished the introduction. Show real app through
+    // navigation or simply by controlling state
+    // this.setState({ showRealApp: true });
+    console.log(a, b);
+  }
+
   renderItem = props => (
     <View
-      style={[
-        styles.mainContent,
+      style={[styles.container,
         {
           // paddingTop: props.topSpacer,
           // paddingBottom: props.bottomSpacer,
@@ -38,25 +43,11 @@ export default class WelcomeScreen extends React.Component {
       {props.bgImage ? props.bgImage : null}
       {props.bgImageOverlay ? props.bgImageOverlay : null}
       {props.content ? props.content : null}
-      {props.key === "welcome-5" ? 
-        <TouchableHighlight
-          onPress={() => {
-            this.setState({ beenWelcomed: true });
-            this.props.navigation.navigate("Bandstands");
-          }}
-        >
-          <Image
-            style={styles.btnChoose}
-            source={require("../assets/images/buttons/btn-choose.png")}
-          />
-        </TouchableHighlight>
-      : null}
     </View>
   );
 
   render() {
     return (
-      <View style={styles.container}>
       <AppIntroSlider
         slides={this.state.beenWelcomed ? slides1.slice(3, 4) : slides1 }
         renderItem={this.renderItem}
@@ -64,8 +55,9 @@ export default class WelcomeScreen extends React.Component {
         activeDotColor="rgb(255,255,0)"
         hideNextButton
         hideDoneButton
+        onSlideChange={this.onSlide}
+        pagingEnabled={false}
       />
-      </View>
     );
   }
 }
@@ -73,9 +65,6 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  mainContent: {
     backgroundColor: "#fff",
     justifyContent: "center"
   },
@@ -88,64 +77,56 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "contain"
   },
-  screenContainer: {
-    marginTop: 20,
-    marginBottom: 120,
+  contentContainer: {
+    // backgroundColor: "rgba(255,255,255,0.7)",
+    paddingLeft: 20,
     paddingRight: 20,
-    paddingLeft: 30
-  },
-  textContainer: {
-    backgroundColor: "rgba(255,255,255,0.65)",
-    padding: 10,
-    maxWidth: 480,
     alignSelf: "center",
-    display: "flex"
+    alignContent: "center",
+    maxWidth: 420,
   },
   text: {
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: 17,
+    lineHeight: 24,
     textAlign: "center"
+  },
+  textSmall: {
+    fontSize: 13
   },
   textLarge: {
     fontSize: 25,
-    lineHeight: 50
-  },
-  textSmall: {
-    fontSize: 16,
-    lineHeight: 21
+    lineHeight: 50,
+    textAlign: "center"
   },
   textBold: {
-    color: Colours.brandPurple,
-    fontSize: 16,
-    lineHeight: 21
+    fontSize: 18,
+    color: Colours.brandGreen,
   },
-  link: {
-    color: Colours.brandPurple,
-    fontSize: 20,
-    marginBottom: 15
+  textLink: {
+    color: Colours.brandPurple
   },
   logos: {
-    width: 280,
-    height: 59,
-    marginTop: 20
-  },
-  btnChoose: {
-    width: 200,
-    height: 92,
+    width: 212,
+    height: 45,
     alignSelf: "center",
-    marginBottom: 140
   },
   headphones: {
     width: 120,
     height: 68,
-    marginTop: 10,
-    marginBottom: 20,
     alignSelf: "center",
   },
-  marker: {
-    width: 48,
-    height: 48,
-  }
+  test0: {
+    display: 'flex',
+    justifyContent: "center",
+    height: "100%",
+  },
+  test2: {
+    // flex: 1,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    height: 100,
+  },
 });
 
 const slides1 = [
@@ -173,14 +154,12 @@ const slides1 = [
       />
     ),
     content: (
-      <View style={[styles.screenContainer, styles.screenContainerBottom]}>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={[styles.text, styles.textLarge]}>
-            as i walk{"\n"}
-            i glimpse{"\n"}
-            i hear
-          </MonoTextBold>
-        </View>
+      <View style={styles.contentContainer}>
+        <MonoTextBold style={[styles.textBold, styles.textLarge]}>
+          as i walk{"\n"}
+          i glimpse{"\n"}
+          i hear
+        </MonoTextBold>
       </View>
     )
   },
@@ -193,28 +172,22 @@ const slides1 = [
       />
     ),
     content: (
-      <View style={styles.screenContainer}>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={[styles.text, styles.text01]}>
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={styles.textBold}>
             8 locations of bandstand soundspaces across edinburgh and
-            musselburgh, with accompanied sound, imagery and text
+            musselburgh, with accompanied sound, imagery and text{"\n"}{"\n"}
           </MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoText style={[styles.text, styles.textSmall]}>
+          <MonoText>
             Marking the spaces of where bandstands once stood, and some that
             still do, this project brings together a sense of discovery through
             sound, to replicate the sense of hearing music playing at a
-            bandstand in a public park.
-          </MonoText>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoText style={[styles.text, styles.textSmall]}>
+            bandstand in a public park.{"\n"}{"\n"}
             Each location contains a marker representing as near as possible the
             location of the actual bandstand. Once you visit please use the QR
-            code on the marker to find out more about that site.
+            code on the marker to find out more about that site.{"\n"}
           </MonoText>
-        </View>
+        </MonoText>
       </View>
     )
   },
@@ -227,28 +200,26 @@ const slides1 = [
       />
     ),
     content: (
-      <View style={styles.screenContainer}>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={styles.text}>
-            Commissioned and conceived by Art Walk Projects
-          </MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoText style={[styles.text, styles.textSmall]}>
-            composition: ross whyte{"\n"}
-            performed by: portobello community choir{"\n"}
-            curation+lyrics: rosy naylor{"\n"}
-            app creation: steven park
-          </MonoText>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoText style={[styles.text, styles.textSmall]}>
-            Ross Whyte is a Glasgow based composer and sound artist. His
-            composition is inspired by the early 1900s era of seaside
-            entertainment, relating to Portobello and of the work of Harry
-            Lauder.
-          </MonoText>
-        </View>
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={styles.textBold}>Commissioned and conceived by{"\n"}</MonoTextBold>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.artwalkprojects.co.uk')}>artwalkprojects.co.uk</MonoTextBold>
+          <MonoText style={styles.textSmall}>{"\n"}{"\n"}composition:{"\n"}</MonoText>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.rosswhyte.com')}>rosswhyte.com</MonoTextBold>
+          <MonoText style={styles.textSmall}>{"\n"}{"\n"}performed by:{"\n"}</MonoText>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.portobellocommunitychoir.org/')}>portobellocommunitychoir.org</MonoTextBold>
+          <MonoText style={styles.textSmall}>{"\n"}{"\n"}curation+lyrics:{"\n"}</MonoText>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.rosynaylor.com/')}>rosynaylor.com</MonoTextBold>
+          <MonoText style={styles.textSmall}>{"\n"}{"\n"}app creation:{"\n"}</MonoText>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.stevenpark.co.uk')}>stevenpark.co.uk{"\n"}{"\n"}</MonoTextBold>
+          <MonoText style={styles.textSmall}>Enquiries:{"\n"}</MonoText>
+          <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openMailto('mailto:rosy@artwalkporty.co.uk')}>rosy@artwalkporty.co.uk{"\n"}{"\n"}</MonoTextBold>
+          <MonoText style={styles.textSmall}>This project is sponsored by The Royal Edinburgh Military Tattoo and The City of Edinburgh Council.{"\n"}</MonoText>
+        </MonoText>
+        <Image
+          style={styles.logos}
+          source={require("../assets/images/screens/additional/sponsor-logos.jpg")}
+        />
       </View>
     )
   },
@@ -257,66 +228,56 @@ const slides1 = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-04.png")}
+        source={require("../assets/images/screens/welcome-02.png")}
       />
     ),
     content: (
-      <View style={styles.screenContainer}>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={styles.text}>
-            This project is sponsored by The Royal Edinburgh Military Tattoo and
-            The City of Edinburgh Council.
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={styles.textBold}>
+          Ross Whyte is a Glasgow based composer and sound artist.{"\n"}{"\n"}
           </MonoTextBold>
-          <Image
-            style={styles.logos}
-            source={require("../assets/images/screens/additional/sponsor-logos.jpg")}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={styles.text}>Contacts:</MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.artwalkprojects.co.uk')}>
-            artwalkprojects.co.uk
+          <MonoTextBold style={styles.textSmall}>
+            His composition is inspired by the early 1900s era of seaside entertainment, relating to Portobello and of the work of Harry Lauder.{"\n"}{"\n"}
           </MonoTextBold>
-          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.rosswhyte.com')}>
-          rosswhyte.com
-          </MonoTextBold>
-          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openWebPage('http://www.stevenpark.co.uk')}>
-          stevenpark.co.uk
-          </MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={styles.text}>Enquiries:</MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={[styles.text, styles.textSmall, styles.link]} onPress={() => NavigationHelpers.openMailto('mailto:rosy@artwalkporty.co.uk')}>
-            rosy@artwalkporty.co.uk
-          </MonoTextBold>
-        </View>
+          <MonoText style={styles.textSmall}>
+            The Great Exhibition combines recent sound recording with both archival and newly-composed material to present an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh.{"\n"}{"\n"}
+            The work contains 8 melodic lines performed by the Portobello Community Choir.  The melodies can be ‘unlocked’ by visiting each of the 8 bandstand locations.  They can be listened to individually or layered on top of each other, as each new melody is discovered.  Together they form a complete song: The Great Exhibition.{"\n"}{"\n"}
+            The Great Exhibition is romantic, sentimental, light-hearted, and hopeful, and aims to evoke an atmosphere of a more innocent time.{"\n"}
+          </MonoText>
+        </MonoText>
       </View>
     )
   },
   {
     key: "welcome-5",
+    bgImage: (
+      <Image
+        style={styles.bgImage}
+        source={require("../assets/images/screens/welcome-03.png")}
+      />
+    ),
     content: (
-      <View style={styles.screenContainer}>
-        <View style={styles.textContainer}>
-          <MonoTextBold style={styles.text}>
-            Get Started
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={[styles.textBold, styles.textLink]}>
+          Get Started!{"\n"}
           </MonoTextBold>
-        </View>
-        <View style={styles.textContainer}>
-          <Image
-            style={styles.headphones}
-            source={require("../assets/images/screens/additional/headphones.png")}
-          />
-          <MonoText style={[styles.text, styles.textBold]}>
-            wear your headphones to start{"\n"}
-            listen to the immersive sound as you walk around each park, to help find each bandstand zone
-          </MonoText>
-        </View>
-        <NavButton />
+        </MonoText>
+        <MonoTextBold style={[styles.text, styles.textBold]}>
+          We recommend you{"\n"} wear headphones...{"\n"}
+        </MonoTextBold>
+        <Image
+          style={styles.headphones}
+          source={require("../assets/images/screens/additional/headphones.png")}
+        />
+        <MonoTextBold style={[styles.text, styles.textBold]}>
+          {"\n"}Then,{"\n"}choose a{"\n"}bandstand...
+        </MonoTextBold>
+        <Prompt />
+        {/* <View style={styles.test2}>
+          <NavButton />
+        </View> */}
       </View>
     )
   }
