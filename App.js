@@ -59,19 +59,31 @@ export default class App extends React.Component {
         require('./assets/images/screens/welcome-02.png'),
         require('./assets/images/screens/welcome-03.png'),
         require('./assets/images/screens/welcome-04.png'),
-        require('./assets/images/icon_bandstand_marker.png'),
-        require('./assets/images/icon_menu.png'),
-        require('./assets/images/icon_close.png'),
-        require('./assets/images/icon_marker.png'),
-        require('./assets/images/icon_info.png'),
-        require('./assets/images/icon_playlist.png'),
-        require('./assets/images/icon_bandstand.png'),
-        require('./assets/images/icon_bandstand_alt.png'),
-        require('./assets/images/icon_bandstand_alt_2.png'),
-        require('./assets/images/icon_bandstand_alt_3.png'),
-        require('./assets/images/icon_play.png'),
-        require('./assets/images/icon_pause.png'),
-        require('./assets/images/buttons/btn-choose.png'),
+
+        // Icons - Main Menu
+        require('./assets/images/icons/icon_menu.png'),
+        require('./assets/images/icons/icon_menu_close.png'),
+        require('./assets/images/icons/icon_menu_bandstand.png'),
+        require('./assets/images/icons/icon_menu_marker.png'),
+        require('./assets/images/icons/icon_menu_playlist.png'),
+        require('./assets/images/icons/icon_menu_info.png'),
+
+        // Icons - Interactions
+        require('./assets/images/icons/icon_action_bandstand.png'),
+        require('./assets/images/icons/icon_action_marker.png'),
+
+        // Icons - Media Player
+        require('./assets/images/icons/icon_play.png'),
+        require('./assets/images/icons/icon_pause.png'),
+
+        // Icons - Bandstand Markers
+        require('./assets/images/icons/icon_bandstand_hollow_grey.png'),
+        require('./assets/images/icons/icon_bandstand_hollow_green.png'),
+
+        // Icons - Interface
+        require('./assets/images/icons/icon_tick_key.png'),
+        require('./assets/images/icons/icon_tick_corner.png'),
+        require('./assets/images/icons/icon_back.png'),
       ]),
       Font.loadAsync({
         // ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
