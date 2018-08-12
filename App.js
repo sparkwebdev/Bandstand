@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Image } from 'react-native';
 import { AppLoading, Asset, Font, Notifications, Audio } from 'expo';
-import Nav from "./navigation/Nav";
+import Screens from "./navigation/Screens";
 import LoadingIndicator from "./navigation/LoadingIndicator";
-import NavButton from "./navigation/NavButton";
+import Colours from './constants/Colors';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    visited = [7,8];
+    visited = [1, 7,8];
     const visitedStr = JSON.stringify(visited);
     AsyncStorage.setItem("visited", visitedStr);
     AsyncStorage.getItem("visited").then((value) => {
@@ -43,8 +43,10 @@ export default class App extends React.Component {
       return (
         <View style={styles.container} visited={this.state.visited}>
           {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
-          {Platform.OS === 'ios'}
-          <Nav />
+          {Platform.OS === 'ios' && <StatusBar />}
+
+
+          <Screens />
         </View>
       );
     }
@@ -106,6 +108,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colours.brandGreen,
+    // paddingTop: 20,
   }
 });
