@@ -1,6 +1,7 @@
 import React from "react";
 import {
   TouchableWithoutFeedback,
+  Image,
   View,
   StyleSheet,
 } from "react-native";
@@ -40,9 +41,30 @@ class BandstandCard extends React.Component {
                   hasVisited ? styles.visited : null
               ]}
               >
-              <MonoTextBold style={styles.title}>{item.title}</MonoTextBold>
-              <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
-              <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
+                <View style={styles.cardContent}>
+                  <MonoTextBold style={styles.title}>{item.title}</MonoTextBold>
+                  <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
+                  <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
+                </View>
+                <View style={styles.cardActions}>
+                  {hasVisited ? (
+                    <Image
+                      style={styles.icon}
+                      source={require("../assets/images/icon_info.png")}
+                    />
+                  ) : 
+                    <Image
+                      style={styles.icon}
+                      source={require("../assets/images/icon_marker.png")}
+                    />
+                  }
+                </View>
+              {hasVisited ? (
+                <Image
+                  style={styles.tick}
+                  source={require("../assets/images/icon_tick.png")}
+                />
+              ) : null}
               {hasDescription ? (
                 <MonoText style={styles.description}>{item.description}</MonoText>
               ) : null}
@@ -79,7 +101,21 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderLeftColor: "#fff",
     borderLeftWidth: 10,
-    width: "100%"
+    width: "100%",
+    flex: 1, 
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  cardContent: {
+    width: "80%",
+  },
+  cardActions: {
+    width: 56,
+    justifyContent: 'center',
+  },
+  icon: {
+    width: 56,
+    height: 56,
   },
   visited: {
     borderLeftColor: Colours.brandGreen
@@ -108,5 +144,12 @@ const styles = StyleSheet.create({
   link: {
     color: Colours.brandPurple,
     fontSize: 15
+  },
+  tick: {
+    width: 32,
+    height: 32,
+    position: 'absolute',
+    top: 0,
+    right: 0
   }
 });

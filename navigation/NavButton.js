@@ -19,7 +19,7 @@ class NavButton extends React.Component {
 
     render() {
       return (
-        <ActionButton buttonColor={Colours.brandPurple} bgColor="rgba(0,0,0,0.5)" degrees={0} renderIcon={this.menuIcon} hideShadow={true} verticalOrientation="down" offsetY={40} position="right" spacing={20} backdrop={<BlurView />}>
+        <ActionButton buttonColor={Colours.brandPurple} bgColor="rgba(0,0,0,0.5)" degrees={0} renderIcon={this.menuIcon} hideShadow={false} verticalOrientation="down" offsetY={40} position="right" spacing={20} backdrop={<BlurView />}>
           <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Bandstands" onPress={() => this.props.navigation.navigate('Bandstands')}>
             <Image style={styles.marker} source={require("../assets/images/icon_bandstand_marker.png")} />
           </ActionButton.Item>
