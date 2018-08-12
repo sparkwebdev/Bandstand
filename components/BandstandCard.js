@@ -22,10 +22,13 @@ class BandstandCard extends React.Component {
     const hasDescription = this.props.hasLink || false;
     return (
       <TouchableWithoutFeedback
+
           onPress={() =>
-            this.props.navigation.navigate("Bandstand", {
-              itemId: item.id
-            })
+            !hasAudio ? 
+              this.props.navigation.navigate("Bandstand", {
+                itemId: item.id
+              })
+            : null
           }
           >
           <View
@@ -43,37 +46,41 @@ class BandstandCard extends React.Component {
               >
                 <View style={styles.cardContent}>
                   <MonoTextBold style={styles.title}>{item.title}</MonoTextBold>
-                  <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
-                  <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
+                  {hasVisited && hasAudio ?
+                    <MonoTextBold style={styles.title}>{item.song.duration}{"\n"}</MonoTextBold>
+                  : 
+                    <View>
+                      <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
+                      <MonoTextBold style={styles.dates}>{item.dates}</MonoTextBold>
+                    </View>
+                  }
+                  {hasDescription ? (
+                    <MonoText style={styles.description}>{item.description}</MonoText>
+                  ) : null}
                 </View>
                 <View style={styles.cardActions}>
-                  {hasVisited ? (
+                  {hasVisited && hasAudio ?
+                      <BandstandCardPlayer item={item} />
+                  : null}
+                  {hasVisited && !hasAudio ?
                     <Image
                       style={styles.icon}
-                      source={require("../assets/images/icon_info.png")}
+                      source={require("../assets/images/icons/icon_action_bandstand.png")}
                     />
-                  ) : 
+                  : null}
+                  {!hasVisited ?
                     <Image
                       style={styles.icon}
-                      source={require("../assets/images/icon_marker.png")}
+                      source={require("../assets/images/icons/icon_action_marker.png")}
                     />
-                  }
+                  : null}
                 </View>
-              {hasVisited ? (
-                <Image
-                  style={styles.tick}
-                  source={require("../assets/images/icon_tick.png")}
-                />
-              ) : null}
-              {hasDescription ? (
-                <MonoText style={styles.description}>{item.description}</MonoText>
-              ) : null}
-              {hasLink ? (
-                <MonoTextBold style={styles.link}>Link</MonoTextBold>
-              ) : null}
-              {hasVisited && hasAudio ? (
-                  <BandstandCardPlayer item={item} />
-              ) : null}
+                {hasVisited ?
+                  <Image
+                    style={styles.tick}
+                    source={require("../assets/images/icons/icon_tick_corner.png")}
+                  />
+                : null}
               </View>
           </View>
       </TouchableWithoutFeedback>
@@ -112,6 +119,7 @@ const styles = StyleSheet.create({
   cardActions: {
     width: 56,
     justifyContent: 'center',
+    alignContent: 'flex-end',
   },
   icon: {
     width: 56,
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
     borderColor: Colours.tone40
   },
   title: {
-    fontSize: 18,
+    fontSize: 17,
     marginBottom: 5
   },
   subtitle: {
