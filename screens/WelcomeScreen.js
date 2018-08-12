@@ -13,28 +13,19 @@ export default class WelcomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastSLide: false,
       beenWelcomed: false
     };
   }
+
 
   static navigationOptions = {
     header: null
   };
 
-  onSlide = (a, b) => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    // this.setState({ showRealApp: true });
-    console.log(a, b);
-  }
-
   renderItem = props => (
     <View
       style={[styles.container,
         {
-          // paddingTop: props.topSpacer,
-          // paddingBottom: props.bottomSpacer,
           width: props.width,
           height: props.height
         }
@@ -55,8 +46,6 @@ export default class WelcomeScreen extends React.Component {
         activeDotColor="rgb(255,255,0)"
         hideNextButton
         hideDoneButton
-        onSlideChange={this.onSlide}
-        pagingEnabled={false}
       />
     );
   }
@@ -115,18 +104,6 @@ const styles = StyleSheet.create({
     height: 68,
     alignSelf: "center",
   },
-  test0: {
-    display: 'flex',
-    justifyContent: "center",
-    height: "100%",
-  },
-  test2: {
-    // flex: 1,
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    height: 100,
-  },
 });
 
 const slides1 = [
@@ -179,13 +156,8 @@ const slides1 = [
             musselburgh, with accompanied sound, imagery and text{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
-            Marking the spaces of where bandstands once stood, and some that
-            still do, this project brings together a sense of discovery through
-            sound, to replicate the sense of hearing music playing at a
-            bandstand in a public park.{"\n"}{"\n"}
-            Each location contains a marker representing as near as possible the
-            location of the actual bandstand. Once you visit please use the QR
-            code on the marker to find out more about that site.{"\n"}
+            Marking the spaces of where bandstands once stood, and some that still do, this project brings together a sense of discovery through sound, to replicate the sense of hearing music playing at a bandstand in a public park.{"\n"}{"\n"}
+            Each location contains a marker representing as near as possible the location of the actual bandstand. Once you visit please use the QR code on the marker to find out more about that site.{"\n"}
           </MonoText>
         </MonoText>
       </View>
@@ -197,6 +169,32 @@ const slides1 = [
       <Image
         style={styles.bgImage}
         source={require("../assets/images/screens/welcome-03.png")}
+      />
+    ),
+    content: (
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={styles.textBold}>
+          Ross Whyte is a Glasgow based composer and sound artist.{"\n"}{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textSmall}>
+            His composition is inspired by the early 1900s era of seaside entertainment, relating to Portobello and of the work of Harry Lauder.{"\n"}{"\n"}
+          </MonoTextBold>
+          <MonoText style={styles.textSmall}>
+            The Great Exhibition combines recent sound recording with both archival and newly-composed material to present an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh.{"\n"}{"\n"}
+            The work contains 8 melodic lines performed by the Portobello Community Choir. The melodies can be ‘unlocked’ by visiting each of the 8 bandstand locations. They can be listened to individually or layered on top of each other, as each new melody is discovered. Together they form a complete song: The Great Exhibition.{"\n"}{"\n"}
+            The Great Exhibition is romantic, sentimental, light-hearted, and hopeful, and aims to evoke an atmosphere of a more innocent time.{"\n"}
+          </MonoText>
+        </MonoText>
+      </View>
+    )
+  },
+  {
+    key: "welcome-4",
+    bgImage: (
+      <Image
+        style={styles.bgImage}
+        source={require("../assets/images/screens/welcome-02.png")}
       />
     ),
     content: (
@@ -224,48 +222,16 @@ const slides1 = [
     )
   },
   {
-    key: "welcome-4",
-    bgImage: (
-      <Image
-        style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-02.png")}
-      />
-    ),
-    content: (
-      <View style={styles.contentContainer}>
-        <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>
-          Ross Whyte is a Glasgow based composer and sound artist.{"\n"}{"\n"}
-          </MonoTextBold>
-          <MonoTextBold style={styles.textSmall}>
-            His composition is inspired by the early 1900s era of seaside entertainment, relating to Portobello and of the work of Harry Lauder.{"\n"}{"\n"}
-          </MonoTextBold>
-          <MonoText style={styles.textSmall}>
-            The Great Exhibition combines recent sound recording with both archival and newly-composed material to present an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh.{"\n"}{"\n"}
-            The work contains 8 melodic lines performed by the Portobello Community Choir.  The melodies can be ‘unlocked’ by visiting each of the 8 bandstand locations.  They can be listened to individually or layered on top of each other, as each new melody is discovered.  Together they form a complete song: The Great Exhibition.{"\n"}{"\n"}
-            The Great Exhibition is romantic, sentimental, light-hearted, and hopeful, and aims to evoke an atmosphere of a more innocent time.{"\n"}
-          </MonoText>
-        </MonoText>
-      </View>
-    )
-  },
-  {
     key: "welcome-5",
-    bgImage: (
-      <Image
-        style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-03.png")}
-      />
-    ),
     content: (
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
-          <MonoTextBold style={[styles.textBold, styles.textLink]}>
-          Get Started!{"\n"}
+          <MonoTextBold style={[styles.textBold, styles.textLink, styles.textLarge]}>
+          Get Started!
           </MonoTextBold>
         </MonoText>
         <MonoTextBold style={[styles.text, styles.textBold]}>
-          We recommend you{"\n"} wear headphones...{"\n"}
+        {"\n"}We recommend you{"\n"} wear headphones...{"\n"}
         </MonoTextBold>
         <Image
           style={styles.headphones}
@@ -275,9 +241,6 @@ const slides1 = [
           {"\n"}Then,{"\n"}choose a{"\n"}bandstand...
         </MonoTextBold>
         <Prompt />
-        {/* <View style={styles.test2}>
-          <NavButton />
-        </View> */}
       </View>
     )
   }
