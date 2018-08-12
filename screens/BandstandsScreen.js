@@ -10,6 +10,14 @@ import { MonoTextBold } from "../components/StyledTextBold";
 
 export default class BandstandsScreen extends React.Component {
   static navigationOptions = {
+    // title: 'Bandstands',
+    // headerStyle: {
+    //   backgroundColor: '#ff0000',
+    // },
+    // headerTintColor: '#ccc',
+    // headerTitleStyle: {
+    //   fontWeight: 'bold',
+    // },
     header: null
   };
 
@@ -22,15 +30,15 @@ export default class BandstandsScreen extends React.Component {
             <MonoText style={styles.keyText}>
               <Image
                 style={styles.keyIcon}
-                source={require("../assets/images/icon_tick_key.png")}
+                source={require("../assets/images/icons/icon_tick_key.png")}
               /> Visited bandstand{"\n"}{"\n"}
               <Image
                 style={styles.keyIcon}
-                source={require("../assets/images/icon_info.png")}
+                source={require("../assets/images/icons/icon_action_bandstand.png")}
               /> View visited bandstand{"\n"}{"\n"}
               <Image
                 style={styles.keyIcon}
-                source={require("../assets/images/icon_marker.png")}
+                source={require("../assets/images/icons/icon_action_marker.png")}
               /> Select next bandstand{"\n"}{"\n"}
             </MonoText>
           </View>
@@ -51,8 +59,8 @@ export default class BandstandsScreen extends React.Component {
                       style={styles.marker}
                       source={
                         hasVisited
-                          ? require("../assets/images/icon_bandstand_alt.png")
-                          : require("../assets/images/icon_bandstand_alt_2.png")
+                          ? require("../assets/images/icons/icon_bandstand_hollow_green.png")
+                          : require("../assets/images/icons/icon_bandstand_hollow_grey.png")
                       }
                     />
                     <BandstandCard
