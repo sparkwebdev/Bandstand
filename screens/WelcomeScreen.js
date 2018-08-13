@@ -240,7 +240,7 @@ const slides1 = [
         <MonoTextBold style={[styles.text, styles.textBold]}>
           {"\n"}Then,{"\n"}choose a{"\n"}bandstand...
         </MonoTextBold>
-        <Prompt />
+        <Prompt target={"Bandstands"} source={require("../assets/images/icons/icon_action_marker.png")} />
       </View>
     )
   }

@@ -6,6 +6,8 @@ import { withNavigation } from 'react-navigation';
 
 class Prompt extends React.Component {
   render() {
+    const target = this.props.target;
+    const icon = this.props.source;
     return (
       <View style={styles.prompt}>
         <View style={styles.arrows}>
@@ -15,12 +17,12 @@ class Prompt extends React.Component {
         </View>
         <TouchableWithoutFeedback
           onPress={() =>
-            this.props.navigation.navigate("Bandstands")
+            this.props.navigation.navigate(target)
           }
         >
           <Image
             style={styles.marker}
-            source={require("../assets/images/icons/icon_action_marker.png")}
+            source={icon}
           />
         </TouchableWithoutFeedback>
       </View>
