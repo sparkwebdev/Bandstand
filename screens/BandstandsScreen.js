@@ -22,6 +22,7 @@ export default class BandstandsScreen extends React.Component {
   };
 
   render() {
+    const visited = this.props.screenProps.visited;
     return (
       <View style={styles.containerOuter}>
         <ScrollView style={styles.container} visited={visited}>

@@ -21,6 +21,7 @@ export default class PlaylistScreen extends React.Component {
   
   render() {
     let notVisited = [];
+    const visited = this.props.screenProps.visited;
     return (
       <View style={styles.containerOuter}>
         <ScrollView style={styles.container} visited={visited}>
