@@ -11,14 +11,40 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
       visited: [],
-      // sound: new Audio.Sound(),
-      // loop: new Audio.Sound()
     };
 
   }
 
+  async getVisited() {
+    try {
+      const value = await AsyncStorage.getItem('visited');
+      this.setState({visited: value});
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+    }
+  }
+
+  async saveVisited(value) {
+    // const visitedStr = JSON.stringify(visited);
+    try {
+      await AsyncStorage.setItem('visited', value);
+    } catch (error) {
+      console.log("Error saving data" + error);
+    }
+  }
+
+  async resetVisited() {
+    try {
+      await AsyncStorage.removeItem('visited');
+      const value = await AsyncStorage.getItem('visited');
+      this.setState({visited: value});
+    } catch (error) {
+      console.log("Error resetting data" + error);
+    }
+  }
+
   componentDidMount() {
-    visited = [1, 7,8];
+    visited = [1,2,3];
     const visitedStr = JSON.stringify(visited);
     AsyncStorage.setItem("visited", visitedStr);
     AsyncStorage.getItem("visited").then((value) => {
@@ -67,6 +93,7 @@ export default class App extends React.Component {
         require('./assets/images/icons/icon_menu_close.png'),
         require('./assets/images/icons/icon_menu_bandstand.png'),
         require('./assets/images/icons/icon_menu_marker.png'),
+        require('./assets/images/icons/icon_menu_play.png'),
         require('./assets/images/icons/icon_menu_playlist.png'),
         require('./assets/images/icons/icon_menu_info.png'),
 
