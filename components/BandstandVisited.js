@@ -20,7 +20,7 @@ export default class BandstandVisited extends React.Component {
   );
 
   render() {
-    const selectedBandstand = this.props.selectBandstand;
+    const selectedBandstand = this.props.navigation.getParam('itemId', 0);
     const item = bandStands[selectedBandstand - 1];
     return (
         <AppIntroSlider
