@@ -1,9 +1,46 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Image } from 'react-native';
 import { AppLoading, Asset, Font, Notifications, Audio } from 'expo';
-import Screens from "./navigation/Screens";
 import LoadingIndicator from "./navigation/LoadingIndicator";
 import Colours from './constants/Colors';
+import { createStackNavigator } from 'react-navigation';
+
+import WelcomeScreen from './screens/WelcomeScreen';
+import LocationsScreen from './screens/LocationsScreen';
+import BandstandsScreen from './screens/BandstandsScreen';
+import BandstandScreen from './screens/BandstandScreen';
+import PlaylistScreen from './screens/PlaylistScreen';
+import EventsScreen from './screens/EventsScreen';
+import QrCodeScreen from './screens/QrCodeScreen';
+
+const Screens = createStackNavigator(
+  {
+    Welcome: {
+      screen: WelcomeScreen,
+    },
+    Bandstands: {
+      screen: BandstandsScreen,
+    },
+    Locations: {
+      screen: LocationsScreen,
+    },
+    Bandstand: {
+      screen: BandstandScreen,
+    },
+    Playlist: {
+      screen: PlaylistScreen,
+    },
+    Events: {
+      screen: EventsScreen,
+    },
+    QrCode: {
+      screen: QrCodeScreen,
+    },
+  },
+  {
+    initialRouteName: 'Bandstand',
+  }
+);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,45 +49,45 @@ export default class App extends React.Component {
       isLoadingComplete: false,
       visited: [],
     };
-
   }
 
-  async getVisited() {
+  componentWillMount() {
+    // this.resetVisited();
+    this.getVisited();
+    // Notifications.setBadgeNumberAsync(visited.length);
+  }
+
+  getVisited = async () => {
     try {
       const value = await AsyncStorage.getItem('visited');
-      this.setState({visited: value});
+      this.setState({visited: value || []});
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
   }
 
-  async saveVisited(value) {
-    // const visitedStr = JSON.stringify(visited);
+  saveVisited = async (id) => {
+    let visited = this.state.visited;
+    if (id && !visited.includes(id)) {
+      visited.push(id);
+    }
     try {
-      await AsyncStorage.setItem('visited', value);
+      const visitedStr = JSON.stringify(visited);
+      await AsyncStorage.setItem('visited', visitedStr);
+      this.setState({visited: visited});
     } catch (error) {
       console.log("Error saving data" + error);
     }
   }
 
-  async resetVisited() {
+  resetVisited = async () => {
     try {
       await AsyncStorage.removeItem('visited');
       const value = await AsyncStorage.getItem('visited');
-      this.setState({visited: value});
+      this.setState({visited: value || []});
     } catch (error) {
       console.log("Error resetting data" + error);
     }
-  }
-
-  componentDidMount() {
-    visited = [1,2,3];
-    const visitedStr = JSON.stringify(visited);
-    AsyncStorage.setItem("visited", visitedStr);
-    AsyncStorage.getItem("visited").then((value) => {
-        this.setState({"visited": value});
-    }).done();
-    // Notifications.setBadgeNumberAsync(visited.length);
   }
 
   render() {
@@ -66,13 +103,17 @@ export default class App extends React.Component {
         </View>
       );
     } else {
+      const propsForTheScreen = {
+        visited      : this.state.visited || [],
+        getVisited   : this.getVisited, 
+        saveVisited  : this.saveVisited, 
+        resetVisited : this.resetVisited, 
+      };
       return (
-        <View style={styles.container} visited={this.state.visited}>
+        <View style={styles.container}>
           {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
           {Platform.OS === 'ios' && <StatusBar />}
-
-
-          <Screens />
+          <Screens screenProps={propsForTheScreen} />
         </View>
       );
     }
