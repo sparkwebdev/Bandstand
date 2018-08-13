@@ -23,13 +23,16 @@ class NavButton extends React.Component {
           <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Bandstands" onPress={() => this.props.navigation.navigate('Bandstands')}>
             <Image style={styles.marker} source={require("../assets/images/icons/icon_menu_bandstand.png")} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Locations" onPress={() => this.props.navigation.navigate('Locations')}>
+          <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Locations Map" onPress={() => this.props.navigation.navigate('Locations')}>
             <Image style={styles.marker} source={require("../assets/images/icons/icon_menu_marker.png")} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Playlist" onPress={() => this.props.navigation.navigate('Playlist')}>
+            <Image style={styles.marker} source={require("../assets/images/icons/icon_menu_play.png")} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Performances" onPress={() => this.props.navigation.navigate('Events')}>
             <Image style={styles.marker} source={require("../assets/images/icons/icon_menu_playlist.png")} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Events" onPress={() => this.props.navigation.navigate('Events')}>
+          <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="More Info" onPress={() => this.props.navigation.navigate('Welcome')}>
             <Image style={styles.marker} source={require("../assets/images/icons/icon_menu_info.png")} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor="transparent" textStyle={styles.textStyle} textContainerStyle={styles.textContainerStyle} hideLabelShadow={true} spaceBetween={0} title="Bandstand" onPress={() =>

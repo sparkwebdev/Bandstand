@@ -42,8 +42,8 @@ export default class WelcomeScreen extends React.Component {
       <AppIntroSlider
         slides={this.state.beenWelcomed ? slides1.slice(3, 4) : slides1 }
         renderItem={this.renderItem}
-        dotColor="rgb(115,63,216)"
-        activeDotColor="rgb(255,255,0)"
+        dotColor={Colours.brandPurple}
+        activeDotColor={Colours.brandYellow}
         hideNextButton
         hideDoneButton
       />
