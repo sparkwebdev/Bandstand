@@ -18,7 +18,6 @@ class BandstandCard extends React.Component {
     const item = this.props.item;
     const hasVisited = this.props.hasVisited || false;
     const hasAudio = this.props.hasAudio || false;
-    const hasLink = this.props.hasLink || false;
     const hasDescription = this.props.hasLink || false;
     return (
       <TouchableWithoutFeedback
@@ -46,8 +45,11 @@ class BandstandCard extends React.Component {
               >
                 <View style={styles.cardContent}>
                   <MonoTextBold style={styles.title}>{item.title}</MonoTextBold>
-                  {hasVisited && hasAudio ?
-                    <MonoTextBold style={styles.title}>{item.song.duration}{"\n"}</MonoTextBold>
+                  {hasAudio ?
+                    <View>
+                      {/* <MonoTextBold style={styles.title}>{item.song.duration}{"\n"}</MonoTextBold> */}
+                      <MonoTextBold style={styles.dates}>{item.dates}{"\n"}</MonoTextBold>
+                    </View>
                   : 
                     <View>
                       <MonoTextBold style={styles.subtitle}>{item.location}</MonoTextBold>
@@ -59,7 +61,7 @@ class BandstandCard extends React.Component {
                   ) : null}
                 </View>
                 <View style={styles.cardActions}>
-                  {hasVisited && hasAudio ?
+                  {hasAudio ?
                       <BandstandCardPlayer item={item} />
                   : null}
                   {hasVisited && !hasAudio ?
@@ -68,7 +70,7 @@ class BandstandCard extends React.Component {
                       source={require("../assets/images/icons/icon_action_bandstand.png")}
                     />
                   : null}
-                  {!hasVisited ?
+                  {!hasVisited && !hasAudio ?
                     <Image
                       style={styles.icon}
                       source={require("../assets/images/icons/icon_action_marker.png")}
