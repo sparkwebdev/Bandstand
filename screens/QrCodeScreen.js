@@ -11,8 +11,44 @@ class QrCode extends React.Component {
   static navigationOptions = {
     header: null,
   };
+  constructor(props) {
+    super(props);
+    // this.audioPlayer = new Audio.Sound();
+    // this.audioPlayerLoop = new Audio.Sound();
+    this.state = {
+      doingQR: false,
+      hasCameraPermission: null,
+      // flash: 'off',
+    };
+
+  }
+
+
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({hasCameraPermission: status === 'granted'});
+  }
+
+
+  handleBarCodeRead = ({ type, data }) => {
+    this.setQrState;
+    if (data) {
+      let id = data.substr(data.length - 1);
+      //this.setFoundBandstand(Number(id));
+    } else {
+      alert('Sorry not found');
+    }
+  }
+  setQrState = () => {
+    this.setState({
+      doingQR: !this.state.doingQR
+    });
+  }
+
+
   render() {
 
+    // const { hasCameraPermission } = this.state;
 
     // if (hasCameraPermission === null) {
     //     return <Text>Requesting for camera permission</Text>;
