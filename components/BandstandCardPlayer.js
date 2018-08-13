@@ -12,7 +12,6 @@ export default class BandstandCardPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // isLoading: true,
       hasLoaded: false,
       isPlaying: false,
       isPaused: true,
