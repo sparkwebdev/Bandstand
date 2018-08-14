@@ -136,6 +136,11 @@ const bandStands = [{
           </View>
         )
       },
+      {
+        key: '5',
+        image: require('../assets/images/bandstand-01-03.jpg'),
+        imageResizeMode: 'cover',
+      },
     ]
   },
   {
@@ -219,6 +224,16 @@ const bandStands = [{
         </View>
         )
       },
+      {
+        key: '6',
+        image: require('../assets/images/bandstand-02-04.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '7',
+        image: require('../assets/images/bandstand-02-05.jpg'),
+        imageResizeMode: 'cover',
+      },
     ]
   },
   {
@@ -292,13 +307,30 @@ const bandStands = [{
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
             <MonoTextBold style={styles.textBold}>
-            The Scottish National Exhibition took place at Saughton Park from May-Oct 1908,{"\u2002"}
+            The Scottish National Exhibition took place at Saughton Park from May-Oct 1908, after which time the prefabricated buildings (and two bandstands) were dismantled, with many being relocated to form Portobello’s Marine Gardens.{"\n"}{"\n"}
             </MonoTextBold>
             <MonoText>
-            after which time the prefabricated buildings (and two bandstands) were dismantled, with many being relocated to form Portobello’s Marine Gardens.{"\n"}{"\n"}
+            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park. 
             </MonoText>
-            <MonoText style={styles.textSmall}>
-            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park. This bandstand was eventually dismantled in 1986, and kept in storage, which is currently being rebuilt to be returned to the park as part of their ongoing redevelopment project, which opens to the public in 2019. Although access to the bandstand is currently not possible, it is visible from the Stevenson Drive entrance that leads you towards the Walled Garden.
+          </MonoText>
+        </View>
+        )
+      },
+      {
+        key: '6',
+        image: require('../assets/images/bandstand-03-04.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '7',
+        content: (
+          <View style={styles.contentContainer}>
+          <MonoText style={styles.text}>
+            <MonoTextBold style={styles.textBold}>
+            This bandstand was eventually dismantled in 1986, and kept in storage, which is currently being rebuilt to be returned to the park as part of their ongoing redevelopment project, which opens to the public in 2019.{"\n"}{"\n"}
+            </MonoTextBold>
+            <MonoText>
+            Although access to the bandstand is currently not possible, it is visible from the Stevenson Drive entrance that leads you towards the Walled Garden. 
             </MonoText>
           </MonoText>
         </View>
@@ -381,6 +413,16 @@ const bandStands = [{
         </View>
         )
       },
+      {
+        key: '5',
+        image: require('../assets/images/bandstand-04-03.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '6',
+        image: require('../assets/images/bandstand-04-04.jpg'),
+        imageResizeMode: 'cover',
+      },
     ]
   },
   {
@@ -458,6 +500,16 @@ const bandStands = [{
         </View>
         )
       },
+      {
+        key: '5',
+        image: require('../assets/images/bandstand-05-03.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '6',
+        image: require('../assets/images/bandstand-05-04.jpg'),
+        imageResizeMode: 'cover',
+      },
     ]
   },
   {
@@ -532,11 +584,6 @@ const bandStands = [{
       },
       {
         key: '6',
-        image: require('../assets/images/bandstand-06-05.jpg'),
-        imageResizeMode: 'cover',
-      },
-      {
-        key: '7',
         content: (
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
@@ -549,6 +596,21 @@ const bandStands = [{
           </MonoText>
         </View>
         )
+      },
+      {
+        key: '7',
+        image: require('../assets/images/bandstand-06-05.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '8',
+        image: require('../assets/images/bandstand-06-06.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '9',
+        image: require('../assets/images/bandstand-06-07.jpg'),
+        imageResizeMode: 'cover',
       },
     ]
   },
@@ -641,6 +703,21 @@ const bandStands = [{
           </MonoText>
         </View>
         )
+      },
+      {
+        key: '8',
+        image: require('../assets/images/bandstand-07-06.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '9',
+        image: require('../assets/images/bandstand-07-07.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '10',
+        image: require('../assets/images/bandstand-07-08.jpg'),
+        imageResizeMode: 'cover',
       },
     ]
   },
