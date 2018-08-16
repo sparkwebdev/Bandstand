@@ -6,8 +6,8 @@ import Colours from './constants/Colors';
 import { createStackNavigator } from 'react-navigation';
 
 import WelcomeScreen from './screens/WelcomeScreen';
-import LocationsScreen from './screens/LocationsScreen';
 import BandstandsScreen from './screens/BandstandsScreen';
+import LocationsScreen from './screens/LocationsScreen';
 import BandstandScreen from './screens/BandstandScreen';
 import PlaylistScreen from './screens/PlaylistScreen';
 import EventsScreen from './screens/EventsScreen';
@@ -38,7 +38,7 @@ const Screens = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Bandstand',
+    initialRouteName: 'Welcome',
   }
 );
 
@@ -51,28 +51,23 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
+  async componentDidMount() {
     // this.resetVisited();
-    this.getVisited();
+    // this.resetWelcomed();
     // Notifications.setBadgeNumberAsync(visited.length);
-  }
-
-  getVisited = async () => {
     try {
       const value = await AsyncStorage.getItem('visited');
-      this.setState({visited: value || []});
+      const valueParsed = JSON.parse(value);
+      this.setState({visited: valueParsed || []});
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
   }
 
   saveVisited = async (id) => {
-    let visited = this.state.visited;
-    if (id && !visited.includes(id)) {
-      visited.push(id);
-    }
+    const visited = this.state.visited.includes(id) ? this.state.visited : [...this.state.visited, id];
+    const visitedStr = JSON.stringify(visited);
     try {
-      const visitedStr = JSON.stringify(visited);
       await AsyncStorage.setItem('visited', visitedStr);
       this.setState({visited: visited});
     } catch (error) {
@@ -90,6 +85,14 @@ export default class App extends React.Component {
     }
   }
 
+  resetWelcomed = async () => {
+    try {
+      await AsyncStorage.removeItem('welcomed');
+    } catch (error) {
+      console.log("Error resetting data" + error);
+    }
+  }
+
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -102,32 +105,44 @@ export default class App extends React.Component {
         <LoadingIndicator />
         </View>
       );
-    } else {
-      const propsForTheScreen = {
-        visited      : this.state.visited || [],
-        getVisited   : this.getVisited, 
-        saveVisited  : this.saveVisited, 
-        resetVisited : this.resetVisited, 
-      };
-      return (
-        <View style={styles.container}>
-          {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
-          {Platform.OS === 'ios' && <StatusBar />}
-          <Screens screenProps={propsForTheScreen} />
-        </View>
-      );
     }
+    return (
+      <View style={styles.container}>
+        {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
+        {Platform.OS === 'ios' && <StatusBar />}
+        <Screens screenProps={{visited: this.state.visited, saveVisited: this.saveVisited}}  />
+      </View>
+    );
   }
 
   _loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
+        // Welcome Screens
         require('./assets/images/screens/welcome-00.jpg'),
         require('./assets/images/screens/welcome-00.png'),
         require('./assets/images/screens/welcome-01.png'),
         require('./assets/images/screens/welcome-02.png'),
         require('./assets/images/screens/welcome-03.png'),
         require('./assets/images/screens/welcome-04.png'),
+
+        // Banstand Screens
+        require('./assets/images/bandstand-01-00.jpg'),
+        require('./assets/images/bandstand-02-00.jpg'),
+        require('./assets/images/bandstand-03-00.jpg'),
+        require('./assets/images/bandstand-04-00.jpg'),
+        require('./assets/images/bandstand-05-00.jpg'),
+        require('./assets/images/bandstand-06-00.jpg'),
+        require('./assets/images/bandstand-07-00.jpg'),
+        require('./assets/images/bandstand-08-00.jpg'),
+        require('./assets/images/bandstand-01-01.jpg'),
+        require('./assets/images/bandstand-02-01.jpg'),
+        require('./assets/images/bandstand-03-01.jpg'),
+        require('./assets/images/bandstand-04-01.jpg'),
+        require('./assets/images/bandstand-05-01.jpg'),
+        require('./assets/images/bandstand-06-01.jpg'),
+        require('./assets/images/bandstand-07-01.jpg'),
+        require('./assets/images/bandstand-08-01.jpg'),
 
         // Icons - Main Menu
         require('./assets/images/icons/icon_menu.png'),
