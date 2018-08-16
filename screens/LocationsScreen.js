@@ -8,6 +8,9 @@ import {
   Dimensions,
 } from "react-native";
 import { MapView } from 'expo';
+import { MonoText } from "../components/StyledText";
+import { MonoTextBold } from "../components/StyledTextBold";
+import Colours from '../constants/Colors';
 
 import BandstandCard from "../components/BandstandCard";
 
@@ -15,7 +18,7 @@ import bandStands from "../constants/Bandstands";
 import NavButton from "../navigation/NavButton";
 
 const { width } = Dimensions.get("window");
-const CARD_WIDTH = width / 1.65;
+const CARD_WIDTH = width / 1.35;
 
 const bandStandMarkers = bandStands.map(function(bandstand) {
   return {
@@ -84,6 +87,7 @@ export default class LocationsScreen extends React.Component {
   }
 
   render() {
+    const visited = this.props.screenProps.visited;
     const interpolations = this.state.markers.map((marker, index) => {
       const inputRange = [
         (index - 1) * CARD_WIDTH,
@@ -124,12 +128,13 @@ export default class LocationsScreen extends React.Component {
               <MapView.Marker key={index} coordinate={marker.coordinate}>
                 <Animated.View style={[styles.markerWrap, opacityStyle, scaleStyle]}>
                   <Image style={[styles.icon]} source={require('../assets/images/icons/icon_action_marker.png')} />
+                  <MonoTextBold style={[styles.markerTitle]}>{marker.title}</MonoTextBold>
                 </Animated.View>
               </MapView.Marker>
             );
           })}
         </MapView>
-        {/* <Animated.ScrollView
+        <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
@@ -154,13 +159,13 @@ export default class LocationsScreen extends React.Component {
             return (
               <BandstandCard
                 key={index}
-                item={marker}
+                item={bandStands[index]}
                 hasVisited={hasVisited}
                 style={{ width: CARD_WIDTH }}
               />
             )
           })}
-        </Animated.ScrollView> */}
+        </Animated.ScrollView>
         <NavButton />
       </View>
     );
@@ -173,7 +178,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     position: "absolute",
-    bottom: 105,
+    bottom: 20,
     left: 0,
     right: 0,
   },
@@ -185,9 +190,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   icon: {
-    width: 34,
-    height: 34,
+    width: 48,
+    height: 48,
   },
+  markerTitle: {
+    backgroundColor: Colours.brandGreen,
+    color: '#fff',
+    fontSize: 11,
+    lineHeight: 13,
+    width: 75,
+    padding: 2,
+    textAlign: 'center'
+  }
 });
 
 AppRegistry.registerComponent("mapfocus", () => screens);
