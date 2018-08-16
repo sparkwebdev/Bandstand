@@ -13,7 +13,6 @@ import { withNavigation } from 'react-navigation';
 import Prompt from "../components/Prompt";
 
 
-
 class BandstandScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -23,6 +22,8 @@ class BandstandScreen extends React.Component {
     // this.audioPlayer = new Audio.Sound();
     // this.audioPlayerLoop = new Audio.Sound();
     this.state = {
+      visited : null,
+      current : null,
 
       audioPlayerSoundscape : new Audio.Sound(),
       hasLoadedSoundscape   : false,
@@ -45,10 +46,11 @@ class BandstandScreen extends React.Component {
 
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
+    this.state.hasFound = false;
+    const item = this.props.navigation.getParam('item', 0);
+    this.state.current = item.id;
     try {
-      const item = this.props.item;
-
       await Audio.setIsEnabledAsync(true);
 
       await this.state.audioPlayerSoundscape.loadAsync(
@@ -63,10 +65,11 @@ class BandstandScreen extends React.Component {
       );
       await this.state.audioPlayerLoop.setIsLoopingAsync(true);
       await this.state.audioPlayerLoop.setVolumeAsync(0);
+      await this.state.audioPlayerLoop.playAsync();
       
       this.setState({
         hasLoadedSoundscape : true,
-        // isPlayingSoundscape : true,
+        isPlayingSoundscape : true,
         hasLoadedLoop       : true,
         isPlayingLoop       : true
       });
@@ -74,85 +77,61 @@ class BandstandScreen extends React.Component {
     } catch(error) {
       console.log(error);
     }
-  }
-
-  async componentDidMount() {
+    // this.getVisited();
     this.startWatchingLocation();
-    // this.startWatchingHeading();
-    // this.playLoop(this.state.selectedBandstand);
   }
 
+  componentWillUnmount() {
+    this.stopWatchingLocation();
+    this.state.audioPlayerSoundscape.stopAsync();
+    this.state.audioPlayerLoop.stopAsync();
+  }
 
-  // setFoundBandstand = (id) => {
-  //   this.setState({
-  //     foundBandstand: id
-  //   });
-  //   var currentVisited = this.state.visited.filter(function(num) {
-  //     return num !== id;
-  //   });
-  //   currentVisited.push(id);
-  //   console.log(JSON.stringify(currentVisited));
-  //   this.saveVisited(JSON.stringify(currentVisited));
-  // }
-
-  // async saveVisited(value) {
-  //   try {
-  //     await AsyncStorage.setItem('@VisitedStore:key', value);
-  //   } catch (error) {
-  //     console.log("Error saving data" + error);
-  //   }
-  // }
 
   getDistance = (a, b, c, d) => {
     const dist = geolib.getDistance(
       {latitude: a, longitude: b},
       {latitude: c, longitude: d}
     );
-    this.setState({
-      distance : dist
-    });
 
-    this.setFeedback(dist);
-    if (dist <= 100) {
+    if (dist > 500) {
+      this.state.distanceReport = "Still far away :(";
+    } else if (dist <= 500 && dist > 100) {
+      this.state.distanceReport = "Getting closer...";
+    } else if (dist <= 100 && dist > 50) {
+      this.state.distanceReport = "You're not far...";
+    } else if (dist <= 50 && dist > 10) {
+      this.state.distanceReport = "You're close...";
+    } else if (dist <= 10) {
+      this.state.distanceReport = "You found it! :)";
+    }
+
+    if (dist <= 150) {
       this.state.gotNear = true;
       this.setVolume(dist);
     }
-    if (dist <= 10) {
-      this.stopWatchingLocation();
-      this.setState({
-        hasFound : true
-      });
+    if (dist <= 20) {
+      // this.state.hasFound = true;
+      this.props.saveVisited();
     }
     let distKm = dist / 1000;
     let distMiles = distKm * 0.621371;
     return [distKm.toFixed(2), distMiles.toFixed(3)];
   }
 
-  setFeedback = (dist) => {
-    let feedback = "";
-    if (dist > 500) {
-      feedback = "Still far away :(";
-    } else if (dist <= 500 && dist > 100) {
-      feedback = "Getting closer...";
-    } else if (dist <= 100 && dist > 50) {
-      feedback = "You're not far...";
-    } else if (dist <= 50 && dist > 10) {
-      feedback = "You're close...";
-    } else if (dist <= 10) {
-      feedback = "You found it! :)";
+  setVolume = (dist) => {
+    if (this.state.isPlayingLoop) {
+      this.state.audioPlayerLoop.setVolumeAsync(1 - (dist / 150));
     }
-    this.state.distanceReport = feedback;
   }
 
-  setVolume = (dist) => {
-    if (this.state.gotNear === false) {
-      // await this.state.audioPlayerLoop.playAsync();
-      this.setState({
-        isPlayingSoundscape : true
-      });
-    }
-    if (this.state.isPlaying) {
-      // this.audioPlayer.setVolumeAsync(1 - (dist / 100));
+  getVisited = async () => {
+    try {
+      const value = await AsyncStorage.getItem('visited');
+      const valueParsed = JSON.parse(value);
+      this.state.visited = valueParsed || [];
+    } catch (error) {
+      console.log("Error retrieving data" + error);
     }
   }
 
@@ -209,8 +188,8 @@ class BandstandScreen extends React.Component {
       );
       return (
         <View>
-          <MonoText style={[styles.distance]}>Distance: </MonoText>
-          <MonoText style={[styles.distance]}>{dist[0]}km</MonoText>
+          {/* <MonoText style={[styles.distance]}>Distance: </MonoText> */}
+          <MonoTextBold style={[styles.distance]}>{dist[0]}km</MonoTextBold>
           <MonoText style={[styles.miles]}>({dist[1]} miles)</MonoText>
           {/* <Text>
             {this.state.polyfill
@@ -241,11 +220,7 @@ class BandstandScreen extends React.Component {
 //   };
 
   render() {
-    const selectedBandstand = this.props.navigation.getParam('itemId', 0);
-    console.log(selectedBandstand);
-    // this.state.selectedBandstand = selectedBandstand;
-    const item = bandStands[selectedBandstand];
-    // const navigation = this.props.navigation;
+    const item = this.props.navigation.getParam('item', 0);
     return (
       <View style={styles.card}>
         <Image
@@ -257,15 +232,16 @@ class BandstandScreen extends React.Component {
           <MonoTextBold style={[styles.title]}>{item.title}</MonoTextBold>
           <MonoTextBold style={[styles.location]}>{item.location}</MonoTextBold>
           {/* {this.renderWatchCompass()} */}
-          <MonoTextBold style={[styles.title, styles.distanceReport]}>{this.state.distanceReport}</MonoTextBold>
+          <MonoTextBold style={[styles.distanceReport]}>{this.state.distanceReport}</MonoTextBold>
           {this.renderWatchLocation(item)}
+        </View>
+        <View>
           {!this.state.hasFound ? 
             <View>
-              <MonoTextBold>scan QR code</MonoTextBold>
-              <Prompt target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
+              <Prompt text={"Can you see a Bandstand marker?\nScan QR code to activate..."} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
             </View>
           : 
-            <Prompt text={"View Bandstand"} target={"Bandstand"} source={require("../assets/images/icons/icon_action_bandstand.png")} />
+            <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} />
           }
         </View>
       </View>
@@ -288,23 +264,14 @@ const styles = StyleSheet.create({
   cardContent: {
     marginTop: -100,
     width: '85%',
-    backgroundColor: '#fff',
+    // backgroundColor: 'rgba(98,211,162,0.9)',
+    backgroundColor: 'rgba(255,255,255,1)',
     paddingTop: 20,
     alignContent: 'center',
     alignSelf: 'center',
     borderRadius: 5,
     // borderColor: Colours.brandGreen,
     // borderWidth: 3,
-  },
-  qrContainer: {
-    padding: 5,
-    borderColor: '#62d3a2',
-    borderWidth: 3,
-    marginBottom: 10,
-  },
-  qr: {
-    width: "100%",
-    height: 320,
   },
   distance: {
     textAlign: 'center',
@@ -316,25 +283,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
   },
-  button: {
-    backgroundColor: '#62d3a2',
-    color: "#7f47dd",
-    fontSize: 24,
-    marginLeft: "20%",
-    width: '60%',
-    padding: 20,
-    textAlign: 'center',
-  },
   title: {
     fontSize: 20,
     textAlign: 'center',
+    color: Colours.brandGreen,
   },
   location: {
     textAlign: 'center',
     marginTop: 5,
   },
   distanceReport: {
-    marginTop: 50,
+    fontSize: 18,
+    marginTop: 40,
+    marginBottom: 10,
+    textAlign: 'center',
   },
   description: {
     padding: 10,
