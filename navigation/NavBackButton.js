@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TouchableHighlight, Image, StyleSheet } from 'react-native';
+import { View, TouchableHighlight, Image, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 // import { MonoTextBold } from "./components/StyledTextBold";
