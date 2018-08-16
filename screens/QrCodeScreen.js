@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'react-native';
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
-import { BlurView } from 'expo';
+import { BarCodeScanner, BlurView, Permissions } from 'expo';
 import NavBackButton from "../navigation/NavButton";
+import Colours from '../constants/Colors';
 import { withNavigation } from 'react-navigation';
 
 
@@ -16,72 +17,65 @@ class QrCode extends React.Component {
     // this.audioPlayer = new Audio.Sound();
     // this.audioPlayerLoop = new Audio.Sound();
     this.state = {
-      doingQR: false,
+      doingQR: true,
       hasCameraPermission: null,
       // flash: 'off',
     };
 
   }
 
-
-  async componentWillMount() {
+  async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({hasCameraPermission: status === 'granted'});
   }
-
 
   handleBarCodeRead = ({ type, data }) => {
     this.setQrState;
     if (data) {
       let id = data.substr(data.length - 1);
-      //this.setFoundBandstand(Number(id));
+      // console.log(data);
+      // console.log(id);
+      // this.setFoundBandstand(Number(id));
     } else {
       alert('Sorry not found');
     }
   }
-  setQrState = () => {
+
+  setQrState = (id) => {
     this.setState({
       doingQR: !this.state.doingQR
     });
   }
 
-
   render() {
+    const { hasCameraPermission } = this.state;
 
-    // const { hasCameraPermission } = this.state;
-
-    // if (hasCameraPermission === null) {
-    //     return <Text>Requesting for camera permission</Text>;
-    //   } else if (hasCameraPermission === false) {
-    //     return <Text>No access to camera</Text>;
-    //   } else {
-    //     return (
-    //       <View style={styles.container}>
-    //         <Text style={[styles.title]}>{item.title}</Text>
-    //         <View style={styles.qrContainer}>
-    //           {this.state.doingQR ? <BarCodeScanner onBarCodeRead={this.handleBarCodeRead} style={styles.qr} /> : null}
-    //         </View>
-    //         <Text style={[styles.button]} onPress={this.setQrState}>back</Text>
-    //       </View>
-    //     );
-    //   }
-    return (
-      <View style={{ flex: 1 }}>
-        {/* Adjust the tint and intensity */}
-        <BlurView tint="dark" intensity={65} style={StyleSheet.absoluteFill}></BlurView>
-        <MonoText>Testing</MonoText>
-          {/* <NavBackButton /> Why not working? */}
-          <TouchableOpacity style={styles.backButton} 
-          onPress={() =>
-            this.props.navigation.goBack(null)
-          }>
-            <Image
-              style={styles.backButtonImg}
-              source={require("../assets/images/icons/icon_back.png")}
-            />
-          </TouchableOpacity>
-      </View>
-    );
+    if (hasCameraPermission === null) {
+      return <MonoText>Requesting for camera permission</MonoText>;
+    } else if (hasCameraPermission === false) {
+      return <MonoText>No access to camera</MonoText>;
+    } else {
+      return (
+        <View style={styles.container}>
+          {/* Adjust the tint and intensity */}
+          <BlurView tint="dark" intensity={65} style={StyleSheet.absoluteFill}></BlurView>
+            <MonoTextBold style={[styles.title]}>Scan the QR Code</MonoTextBold>
+            <View style={styles.qrContainer}>
+              {this.state.doingQR ? <BarCodeScanner onBarCodeRead={this.handleBarCodeRead} style={styles.qr} /> : null}
+            </View>
+            {/* <NavBackButton /> Why not working? */}
+            <TouchableOpacity style={styles.backButton} 
+            onPress={() =>
+              this.props.navigation.goBack(null)
+            }>
+              <Image
+                style={styles.backButtonImg}
+                source={require("../assets/images/icons/icon_back.png")}
+              />
+            </TouchableOpacity>
+        </View>
+      )
+    }
   }
 }
 
@@ -90,7 +84,10 @@ export default withNavigation(QrCode);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    alignContent: 'center',
+    backgroundColor: '#fff',
+    padding: 15,
   },
   backButton: {
     width: 46,
@@ -100,8 +97,24 @@ const styles = StyleSheet.create({
     left: 30,
     top: 46
   },
+  title: {
+    fontSize: 20,
+    color: Colours.brandGreen,
+    textAlign: 'center',
+  },
   backButtonImg: {
     width: '100%',
     height: '100%',
-  }
+  },
+  qrContainer: {
+    margin: 20,
+    borderColor: Colours.brandGreen,
+    borderWidth: 3,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+  },
+  qr: {
+    width: "100%",
+    height: 320,
+  },
 });
