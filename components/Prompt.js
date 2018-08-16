@@ -11,6 +11,7 @@ class Prompt extends React.Component {
     const text = this.props.text;
     const textAfter = this.props.textAfter;
     const target = this.props.target;
+    const targetId = this.props.targetId;
     const icon = this.props.source;
     return (
       <View style={styles.prompt}>
@@ -23,8 +24,18 @@ class Prompt extends React.Component {
           <Ionicons style={styles.ionicon} name="ios-arrow-down" size={30} />
         </View>
         <TouchableWithoutFeedback
-          onPress={() =>
-            this.props.navigation.navigate(target)
+          onPress={() => {
+              if (targetId) {
+                this.props.navigation.navigate(target, {
+                  itemId: targetId
+                })
+              } else {
+                this.props.navigation.navigate(target)
+              }
+              if (this.props.onNavigate) {
+                this.props.onNavigate();
+              }
+            }
           }
         >
           <Image
@@ -60,9 +71,10 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 20,
     marginBottom: 10,
+    textAlign: 'center',
   },
   textAfter: {
-    marginTop: 50,
+    marginTop: 20,
     textAlign: 'center',
   },
   
