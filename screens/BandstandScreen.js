@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import Bandstand from "../components/Bandstand";
 import BandstandVisited from "../components/BandstandVisited";
 import NavButton from "../navigation/NavButton";
-import NavBackButton from "../navigation/NavButton";
+import NavBackButton from "../navigation/NavBackButton";
 import { withNavigation } from 'react-navigation';
 
 class BandstandScreen extends React.Component {
@@ -18,8 +18,8 @@ class BandstandScreen extends React.Component {
     if (!hasVisited) {
       return (
         <View style={styles.container}>
-          <Bandstand navigation={this.props.navigation} />
-          <NavButton />
+          <Bandstand navigation={this.props.navigation} saveVisited={this.props.screenProps.saveVisited.bind(null, selectedBandstand)} />
+          {/* <NavButton /> */}
           {/* <NavBackButton /> Why not working? */}
           <TouchableOpacity style={styles.backButton} 
           onPress={() =>
@@ -36,8 +36,8 @@ class BandstandScreen extends React.Component {
       return (
         <View style={styles.container}>
           <BandstandVisited navigation={this.props.navigation} />
-          <NavButton />
-          {/* <NavBackButton /> Why not working? */}
+          {/* <NavButton /> */}
+          {/* <NavBackButton /> Why not working? */}z
           <TouchableOpacity style={styles.backButton} 
           onPress={() =>
             this.props.navigation.goBack(null)
