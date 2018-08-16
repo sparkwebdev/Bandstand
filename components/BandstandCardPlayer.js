@@ -37,6 +37,10 @@ export default class BandstandCardPlayer extends React.Component {
     }
   }
 
+  async componentWillUnmount() {
+    this.state.audioPlayer.stopAsync();
+  }
+
   onPlayPausePressed = async () => {
     if (this.state.hasLoaded === true) {
       try {
