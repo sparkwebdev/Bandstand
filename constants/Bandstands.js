@@ -220,6 +220,12 @@ const bandStands = [{
             <MonoText>
             There is a record of it being scrapped in 1953. One of the few cast iron bandstands.
             </MonoText>
+            {/* <MonoTextBold style={styles.textSmall}>
+            {"\n"}{"\n"}Image Credits:{"\n"}
+            </MonoTextBold>
+            <MonoText style={styles.textSmall}>
+            ???
+            </MonoText> */}
           </MonoText>
         </View>
         )
@@ -733,8 +739,8 @@ const bandStands = [{
       lng: -3.045463,
     },
     coordsTest: {
-      lat: 55.831073, // Queens Park Monument, Glasgow
-      lng: -4.270193,
+      lat: 55.827849, // Dan's, Glasgow
+      lng: -4.281853,
     },
     kmToNext: 0,
     timeToNext: 0,
