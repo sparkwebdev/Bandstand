@@ -15,17 +15,15 @@ import { withNavigation } from 'react-navigation';
 
 class BandstandCard extends React.Component {
   render() {
-    const item = this.props.item;
-    const hasVisited = this.props.hasVisited || false;
-    const hasAudio = this.props.hasAudio || false;
-    const hasDescription = this.props.hasLink || false;
+    const { item, hasVisited, hasAudio, hasDescription } = this.props;
     return (
       <TouchableWithoutFeedback
 
           onPress={() =>
             !hasAudio ? 
               this.props.navigation.navigate("Bandstand", {
-                itemId: item.id
+                itemId: item.id,
+                item: item
               })
             : null
           }
