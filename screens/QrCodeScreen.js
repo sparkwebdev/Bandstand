@@ -33,8 +33,21 @@ class QrCode extends React.Component {
     this.setQrState;
     if (data) {
       let id = data.substr(data.length - 1);
-      // console.log(data);
-      // console.log(id);
+      selectedBandstand = this.props.navigation.getParam('itemId', 0);
+      console.log(selectedBandstand);
+      console.log(id);
+      if (id == selectedBandstand) {
+        this.setState({
+          doingQR: !this.state.doingQR
+        });
+        alert('Well done!');
+        this.props.screenProps.saveVisited(selectedBandstand);
+        this.props.navigation.goBack();
+        // console.log(this.props.navigation);
+      } else {
+        alert('Sorry, that\'s the wrong Bandstand');
+        this.props.navigation.goBack();
+      }
       // this.setFoundBandstand(Number(id));
     } else {
       alert('Sorry not found');
@@ -49,7 +62,6 @@ class QrCode extends React.Component {
 
   render() {
     const { hasCameraPermission } = this.state;
-
     if (hasCameraPermission === null) {
       return <MonoText>Requesting for camera permission</MonoText>;
     } else if (hasCameraPermission === false) {
