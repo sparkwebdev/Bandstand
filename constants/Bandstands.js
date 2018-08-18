@@ -63,14 +63,14 @@ const styles = StyleSheet.create({
 
 const bandStands = [{
     id: 1,
-    title: "Ross Theatre",
+    title: "Princes Street Gardens",
     location: "West Princes Street Gardens",
     dates: "1877-",
     description: "null",
     image: require('../assets/images/bandstand-01-01.jpg'),
     coords: {
-      lat: 55.950526,
-      lng: -3.200066,
+      lat: 55.951130,
+      lng: -3.200180,
     },
     coordsTest: {
       lat: 55.833428, // Steven's home office
@@ -92,7 +92,7 @@ const bandStands = [{
           <View style={styles.contentContainer}>
             <MonoText style={styles.text}>
               <MonoTextBold style={[styles.textYellow, styles.textLargest]}>
-              Ross{"\n"}Theatre{"\n"}
+              Princes Street{"\n"}Gardens{"\n"}
               </MonoTextBold>
               <MonoTextBold style={[styles.textYellow, styles.textLarger]}>
               {"\n"}1877-
@@ -250,8 +250,8 @@ const bandStands = [{
     description: "null3",
     image: require('../assets/images/bandstand-03-01.jpg'),
     coords: {
-      lat: 55.934214,
-      lng: -3.247926,
+      lat: 55.935735,
+      lng: -3.252225,
     },
     coordsTest: {
       lat: 55.859112,  // Central Train Station
@@ -313,10 +313,10 @@ const bandStands = [{
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
             <MonoTextBold style={styles.textBold}>
-            The Scottish National Exhibition took place at Saughton Park from May-Oct 1908, after which time the prefabricated buildings (and two bandstands) were dismantled, with many being relocated to form Portobello’s Marine Gardens.{"\n"}{"\n"}
+            The Scottish National Exhibition took place at Saughton Park from May-Oct 1908, after which time the prefabricated buildings (and two bandstands) were dismantled, with many being relocated to form Portobello’s Marine Gardens. 
             </MonoTextBold>
             <MonoText>
-            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park. 
+            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park.
             </MonoText>
           </MonoText>
         </View>
@@ -333,10 +333,10 @@ const bandStands = [{
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
             <MonoTextBold style={styles.textBold}>
-            This bandstand was eventually dismantled in 1986, and kept in storage, which is currently being rebuilt to be returned to the park as part of their ongoing redevelopment project, which opens to the public in 2019.{"\n"}{"\n"}
+            This bandstand was eventually dismantled in 1986 and kept in storage. It has been completely refurbished and rebuilt in the park as part of their ongoing redevelopment project, which opens to the public in 2019.
             </MonoTextBold>
             <MonoText>
-            Although access to the bandstand is currently not possible, it is visible from the Stevenson Drive entrance that leads you towards the Walled Garden. 
+            Although access to the bandstand is currently not possible, it is visible from various points outside the Walled Garden including the Stevenson Drive entrance that leads you towards the Walled Garden.
             </MonoText>
           </MonoText>
         </View>
@@ -439,8 +439,8 @@ const bandStands = [{
     description: "null5",
     image: require('../assets/images/bandstand-05-01.jpg'),
     coords: {
-      lat: 55.970992,
-      lng: -3.165235,
+      lat: 55.971078,
+      lng: -3.165528,
     },
     coordsTest: {
       lat: 55.862466, // Queen Street Station, Glasgow

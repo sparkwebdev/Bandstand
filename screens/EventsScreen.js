@@ -43,7 +43,6 @@ export default class SettingsScreen extends React.Component {
           <View style={styles.paragraph}>
             <MonoTextBold style={styles.strong}>Sat 8th Sept, 3pm</MonoTextBold>
             <MonoText>
-              Ross Theatre Bandstand,{"\n"}
               Princes Street Gardens,{"\n"}
               Edinburgh EH2 2HG{"\n"}
               (live performances from Ross Whyte & Portobello Community Choir)
