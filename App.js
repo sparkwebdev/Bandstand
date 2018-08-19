@@ -144,6 +144,10 @@ export default class App extends React.Component {
         require('./assets/images/bandstand-07-01.jpg'),
         require('./assets/images/bandstand-08-01.jpg'),
 
+        // Events Screens
+        require('./assets/images/screens/events-00.jpg'),
+        require('./assets/images/screens/events-01.jpg'),
+
         // Icons - Main Menu
         require('./assets/images/icons/icon_menu.png'),
         require('./assets/images/icons/icon_menu_close.png'),
@@ -156,6 +160,7 @@ export default class App extends React.Component {
         // Icons - Interactions
         require('./assets/images/icons/icon_action_bandstand.png'),
         require('./assets/images/icons/icon_action_marker.png'),
+        require('./assets/images/icons/icon_action_qr.png'),
 
         // Icons - Media Player
         require('./assets/images/icons/icon_play.png'),
