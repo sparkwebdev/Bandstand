@@ -37,8 +37,6 @@ class QrCode extends React.Component {
     if (data) {
       let id = data.substr(data.length - 1);
       selectedBandstand = this.props.navigation.getParam('itemId', 0);
-      console.log(selectedBandstand);
-      console.log(id);
       if (id == selectedBandstand) {
         this.setState({
           doingQR: !this.state.doingQR
@@ -46,7 +44,6 @@ class QrCode extends React.Component {
         alert('Well done!');
         this.props.screenProps.saveVisited(selectedBandstand);
         this.props.navigation.goBack();
-        // console.log(this.props.navigation);
       } else {
         alert('Sorry, that\'s the wrong Bandstand');
         this.props.navigation.goBack();
