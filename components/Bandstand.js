@@ -238,7 +238,7 @@ class BandstandScreen extends React.Component {
         <View>
           {!this.state.hasFound ? 
             <View>
-              <Prompt text={"Can you see a Bandstand marker?\nScan QR code to activate..."} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
+              <Prompt text={"Can you see this Bandstand marker?\nScan QR code to activate..."} targetId={item.id} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
             </View>
           : 
             <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} />
