@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     color: Colours.brandPurple
   },
   marker: {
-    width: 66,
-    height: 66,
+    width: 78,
+    height: 78,
   },
   text: {
     marginTop: 20,
