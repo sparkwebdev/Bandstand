@@ -109,9 +109,6 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center"
   },
-  textSmall: {
-    fontSize: 13
-  },
   textLarge: {
     fontSize: 25,
     lineHeight: 50,
@@ -121,12 +118,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colours.brandGreen,
   },
+  textSmall: {
+    fontSize: 14
+  },
+  textSmaller: {
+    fontSize: 12
+  },
   textLink: {
     color: Colours.brandPurple
   },
   logos: {
     width: 212,
     height: 45,
+    marginTop: 15,
+    alignSelf: "center",
+  },
+  logos03: {
+    width: 140,
+    height: 45,
+    marginTop: 10,
+    marginBottom: 20,
     alignSelf: "center",
   },
   headphones: {
@@ -182,12 +193,14 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-            8 locations of bandstand soundspaces across edinburgh and
-            musselburgh, with accompanied sound, imagery{"\n"}and text{"\n"}{"\n"}
+          8 locations of bandstand soundspaces across edinburgh and musselburgh, with immersive sound, commissioned music and archival imagery.{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
-            Marking the spaces of where bandstands once stood, and some that still do, this project brings together a sense of discovery through sound, to replicate the sense of hearing music playing at a bandstand in a public park.{"\n"}{"\n"}
-            Each location contains a marker representing as near as possible the location of the actual bandstand. Once you visit please use the QR code on the marker to find out more about that site.{"\n"}
+          This project invites us to once again find music as we stroll our public parks, to search out the music we hear, focussing on places where bandstands once stood, and a few that still do.{"\n"}{"\n"}
+          </MonoText>
+          <MonoText style={styles.textSmall}>
+          Each location contains a marker representing as near as possible the location of the original bandstand. By visiting each of these, you can unlock the melody relating to that site, along with archive imagery and historical info. Visit 3 locations and you can access the complete composition.
+          {/* {"\n"}{"\n"}As you collect the melodies from each location they can be listened to, or layered together, by using the playlist area of this app. Visit 3 locations and you can access the complete composition. */}
           </MonoText>
         </MonoText>
       </View>
@@ -205,15 +218,11 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          {"\n"}Ross Whyte is a Glasgow based composer and sound artist.{"\n"}{"\n"}
+          Ross Whyte’s composition, The Great Exhibition, is inspired by the early 1900s era of seaside entertainment and end-of-the-pier entertainers such as Harry Lauder.{"\n"}{"\n"}
           </MonoTextBold>
-          <MonoTextBold style={styles.textSmall}>
-            His composition is inspired by the early 1900s era of seaside entertainment, relating to Portobello and of the work of Harry Lauder.{"\n"}{"\n"}
-          </MonoTextBold>
-          <MonoText style={styles.textSmall}>
-            The Great Exhibition combines recent sound recording with both archival and newly-composed material to present an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh.{"\n"}{"\n"}
-            The work contains 8 melodic lines performed by the Portobello Community Choir. The melodies can be ‘unlocked’ by visiting each of the 8 bandstand locations. They can be listened to individually or layered on top of each other, as each new melody is discovered. Together they form a complete song: The Great Exhibition.{"\n"}{"\n"}
-            The Great Exhibition is romantic, sentimental, light-hearted, and hopeful, and aims to evoke an atmosphere of a more innocent time.
+          <MonoText>
+          Using sound recordings of both archival and newly composed material, the work performed by Portobello Community Choir, presents an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh. {"\n"}{"\n"}
+          Ross is a Glasgow based composer and sound artist.
           </MonoText>
         </MonoText>
       </View>
@@ -242,10 +251,6 @@ const slides = [
           <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.stevenpark.co.uk')}>stevenpark.co.uk{"\n"}{"\n"}</MonoTextBold>
           <MonoText style={styles.textSmall}>enquiries:{"\n"}</MonoText>
           <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openMailto('mailto:rosy@artwalkporty.co.uk')}>rosy@artwalkporty.co.uk{"\n"}{"\n"}</MonoTextBold>
-          <MonoText style={styles.textSmall}>thanks to:{"\n"}</MonoText>
-          <MonoText>Historic Environment Scotland{"\n"}
-          National Library of Scotland{"\n"}
-          Portobello Heritage Trust</MonoText>
         </MonoText>
       </View>
     )
@@ -261,23 +266,30 @@ const slides = [
     content: () => (
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>This project is sponsored by The Royal Edinburgh Military Tattoo and The City of Edinburgh Council.{"\n"}</MonoTextBold>
+          <MonoTextBold style={styles.textSmall}>This project is funded by The Royal Edinburgh Military Tattoo and The City of Edinburgh Council.</MonoTextBold>
         </MonoText>
         <Image
           style={styles.logos}
           source={require("../assets/images/screens/additional/sponsor-logos.jpg")}
-        />
+        />{"\n"}
+        <Image
+          style={styles.logos03}
+          source={require("../assets/images/screens/additional/sponsor-logo-03.jpg")}
+        />{"\n"}
         <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>{"\n"}{"\n"}Archive imagery credits:{"\n"}</MonoTextBold>
-          <MonoText style={styles.textSmall}>
-          {"\n"}Meadows - © The Scotsman Publications Ltd{"\n"}
-          Saughton - © The Scotsman Publications Ltd{"\n"}
-          Victoria Park -  © Courtesy of Historic Environment Scotland (Canmore image){"\n"}
-          - valentine image - © Valentines of Dundee{"\n"}
-          Marine Gardens - Portobello Heritage Trust{"\n"}
-          Portobello Prom - bandstand-portobello.jpg - Peter Stubbs{"\n"}
-          - others Portobello Heritage Trust{"\n"}
-          - film still/ clip/dancing - From “Holidays at Home” 1940s archive film. Produced with permission from the City of Edinburgh Council.
+          <MonoTextBold style={styles.textSmall}>Thanks to:</MonoTextBold>
+          <MonoText style={styles.textSmaller}>
+          {"\n"}Historic Environment Scotland{"\n"}
+          National Library of Scotland{"\n"}
+          Portobello Heritage Trust{"\n"}{"\n"}</MonoText>
+          <MonoTextBold style={styles.textSmall}>Archive imagery credits:{"\n"}</MonoTextBold>
+          <MonoText style={styles.textSmaller}>
+          Copyright City of Edinburgh Council (Bandstand Dancing at Portobello){"\n"}
+          from ‘Holidays at Home’ 1940s archive film.{"\n"}
+          Copyright The Scotsman Publications Ltd (Meadows and Saughton){"\n"}
+          Copyright Courtesy of Historic Environment Scotland (Victoria Park){"\n"}
+          Copyright Valentines of Dundee (Victoria Park){"\n"}
+          Portobello Heritage Trust & Peter Stubbs (Portobello Prom)
           </MonoText>
         </MonoText>
       </View>
