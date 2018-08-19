@@ -26,6 +26,9 @@ class QrCode extends React.Component {
 
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    if (status !== 'granted') {
+      alert('We need the camera to scan bandstand QR Codes.');
+    }
     this.setState({hasCameraPermission: status === 'granted'});
   }
 

@@ -138,7 +138,7 @@ class BandstandScreen extends React.Component {
   startWatchingLocation = async () => {
     const { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
-      return;
+      alert('We need to know your location to direct you to the bandstands.');
     }
 
     let subscription = await Location.watchPositionAsync(
