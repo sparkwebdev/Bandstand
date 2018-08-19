@@ -62,6 +62,15 @@ export default class App extends React.Component {
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
+    // Audio.setIsEnabledAsync(true);
+    Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      playsInSilentLockedModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+    });
   }
 
   saveVisited = async (id) => {
