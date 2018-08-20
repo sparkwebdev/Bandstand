@@ -4,8 +4,6 @@
 
 ### High Priority
 
-* Image credits
-
 ### Medium Priority
 
 ### Low Priority
