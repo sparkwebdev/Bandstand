@@ -193,7 +193,7 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          8 locations of bandstand soundspaces across edinburgh and musselburgh, with immersive sound, commissioned music and archival imagery.{"\n"}{"\n"}
+          8 locations of bandstand soundspaces across Edinburgh and Musselburgh, with immersive sound, commissioned music and archival imagery.{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
           This project invites us to once again find music as we stroll our public parks, to search out the music we hear, focussing on places where bandstands once stood, and a few that still do.{"\n"}{"\n"}
