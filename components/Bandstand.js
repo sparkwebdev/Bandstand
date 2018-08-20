@@ -82,9 +82,12 @@ class BandstandScreen extends React.Component {
   }
 
   componentWillUnmount() {
+
     this.stopWatchingLocation();
-    this.state.audioPlayerSoundscape.stopAsync();
-    this.state.audioPlayerLoop.stopAsync();
+    // if (!this.state.hasFound && this.props.navigation.state.routeName !== 'Bandstand') {
+      this.state.audioPlayerSoundscape.stopAsync();
+      this.state.audioPlayerLoop.stopAsync();
+    // }
   }
 
 
@@ -111,7 +114,7 @@ class BandstandScreen extends React.Component {
       this.setVolume(dist);
     }
     if (dist <= 20) {
-      // this.state.hasFound = true;
+      this.state.hasFound = true;
       this.props.saveVisited();
     }
     let distKm = dist / 1000;
