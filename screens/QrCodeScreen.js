@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, AsyncStorage, Alert } from 'react-native';
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 import { BarCodeScanner, BlurView, Permissions } from 'expo';
@@ -41,11 +41,20 @@ class QrCode extends React.Component {
         this.setState({
           doingQR: !this.state.doingQR
         });
-        alert('Well done!');
+        // Works on both iOS and Android
+        Alert.alert(
+          'Well done!',
+          'You found the Bandstand',
+          { cancelable: false }
+        )
         this.props.screenProps.saveVisited(selectedBandstand);
         this.props.navigation.goBack();
       } else {
-        alert('Sorry, that\'s the wrong Bandstand');
+        Alert.alert(
+          'Sorry',
+          'that\'s the wrong Bandstand',
+          { cancelable: false }
+        )
         this.props.navigation.goBack();
       }
       // this.setFoundBandstand(Number(id));
