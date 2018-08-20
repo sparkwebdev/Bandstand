@@ -14,8 +14,6 @@ class QrCode extends React.Component {
   };
   constructor(props) {
     super(props);
-    // this.audioPlayer = new Audio.Sound();
-    // this.audioPlayerLoop = new Audio.Sound();
     this.state = {
       doingQR: true,
       hasCameraPermission: null,
@@ -27,7 +25,7 @@ class QrCode extends React.Component {
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     if (status !== 'granted') {
-      alert('We need the camera to scan bandstand QR Codes.');
+      alert('Bandstands would like to access your camera to allow you to scan QR Codes. We do not store or share any data.');
     }
     this.setState({hasCameraPermission: status === 'granted'});
   }
@@ -72,9 +70,9 @@ class QrCode extends React.Component {
   render() {
     const { hasCameraPermission } = this.state;
     if (hasCameraPermission === null) {
-      return <MonoText>Requesting for camera permission</MonoText>;
+      return <MonoText style={styles.warning}>{"\n"}{"\n"}{"\n"}{"\n"}Requesting for camera permission</MonoText>;
     } else if (hasCameraPermission === false) {
-      return <MonoText>No access to camera</MonoText>;
+      return <MonoText style={styles.warning}>{"\n"}{"\n"}{"\n"}{"\n"}No access to camera</MonoText>;
     } else {
       return (
         <View style={styles.container}>
@@ -137,5 +135,9 @@ const styles = StyleSheet.create({
   qr: {
     width: "100%",
     height: 320,
+  },
+  warning: {
+    padding: 25,
+    textAlign: 'center',
   },
 });
