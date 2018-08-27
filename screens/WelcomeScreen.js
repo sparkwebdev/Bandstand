@@ -125,7 +125,8 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   textLink: {
-    color: Colours.brandPurple
+    color: Colours.brandPurple,
+    fontSize: 16
   },
   // logos: {
   //   width: 212,
