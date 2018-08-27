@@ -145,7 +145,7 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          Weds 5th Sept{"\n"}8.30-10pm</MonoTextBold>
+          Wed 5th Sept{"\n"}8.30-10pm</MonoTextBold>
           <MonoTextBold>
           {"\n"}{"\n"}Ross Whyte performs a live mix of sound recordings together with archival material relating to the project
           The Skylark, 243 Portobello High Street, Edinburgh EH15 2AW
@@ -161,23 +161,12 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          {"\n"}{"\n"}Sat 8th Sept{"\n"}3pm</MonoTextBold>
+          Sat 8th Sept{"\n"}3pm</MonoTextBold>
           <MonoTextBold>
           {"\n"}{"\n"}Ross Whyte and Portobello Community Choir
           perform the complete work ‘The Great Exhibition’
           at Ross Theatre Bandstand, Princes Street Gardens, Edinburgh
-          {"\n"}{"\n"}{"\n"}</MonoTextBold>
-          <MonoText style={styles.textSmall}>
-            You can also download a copy of the event newspaper from our 
-            website:{"\n"}
-            <MonoTextBold
-              style={styles.textLink}
-              onPress={() =>
-              NavigationHelpers.openWebPage("http://www.artwalkporty.co.uk")
-              }
-            >artwalkporty.co.uk
-            </MonoTextBold>
-          </MonoText>
+          {"\n"}{"\n"}All events are free.</MonoTextBold>
         </MonoText>
       </View>
     )
