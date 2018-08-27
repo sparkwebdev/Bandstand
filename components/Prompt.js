@@ -19,9 +19,9 @@ class Prompt extends React.Component {
           <MonoTextBold style={styles.text}>{text}</MonoTextBold>
         : null }
         <View style={styles.arrows}>
-          <Ionicons style={styles.ionicon} name="ios-arrow-down" size={18} />
+          <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={15} />
+          <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={18} />
           <Ionicons style={styles.ionicon} name="ios-arrow-down" size={24} />
-          <Ionicons style={styles.ionicon} name="ios-arrow-down" size={30} />
         </View>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -60,13 +60,16 @@ const styles = StyleSheet.create({
     margin: 10
   },
   ionicon: {
-    lineHeight: 20,
+    lineHeight: 18,
     alignSelf: 'center',
     color: Colours.brandPurple
   },
+  ioniconSmall: {
+    lineHeight: 15,
+  },
   marker: {
-    width: 78,
-    height: 78,
+    width: 64,
+    height: 64,
   },
   text: {
     marginTop: 20,

@@ -127,22 +127,36 @@ const styles = StyleSheet.create({
   textLink: {
     color: Colours.brandPurple
   },
-  logos: {
-    width: 212,
-    height: 45,
-    marginTop: 15,
+  // logos: {
+  //   width: 212,
+  //   height: 45,
+  //   marginTop: 15,
+  //   alignSelf: "center",
+  // },
+  logos01: {
+    width: 147,
+    height: 80,
+    marginTop: 20,
+    marginBottom: 20,
+    alignSelf: "center",
+  },
+  logos02: {
+    width: 197,
+    height: 50,
+    marginBottom: 20,
     alignSelf: "center",
   },
   logos03: {
-    width: 140,
-    height: 45,
-    marginTop: 10,
+    width: 120,
+    height: 39,
     marginBottom: 20,
     alignSelf: "center",
   },
   headphones: {
-    width: 120,
-    height: 68,
+    width: 80,
+    height: 46,
+    marginTop: 15,
+    marginBottom: 15,
     alignSelf: "center",
   },
 });
@@ -193,15 +207,15 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          8 locations of bandstand soundspaces across Edinburgh and Musselburgh, with immersive sound, commissioned music and archival imagery.{"\n"}{"\n"}
+          8 locations of bandstand soundspaces across Edinburgh and Musselburgh, with commissioned music and archival imagery.{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
-          This project invites us to once again find music as we stroll our public parks, to search out the music we hear, focussing on places where bandstands once stood, and a few that still do.{"\n"}{"\n"}
+          Find music once again as we stroll our public parks by visiting each location where bandstands once stood. Look out for the marker at each to unlock the melody and imagery. Visit 3 and you can gain access to the full composition.
           </MonoText>
-          <MonoText style={styles.textSmall}>
-          Each location contains a marker representing as near as possible the location of the original bandstand. By visiting each of these, you can unlock the melody relating to that site, along with archive imagery and historical info. Visit 3 locations and you can access the complete composition.
-          {/* {"\n"}{"\n"}As you collect the melodies from each location they can be listened to, or layered together, by using the playlist area of this app. Visit 3 locations and you can access the complete composition. */}
-          </MonoText>
+          {/* <MonoText style={styles.textSmall}>
+          {"\n"}{"\n"}Each location contains a marker representing as near as possible the location of the original bandstand. By visiting each of these, you can unlock the melody relating to that site, along with archive imagery and historical info. Visit 3 locations and you can access the complete composition.
+          {"\n"}{"\n"}As you collect the melodies from each location they can be listened to, or layered together, by using the playlist area of this app. Visit 3 locations and you can access the complete composition.
+          </MonoText> */}
         </MonoText>
       </View>
     )
@@ -218,11 +232,10 @@ const slides = [
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          Ross Whyte’s composition, The Great Exhibition, is inspired by the early 1900s era of seaside entertainment and end-of-the-pier entertainers such as Harry Lauder.{"\n"}{"\n"}
+          The commissioned music by Ross Whyte, The Great Exhibition, is inspired by the early 1900s era of seaside entertainment and end-of-the-pier entertainers such as Harry Lauder.{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
-          Using sound recordings of both archival and newly composed material, the work performed by Portobello Community Choir, presents an abstract reimagining of the kinds of sounds and music that might have been heard at the various bandstands around Edinburgh. {"\n"}{"\n"}
-          Ross is a Glasgow based composer and sound artist.
+          Portobello Community Choir performs the work together with sound recordings of archival material, and lyrics by Rosy Naylor.{"\n"}{"\n"}
           </MonoText>
         </MonoText>
       </View>
@@ -239,9 +252,9 @@ const slides = [
     content: () => (
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>Commissioned and{"\n"}conceived by{"\n"}</MonoTextBold>
+          <MonoText style={styles.textSmall}>Commissioned and conceived by{"\n"}</MonoText>
           <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.artwalkprojects.co.uk')}>artwalkprojects.co.uk</MonoTextBold>
-          <MonoText style={styles.textSmall}>{"\n"}{"\n"}{"\n"}composition:{"\n"}</MonoText>
+          <MonoText style={styles.textSmall}>{"\n"}{"\n"}composition:{"\n"}</MonoText>
           <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.rosswhyte.com')}>rosswhyte.com</MonoTextBold>
           <MonoText style={styles.textSmall}>{"\n"}{"\n"}performed by:{"\n"}</MonoText>
           <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://www.portobellocommunitychoir.org/')}>portobellocommunitychoir.org</MonoTextBold>
@@ -269,8 +282,12 @@ const slides = [
           <MonoTextBold style={styles.textSmall}>This project is funded by The Royal Edinburgh Military Tattoo and The City of Edinburgh Council.</MonoTextBold>
         </MonoText>
         <Image
-          style={styles.logos}
-          source={require("../assets/images/screens/additional/sponsor-logos.jpg")}
+          style={styles.logos01}
+          source={require("../assets/images/screens/additional/sponsor-logo-01.jpg")}
+        />{"\n"}
+        <Image
+          style={styles.logos02}
+          source={require("../assets/images/screens/additional/sponsor-logo-02.jpg")}
         />{"\n"}
         <Image
           style={styles.logos03}
@@ -282,7 +299,7 @@ const slides = [
           {"\n"}Historic Environment Scotland{"\n"}
           National Library of Scotland{"\n"}
           Portobello Heritage Trust{"\n"}{"\n"}</MonoText>
-          <MonoTextBold style={styles.textSmall}>Archive imagery credits:{"\n"}</MonoTextBold>
+          {/* <MonoTextBold style={styles.textSmall}>Archive imagery credits:{"\n"}</MonoTextBold>
           <MonoText style={styles.textSmaller}>
           Copyright City of Edinburgh Council (Bandstand Dancing at Portobello){"\n"}
           from ‘Holidays at Home’ 1940s archive film.{"\n"}
@@ -290,7 +307,7 @@ const slides = [
           Copyright Courtesy of Historic Environment Scotland (Victoria Park){"\n"}
           Copyright Valentines of Dundee (Victoria Park){"\n"}
           Portobello Heritage Trust & Peter Stubbs (Portobello Prom)
-          </MonoText>
+          </MonoText> */}
         </MonoText>
       </View>
     )
@@ -300,19 +317,19 @@ const slides = [
     content: (props) => (
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
-          <MonoTextBold style={[styles.textBold, styles.textLink, styles.textLarge]}>
+          <MonoTextBold style={[styles.textBold, styles.textLink]}>
           Get Started!
           </MonoTextBold>
         </MonoText>
         <MonoTextBold style={[styles.text, styles.textBold]}>
-        {"\n"}We recommend you{"\n"} wear headphones...{"\n"}
+        {"\n"}We recommend you{"\n"} wear headphones...
         </MonoTextBold>
         <Image
           style={styles.headphones}
           source={require("../assets/images/screens/additional/headphones.png")}
         />
         <MonoTextBold style={[styles.text, styles.textBold]}>
-          {"\n"}Then,{"\n"}choose a{"\n"}bandstand...
+          Then, choose{"\n"}a bandstand...
         </MonoTextBold>
         <Prompt target="Bandstands" source={require("../assets/images/icons/icon_action_marker.png")} onNavigate={props.onPromptNavigate} />
       </View>
