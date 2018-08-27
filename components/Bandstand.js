@@ -241,7 +241,7 @@ class BandstandScreen extends React.Component {
         <View>
           {!this.state.hasFound ? 
             <View>
-              <Prompt text={"Can you see this Bandstand marker?\nScan QR code to activate..."} targetId={item.id} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
+              <Prompt text={"Can you see this marker?\nScan QR code to activate..."} targetId={item.id} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
             </View>
           : 
             <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} />
@@ -253,10 +253,9 @@ class BandstandScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  card: {
       flex: 1,
       backgroundColor: '#fff',
-      padding: 15,
   },
   cardImage: {
     marginBottom: 15,
@@ -265,7 +264,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   cardContent: {
-    marginTop: -100,
+    marginTop: -125,
     width: '85%',
     // backgroundColor: 'rgba(98,211,162,0.9)',
     backgroundColor: 'rgba(255,255,255,1)',
@@ -278,16 +277,15 @@ const styles = StyleSheet.create({
   },
   distance: {
     textAlign: 'center',
-    marginBottom: 5,
     fontSize: 20,
     fontWeight: 'bold',
   },
   miles: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 15,
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
     color: Colours.brandGreen,
   },
@@ -297,12 +295,9 @@ const styles = StyleSheet.create({
   },
   distanceReport: {
     fontSize: 18,
-    marginTop: 40,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 5,
     textAlign: 'center',
-  },
-  description: {
-    padding: 10,
   },
 });
 
