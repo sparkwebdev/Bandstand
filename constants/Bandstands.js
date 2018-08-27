@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 
 const bandStands = [{
     id: 1,
-    title: "Princes Street Gardens",
+    title: "Ross Theatre",
     location: "West Princes Street Gardens",
     dates: "1877-",
     description: "null",
@@ -799,11 +799,8 @@ const bandStands = [{
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
             <MonoTextBold style={styles.textBold}>
-            The bandstand was first installed in 1914 which was restored as part of a Heritage Lottery project developing the park, completed in early 2018.{"\n"}{"\n"}
+            The bandstand was first installed in 1914 which was restored as part of a Heritage Lottery project developing the park, completed in early 2018.
             </MonoTextBold>
-            <MonoText>
-            The area later became an outdoor paddling pool and in the 1990s a community garden.
-            </MonoText>
           </MonoText>
         </View>
         )
