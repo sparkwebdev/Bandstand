@@ -186,8 +186,8 @@ class BandstandScreen extends React.Component {
       const dist = this.getDistance(
         this.state.watchLocation.coords.latitude,
         this.state.watchLocation.coords.longitude,
-        item.coordsTest.lat,
-        item.coordsTest.lng,
+        item.coords.lat,
+        item.coords.lng,
       );
       return (
         <View>
