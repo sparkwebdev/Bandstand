@@ -15,10 +15,10 @@ class BandstandScreen extends React.Component {
     const visited = this.props.screenProps.visited;
     const selectedBandstand = this.props.navigation.getParam('itemId', 0);
     const hasVisited = visited.includes(selectedBandstand);
-    if (!hasVisited) {
+    if (hasVisited || visited.length < 2) {
       return (
         <View style={styles.container}>
-          <Bandstand navigation={this.props.navigation} saveVisited={this.props.screenProps.saveVisited.bind(null, selectedBandstand)} />
+          <BandstandVisited navigation={this.props.navigation} />
           {/* <NavButton /> */}
           {/* <NavBackButton /> Why not working? */}
           <TouchableOpacity style={styles.backButton} 
@@ -35,9 +35,9 @@ class BandstandScreen extends React.Component {
     } else {
       return (
         <View style={styles.container}>
-          <BandstandVisited navigation={this.props.navigation} />
+          <Bandstand navigation={this.props.navigation} saveVisited={this.props.screenProps.saveVisited.bind(null, selectedBandstand)} />
           {/* <NavButton /> */}
-          {/* <NavBackButton /> Why not working? */}z
+          {/* <NavBackButton /> Why not working? */}
           <TouchableOpacity style={styles.backButton} 
           onPress={() =>
             this.props.navigation.goBack(null)
