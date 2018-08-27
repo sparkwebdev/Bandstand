@@ -69,7 +69,8 @@ export default class PlaylistScreen extends React.Component {
               let hasVisited = visited.includes(item.id);
               return (
                 <View key={index}>
-                  {index === 0 && visited.length > 2 ? <MonoTextBold>{"\n"}{"\n"}Congratulations, you have unlocked all soundscapes...</MonoTextBold> : null}
+                  {index === 0 && visited.length > 2 ? <MonoTextBold>Congratulations, you have unlocked all soundscapes...</MonoTextBold> : null}
+                  {index === 0 && visited.length > 1 ? <MonoTextBold>{"\n"}You can play tracks one on top of the other to create your own composition. Just press play on each track.</MonoTextBold> : null}
                   <View
                     style={[
                       styles.route, { marginTop: 20 }
