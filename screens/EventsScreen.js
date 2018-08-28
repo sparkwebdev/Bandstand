@@ -3,9 +3,6 @@ import { View, StyleSheet, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
 
 import Colours from '../constants/Colors';
-import NavigationHelpers from "../helpers/NavigationHelpers";
-
-import Prompt from "../components/Prompt";
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 import NavButton from "../navigation/NavButton";
@@ -84,10 +81,7 @@ const styles = StyleSheet.create({
     },
     textBold: {
       fontSize: 24,
-      color: Colours.brandGreen,
-    },
-    textLink: {
-      color: Colours.brandPurple
+      color: Colours.brandPurple,
     },
     textYellow: {
       color: Colours.brandYellow,
@@ -147,9 +141,9 @@ const slides = [
           <MonoTextBold style={styles.textBold}>
           Wed 5th Sept{"\n"}8.30-10pm</MonoTextBold>
           <MonoTextBold>
-          {"\n"}{"\n"}Ross Whyte performs a live mix of sound recordings together with archival material relating to the project
-          The Skylark, 243 Portobello High Street, Edinburgh EH15 2AW
-          (to accompany project exhibition){"\n"}</MonoTextBold>
+          {"\n"}{"\n"}Ross Whyte performs a live mix of sound recordings together with archival material relating to the project.
+          {"\n"}The Skylark, 243 Portobello High Street, Edinburgh EH15 2AW
+          (to accompany project exhibition)</MonoTextBold>
         </MonoText>
       </View>
     )
