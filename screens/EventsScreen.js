@@ -143,7 +143,7 @@ const slides = [
           <MonoTextBold>
           {"\n"}{"\n"}Ross Whyte performs a live mix of sound recordings together with archival material relating to the project.
           {"\n"}The Skylark, 243 Portobello High Street, Edinburgh EH15 2AW
-          (to accompany project exhibition)</MonoTextBold>
+          (to accompany project exhibition){"\n"}</MonoTextBold>
         </MonoText>
       </View>
     )
