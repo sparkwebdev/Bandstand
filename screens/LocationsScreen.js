@@ -8,7 +8,6 @@ import {
   Dimensions,
 } from "react-native";
 import { MapView } from 'expo';
-import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 import Colours from '../constants/Colors';
 
