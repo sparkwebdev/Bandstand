@@ -4,6 +4,7 @@ import Expo, { KeepAwake, Location, Permissions, Audio} from 'expo';
 
 import geolib from 'geolib'
 
+import bandStands from "../constants/Bandstands";
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 import Colours from '../constants/Colors';
@@ -77,11 +78,13 @@ class BandstandScreen extends React.Component {
     }
     // this.getVisited();
     this.startWatchingLocation();
+    // this.startWatchingHeading();
   }
 
   componentWillUnmount() {
 
     this.stopWatchingLocation();
+    // this.stopWatchingHeading();
     // if (!this.state.hasFound && this.props.navigation.state.routeName !== 'Bandstand') {
       this.state.audioPlayerSoundscape.stopAsync();
       this.state.audioPlayerLoop.stopAsync();
@@ -169,7 +172,8 @@ class BandstandScreen extends React.Component {
   //   }
 
   //   let subscription = await Location.watchHeadingAsync(heading => {
-  //     this.setState({ watchHeading: heading });
+  //     headingRounded = Math.round(heading)
+  //     this.setState({ watchHeading: headingRounded });
   //   });
   //   this.setState({ headingSubscription: subscription });
   // };
@@ -206,22 +210,18 @@ class BandstandScreen extends React.Component {
     }
   };
 
-//   renderWatchCompass = () => {
-//     if (this.state.watchHeading) {
-//       return (
-//         <View>
-//           <Text>Location.watchHeadingAsync:</Text>
-//           <Text>Magnetic North: {this.state.watchHeading.magHeading}</Text>
-//           <Text>True North: {this.state.watchHeading.trueHeading}</Text>
-//           <Text>Accuracy: {this.state.watchHeading.accuracy}</Text>
-//           {/* <Button onPress={this.stopWatchingHeading} title="Stop Watching Heading" /> */}
-//         </View>
-//       );
-//     }
-//   };
+  // renderWatchCompass = () => {
+  //   if (this.state.watchHeading) {
+  //     return (
+  //       <View>
+  //         <MonoText>Magnetic North: {this.state.watchHeading.magHeading}</MonoText>
+  //       </View>
+  //     );
+  //   }
+  // };
 
   render() {
-    const item = this.props.navigation.getParam('item', 0);
+    const item = this.props.navigation.getParam('item', 0) || bandStands[0];
     return (
       <View style={styles.card}>
         <Image
