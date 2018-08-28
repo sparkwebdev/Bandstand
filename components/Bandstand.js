@@ -1,13 +1,11 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet, Text, Button, TouchableWithoutFeedback, Image, AsyncStorage } from 'react-native';
-import Expo, { BarCodeScanner, Location, Permissions, Audio} from 'expo';
+import { View, StyleSheet, Image, AsyncStorage } from 'react-native';
+import Expo, { KeepAwake, Location, Permissions, Audio} from 'expo';
 
-import bandStands from '../constants/Bandstands';
 import geolib from 'geolib'
 
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
-import { BlurView } from 'expo';
 import Colours from '../constants/Colors';
 import { withNavigation } from 'react-navigation';
 import Prompt from "../components/Prompt";
@@ -247,6 +245,7 @@ class BandstandScreen extends React.Component {
             <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} />
           }
         </View>
+        <KeepAwake />
       </View>
     )
   }
