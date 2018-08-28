@@ -17,10 +17,7 @@
 * Add self location to map
 * Find (calculate) next Bandstand
 * Image credits
-* Lighten/less fade background images behind the location front screens.
-* Darken performance screens background images, no 2 3 4.
 * Menu popup on first
-* Events on a map
 
 ### Low Priority
 
@@ -29,6 +26,7 @@
 * Dancing Video
 * Hide menu on bandstand until last page
 * Map redesign
+* Events on a map
 
 ### 'Nice-to-have' Priority
 
