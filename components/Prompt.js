@@ -19,8 +19,8 @@ class Prompt extends React.Component {
           <MonoTextBold style={styles.text}>{text}</MonoTextBold>
         : null }
         <View style={styles.arrows}>
-          <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={15} />
-          <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={18} />
+          {/* <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={15} />
+          <Ionicons style={[styles.ionicon, styles.ioniconSmall]} name="ios-arrow-down" size={18} /> */}
           <Ionicons style={styles.ionicon} name="ios-arrow-down" size={24} />
         </View>
         <TouchableWithoutFeedback

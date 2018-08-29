@@ -323,14 +323,14 @@ const slides = [
           </MonoTextBold>
         </MonoText>
         <MonoTextBold style={[styles.text, styles.textBold]}>
-        {"\n"}We recommend you{"\n"} wear headphones...
+        {"\n"}Wear your headphones...
         </MonoTextBold>
         <Image
           style={styles.headphones}
           source={require("../assets/images/screens/additional/headphones.png")}
         />
         <MonoTextBold style={[styles.text, styles.textBold]}>
-          Then, choose{"\n"}a bandstand...
+          Choose a bandstand...
         </MonoTextBold>
         <Prompt target="Bandstands" source={require("../assets/images/icons/icon_action_marker.png")} onNavigate={props.onPromptNavigate} />
       </View>
