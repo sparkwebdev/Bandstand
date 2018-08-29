@@ -25,7 +25,8 @@
       "bundleIdentifier": "com.stevenpark.bandstand",
       "infoPlist": {
         "NSCameraUsageDescription": "Bandstands would like to access your camera to allow you to scan QR Codes. We do not store or share any data.",
-        "NSLocationWhenInUseUsageDescription": "Bandstands would like to use your current location to direct you to the bandstand locations. We do not store or share any location data."
+        "NSLocationWhenInUseUsageDescription": "Bandstands would like to use your current location to direct you to the bandstand locations. We do not store or share any location data.",
+        "NSLocationAlwaysUsageDescription": "Bandstands would like to stop your phone going to sleep while you search for a location."
       }
     }
   }
