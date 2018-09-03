@@ -285,15 +285,15 @@ const slides = [
         <Image
           style={styles.logos01}
           source={require("../assets/images/screens/additional/sponsor-logo-01.jpg")}
-        />{"\n"}
+        />
         <Image
           style={styles.logos02}
           source={require("../assets/images/screens/additional/sponsor-logo-02.jpg")}
-        />{"\n"}
+        />
         <Image
           style={styles.logos03}
           source={require("../assets/images/screens/additional/sponsor-logo-03.jpg")}
-        />{"\n"}
+        />
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textSmall}>Thanks to:</MonoTextBold>
           <MonoText style={styles.textSmaller}>
