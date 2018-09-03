@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     borderLeftColor: "#fff",
     borderLeftWidth: 10,
     width: "100%",
-    // flex: 1,
+    // flex: 1, 
     display: "flex",
     flexDirection: 'row',
     justifyContent: 'space-between'

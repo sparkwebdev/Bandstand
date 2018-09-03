@@ -132,10 +132,11 @@ export default class App extends React.Component {
         // Welcome Screens
         require('./assets/images/screens/welcome-00.jpg'),
         require('./assets/images/screens/welcome-00.png'),
-        require('./assets/images/screens/welcome-01.png'),
-        require('./assets/images/screens/welcome-02.png'),
-        require('./assets/images/screens/welcome-03.png'),
-        require('./assets/images/screens/welcome-04.png'),
+        require('./assets/images/screens/welcome-00b.jpg'),
+        require('./assets/images/screens/welcome-01.jpg'),
+        require('./assets/images/screens/welcome-02.jpg'),
+        require('./assets/images/screens/welcome-03.jpg'),
+        require('./assets/images/screens/welcome-04.jpg'),
 
         // Banstand Screens
         require('./assets/images/bandstand-01-00.jpg'),
