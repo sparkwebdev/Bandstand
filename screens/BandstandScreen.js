@@ -15,7 +15,7 @@ class BandstandScreen extends React.Component {
     const visited = this.props.screenProps.visited;
     const selectedBandstand = this.props.navigation.getParam('itemId', 0);
     const hasVisited = visited.includes(selectedBandstand);
-    if (hasVisited || visited.length < 2) {
+    if (hasVisited || visited.length > 2) {
       return (
         <View style={styles.container}>
           <BandstandVisited navigation={this.props.navigation} />

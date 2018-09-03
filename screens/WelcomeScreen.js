@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     right: 0,
     width: "100%",
     height: "100%",
-    resizeMode: "contain"
+    resizeMode: "cover"
   },
   contentContainer: {
     // backgroundColor: "rgba(255,255,255,0.7)",
@@ -167,14 +167,8 @@ const slides = [
     key: "welcome-0",
     bgImage: (
       <Image
-        style={[styles.bgImage, { resizeMode: "cover" }]}
-        source={require("../assets/images/screens/welcome-00.jpg")}
-      />
-    ),
-    bgImageOverlay: (
-      <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-00.png")}
+        source={require("../assets/images/screens/welcome-00b.jpg")}
       />
     )
   },
@@ -183,7 +177,7 @@ const slides = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-01.png")}
+        source={require("../assets/images/screens/welcome-01.jpg")}
       />
     ),
     content: () => (
@@ -201,7 +195,7 @@ const slides = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-02.png")}
+        source={require("../assets/images/screens/welcome-02.jpg")}
       />
     ),
     content: () => (
@@ -226,7 +220,7 @@ const slides = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-03.png")}
+        source={require("../assets/images/screens/welcome-03.jpg")}
       />
     ),
     content: () => (
@@ -247,7 +241,7 @@ const slides = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-02.png")}
+        source={require("../assets/images/screens/welcome-02.jpg")}
       />
     ),
     content: () => (
@@ -274,7 +268,7 @@ const slides = [
     bgImage: (
       <Image
         style={styles.bgImage}
-        source={require("../assets/images/screens/welcome-02.png")}
+        source={require("../assets/images/screens/welcome-02.jpg")}
       />
     ),
     content: () => (
@@ -285,15 +279,15 @@ const slides = [
         <Image
           style={styles.logos01}
           source={require("../assets/images/screens/additional/sponsor-logo-01.jpg")}
-        />{"\n"}
+        />
         <Image
           style={styles.logos02}
           source={require("../assets/images/screens/additional/sponsor-logo-02.jpg")}
-        />{"\n"}
+        />
         <Image
           style={styles.logos03}
           source={require("../assets/images/screens/additional/sponsor-logo-03.jpg")}
-        />{"\n"}
+        />
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textSmall}>Thanks to:</MonoTextBold>
           <MonoText style={styles.textSmaller}>
