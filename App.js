@@ -170,6 +170,7 @@ export default class App extends React.Component {
         require('./assets/images/icons/icon_action_bandstand.png'),
         require('./assets/images/icons/icon_action_marker.png'),
         require('./assets/images/icons/icon_action_qr.png'),
+        require('./assets/images/icons/icon_action_compass.png'),
 
         // Icons - Media Player
         require('./assets/images/icons/icon_play.png'),

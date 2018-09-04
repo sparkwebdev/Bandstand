@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Image, AsyncStorage } from 'react-native';
+import { View, StyleSheet, Image, AsyncStorage, TouchableWithoutFeedback } from 'react-native';
 import Expo, { KeepAwake, Location, Permissions, Audio} from 'expo';
+import LoadingIndicator from "../navigation/LoadingIndicator";
+import { Ionicons } from '@expo/vector-icons';
 
 import geolib from 'geolib'
 
@@ -22,7 +24,6 @@ class BandstandScreen extends React.Component {
     // this.audioPlayerLoop = new Audio.Sound();
     this.state = {
       visited : null,
-      current : null,
 
       audioPlayerSoundscape : new Audio.Sound(),
       hasLoadedSoundscape   : false,
@@ -41,14 +42,19 @@ class BandstandScreen extends React.Component {
 
       distance        : 999,
       distanceReport  : "calculating distance",
+      markerHeading    : null,
     };
+
+    this.lat = null;
+    this.lng = null;
 
   }
 
   async componentDidMount() {
     this.state.hasFound = false;
     const item = this.props.navigation.getParam('item', 0);
-    this.state.current = item.id;
+    this.lat = item.coordsTest.lat;
+    this.lng = item.coordsTest.lng;
     try {
       await Audio.setIsEnabledAsync(true);
 
@@ -78,13 +84,13 @@ class BandstandScreen extends React.Component {
     }
     // this.getVisited();
     this.startWatchingLocation();
-    // this.startWatchingHeading();
+    this.startWatchingHeading();
   }
 
   componentWillUnmount() {
 
     this.stopWatchingLocation();
-    // this.stopWatchingHeading();
+    this.stopWatchingHeading();
     // if (!this.state.hasFound && this.props.navigation.state.routeName !== 'Bandstand') {
       this.state.audioPlayerSoundscape.stopAsync();
       this.state.audioPlayerLoop.stopAsync();
@@ -152,7 +158,7 @@ class BandstandScreen extends React.Component {
         distanceInterval: 5,
       },
       location => {
-        console.log(`Got location: ${JSON.stringify(location.coords)}`);
+        //console.log(`Got location: ${JSON.stringify(location.coords)}`);
         this.setState({ watchLocation: location });
       }
     );
@@ -165,23 +171,34 @@ class BandstandScreen extends React.Component {
     this.setState({ subscription: null, watchLocation: null });
   };
 
-  // startWatchingHeading = async () => {
-  //   const { status } = await Permissions.askAsync(Permissions.LOCATION);
-  //   if (status !== 'granted') {
-  //     return;
-  //   }
+  startWatchingHeading = async () => {
+    const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      return;
+    }
 
-  //   let subscription = await Location.watchHeadingAsync(heading => {
-  //     headingRounded = Math.round(heading)
-  //     this.setState({ watchHeading: headingRounded });
-  //   });
-  //   this.setState({ headingSubscription: subscription });
-  // };
+    let subscription = await Location.watchHeadingAsync(heading => {
+      headingRounded = Math.round(heading)
+      this.setState({ watchHeading: headingRounded });
+      let lat1 = this.state.watchLocation.coords.latitude * (Math.PI / 180); // currentLat 
+      let lon1 = this.state.watchLocation.coords.longitude * (Math.PI / 180); // currentLng
+      let lat2 = this.lat * (Math.PI / 180); // targetLat
+      let lon2 = this.lng * (Math.PI / 180); // targetLng
+      let dLon = lon2 - lon1;
+      let y = Math.sin(dLon) * Math.cos(lat2);
+      let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
+      let calcHeading = Math.atan2(y, x);
+      let calcHeadingDegrees = calcHeading * 180 / Math.PI;
+      let markerHeading = heading.magHeading - calcHeadingDegrees;
+      this.setState({ markerHeading: markerHeading});
+    });
+    this.setState({ headingSubscription: subscription });
+  };
 
-  // stopWatchingHeading = async () => {
-  //   this.state.headingSubscription.remove();
-  //   this.setState({ headingSubscription: null, watchHeading: null });
-  // };
+  stopWatchingHeading = async () => {
+    this.state.headingSubscription.remove();
+    this.setState({ headingSubscription: null, watchHeading: null });
+  };
 
   renderWatchLocation = (item) => {
     if (this.state.watchLocation) {
@@ -222,6 +239,18 @@ class BandstandScreen extends React.Component {
 
   render() {
     const item = this.props.navigation.getParam('item', 0) || bandStands[0];
+    const actionButton = !this.state.hasFound ? 
+    <Image
+      style={[styles.marker,styles.markerHeading,{transform:[{rotate: `${360 - this.state.markerHeading} deg`}]}]}
+      source={require("../assets/images/icons/icon_action_compass.png")}
+    />
+    :
+    <TouchableWithoutFeedback>
+      <Image
+        style={[styles.marker,styles.markerHeading]}
+        source={require("../assets/images/icons/icon_tick_key.png")}
+      />
+    </TouchableWithoutFeedback>
     return (
       <View style={styles.card}>
         <Image
@@ -232,9 +261,13 @@ class BandstandScreen extends React.Component {
         <View style={styles.cardContent}>
           <MonoTextBold style={[styles.title]}>{item.title}</MonoTextBold>
           <MonoTextBold style={[styles.location]}>{item.location}</MonoTextBold>
+          {!this.state.markerHeading ? 
+            <View style={[styles.loading]}><LoadingIndicator /></View> : actionButton
+          }
           {/* {this.renderWatchCompass()} */}
           <MonoTextBold style={[styles.distanceReport]}>{this.state.distanceReport}</MonoTextBold>
-          {this.renderWatchLocation(item)}
+          {/* <MonoTextBold style={[styles.distanceReport]}>{this.state.markerHeading} degrees</MonoTextBold> */}
+          {!this.state.hasFound ? this.renderWatchLocation(item) : null}
         </View>
         <View>
           {!this.state.hasFound ? 
@@ -242,7 +275,19 @@ class BandstandScreen extends React.Component {
               <Prompt text={"Can you see this marker?\nScan QR code to activate..."} targetId={item.id} target={"QrCode"} source={require("../assets/images/icons/icon_action_qr.png")} />
             </View>
           : 
-            <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} />
+          <View>
+            <MonoTextBold style={styles.text}>View Bandstand</MonoTextBold>
+            <View style={styles.arrows}>
+              <Ionicons style={styles.ionicon} name="ios-arrow-down" size={24} />
+            </View>
+            {/* <Prompt text={"View Bandstand"} target={"Bandstand"} targetId={item.id} source={require("../assets/images/icons/icon_action_bandstand.png")} /> */}
+            <TouchableWithoutFeedback onPress={() => this.props.saveVisited()}>
+              <Image
+                style={[styles.marker]}
+                source={require("../assets/images/icons/icon_action_bandstand.png")}
+              />
+            </TouchableWithoutFeedback>
+          </View>
           }
         </View>
         <KeepAwake />
@@ -274,6 +319,10 @@ const styles = StyleSheet.create({
     // borderColor: Colours.brandGreen,
     // borderWidth: 3,
   },
+  loading: {
+    marginTop: 20,
+    height: 64
+  },
   distance: {
     textAlign: 'center',
     fontSize: 20,
@@ -282,6 +331,17 @@ const styles = StyleSheet.create({
   miles: {
     textAlign: 'center',
     fontSize: 15,
+  },
+  marker: {
+    width: 64,
+    height: 64,
+    alignSelf: 'center',
+  },
+  markerHeading: {
+    marginTop: 20,
+    borderRadius: 32,
+    borderWidth: 3,
+    borderColor: Colours.brandPurple,
   },
   title: {
     fontSize: 18,
@@ -296,6 +356,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
     marginBottom: 5,
+    textAlign: 'center',
+  },
+  ionicon: {
+    lineHeight: 18,
+    alignSelf: 'center',
+    color: Colours.brandPurple
+  },
+  ioniconSmall: {
+    lineHeight: 15,
+  },
+  text: {
+    marginTop: 20,
+    marginBottom: 10,
     textAlign: 'center',
   },
 });
