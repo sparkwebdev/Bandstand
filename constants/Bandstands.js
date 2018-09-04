@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   textLarger: {
-    fontSize: 35,
-    lineHeight: 45,
+    fontSize: 32,
+    lineHeight: 38,
   },
   textLargest: {
-    fontSize: 55,
-    lineHeight: 65,
+    fontSize: 45,
+    lineHeight: 55,
   },
   textBold: {
     fontSize: 18,
