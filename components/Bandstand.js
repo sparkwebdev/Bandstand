@@ -23,21 +23,13 @@ class BandstandScreen extends React.Component {
     // this.audioPlayer = new Audio.Sound();
     // this.audioPlayerLoop = new Audio.Sound();
     this.state = {
-      visited : null,
-
-      audioPlayerSoundscape : new Audio.Sound(),
-      hasLoadedSoundscape   : false,
-      isPlayingSoundscape   : false,
-
-      audioPlayerLoop : new Audio.Sound(),
-      hasLoadedLoop   : false,
-      isPlayingLoop   : false,
+      // visited : null,
 
       watchLocation   : null,
       watchHeading    : null,
       subscription    : null,
       headingSubscription : null,
-      gotNear         : false,
+      // gotNear         : false,
       hasFound        : false,
 
       distance        : 999,
@@ -55,48 +47,14 @@ class BandstandScreen extends React.Component {
     const item = this.props.navigation.getParam('item', 0);
     this.lat = item.coordsTest.lat;
     this.lng = item.coordsTest.lng;
-    try {
-      await Audio.setIsEnabledAsync(true);
-
-      await this.state.audioPlayerSoundscape.loadAsync(
-        item.song.soundscape
-      );
-      await this.state.audioPlayerSoundscape.setIsLoopingAsync(true);
-      await this.state.audioPlayerSoundscape.setVolumeAsync(1);
-      await this.state.audioPlayerSoundscape.playAsync();
-
-      await this.state.audioPlayerLoop.loadAsync(
-        item.song.loop
-      );
-      await this.state.audioPlayerLoop.setIsLoopingAsync(true);
-      await this.state.audioPlayerLoop.setVolumeAsync(0);
-      await this.state.audioPlayerLoop.playAsync();
-      
-      this.setState({
-        hasLoadedSoundscape : true,
-        isPlayingSoundscape : true,
-        hasLoadedLoop       : true,
-        isPlayingLoop       : true
-      });
-
-    } catch(error) {
-      console.log(error);
-    }
-    // this.getVisited();
     this.startWatchingLocation();
     this.startWatchingHeading();
   }
 
   componentWillUnmount() {
-
     this.stopWatchingLocation();
     this.stopWatchingHeading();
-    // if (!this.state.hasFound && this.props.navigation.state.routeName !== 'Bandstand') {
-      this.state.audioPlayerSoundscape.stopAsync();
-      this.state.audioPlayerLoop.stopAsync();
-    // }
   }
-
 
   getDistance = (a, b, c, d) => {
     const dist = geolib.getDistance(
@@ -116,9 +74,9 @@ class BandstandScreen extends React.Component {
       this.state.distanceReport = "You found it! :)";
     }
 
-    if (dist <= 150) {
-      this.state.gotNear = true;
-      this.setVolume(dist);
+    if (dist <= 1150) {
+      // this.state.gotNear = true;
+      this.props.setVolume(dist);
     }
     if (dist <= 20) {
       this.state.hasFound = true;
@@ -127,22 +85,6 @@ class BandstandScreen extends React.Component {
     let distKm = dist / 1000;
     let distMiles = distKm * 0.621371;
     return [distKm.toFixed(2), distMiles.toFixed(3)];
-  }
-
-  setVolume = (dist) => {
-    if (this.state.isPlayingLoop) {
-      this.state.audioPlayerLoop.setVolumeAsync(1 - (dist / 150));
-    }
-  }
-
-  getVisited = async () => {
-    try {
-      const value = await AsyncStorage.getItem('visited');
-      const valueParsed = JSON.parse(value);
-      this.state.visited = valueParsed || [];
-    } catch (error) {
-      console.log("Error retrieving data" + error);
-    }
   }
 
   startWatchingLocation = async () => {
@@ -205,37 +147,17 @@ class BandstandScreen extends React.Component {
       const dist = this.getDistance(
         this.state.watchLocation.coords.latitude,
         this.state.watchLocation.coords.longitude,
-        item.coords.lat,
-        item.coords.lng,
+        item.coordsTest.lat,
+        item.coordsTest.lng,
       );
       return (
         <View>
-          {/* <MonoText style={[styles.distance]}>Distance: </MonoText> */}
           <MonoTextBold style={[styles.distance]}>{dist[0]}km</MonoTextBold>
           <MonoText style={[styles.miles]}>({dist[1]} miles)</MonoText>
-          {/* <Text>
-            {this.state.polyfill
-              ? 'navigator.geolocation.watchPosition'
-              : 'Location.watchPositionAsync'}
-            :
-          </Text>
-          <Text>Latitude: {this.state.watchLocation.coords.latitude}</Text>
-          <Text>Longitude: {this.state.watchLocation.coords.longitude}</Text>
-          <Button onPress={this.stopWatchingLocation} title="Stop Watching Location" /> */}
         </View>
       );
     }
   };
-
-  // renderWatchCompass = () => {
-  //   if (this.state.watchHeading) {
-  //     return (
-  //       <View>
-  //         <MonoText>Magnetic North: {this.state.watchHeading.magHeading}</MonoText>
-  //       </View>
-  //     );
-  //   }
-  // };
 
   render() {
     const item = this.props.navigation.getParam('item', 0) || bandStands[0];
