@@ -14,8 +14,8 @@ export default class BandstandVisited extends React.Component {
         height: props.height,
       }]}
     >
-        {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
-        {props.content ? props.content : null}
+      {props.image ? <Image style={[styles.image, {resizeMode: props.imageResizeMode,}]} source={props.image} /> : null }
+      {props.content ? props.content : null}
     </View>
   );
 
@@ -23,14 +23,14 @@ export default class BandstandVisited extends React.Component {
     const selectedBandstand = this.props.navigation.getParam('itemId', 0);
     const item = bandStands[selectedBandstand - 1];
     return (
-        <AppIntroSlider
-            slides={item.slides}
-            renderItem={this.renderItem}
-            dotColor={Colours.brandPurple}
-            activeDotColor={Colours.brandYellow}
-            hideNextButton
-            hideDoneButton
-        />
+      <AppIntroSlider
+        slides={item.slides}
+        renderItem={this.renderItem}
+        dotColor={Colours.brandPurple}
+        activeDotColor={Colours.brandYellow}
+        hideNextButton
+        hideDoneButton
+      />
     )
   }
 }
