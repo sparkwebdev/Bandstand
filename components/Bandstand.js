@@ -131,7 +131,7 @@ class BandstandScreen extends React.Component {
       let x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
       let calcHeading = Math.atan2(y, x);
       let calcHeadingDegrees = calcHeading * 180 / Math.PI;
-      let markerHeading = heading.magHeading - calcHeadingDegrees;
+      let markerHeading = heading.trueHeading - calcHeadingDegrees;
       this.setState({ markerHeading: markerHeading});
     });
     this.setState({ headingSubscription: subscription });

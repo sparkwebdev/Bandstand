@@ -23,8 +23,8 @@ const bandStandMarkers = bandStands.map(function(bandstand) {
   return {
     id: bandstand.id,
     coordinate: {
-      latitude: bandstand.coords.lat,
-      longitude: bandstand.coords.lng,
+      latitude: bandstand.coordsTest.lat,
+      longitude: bandstand.coordsTest.lng,
     },
     title: bandstand.title,
     location: bandstand.location,
