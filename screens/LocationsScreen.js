@@ -12,6 +12,7 @@ import { MapView } from 'expo';
 import BandstandCard from "../components/BandstandCard";
 
 import bandStands from "../constants/Bandstands";
+import NavButton from "../navigation/NavButton";
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width / 1.65;
@@ -122,13 +123,13 @@ export default class LocationsScreen extends React.Component {
             return (
               <MapView.Marker key={index} coordinate={marker.coordinate}>
                 <Animated.View style={[styles.markerWrap, opacityStyle, scaleStyle]}>
-                  <Image style={[styles.icon]} source={require('../assets/images/icon_bandstand.png')} />
+                  <Image style={[styles.icon]} source={require('../assets/images/icons/icon_bandstand_marker.png')} />
                 </Animated.View>
               </MapView.Marker>
             );
           })}
         </MapView>
-        <Animated.ScrollView
+        {/* <Animated.ScrollView
           horizontal
           scrollEventThrottle={1}
           showsHorizontalScrollIndicator={false}
@@ -159,7 +160,8 @@ export default class LocationsScreen extends React.Component {
               />
             )
           })}
-        </Animated.ScrollView>
+        </Animated.ScrollView> */}
+        <NavButton />
       </View>
     );
   }
@@ -171,7 +173,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     position: "absolute",
-    bottom: 15,
+    bottom: 105,
     left: 0,
     right: 0,
   },

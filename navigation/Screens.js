@@ -30,7 +30,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Welcome',
+    initialRouteName: 'Bandstands',
   }
 );
 

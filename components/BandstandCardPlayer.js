@@ -17,27 +17,23 @@ export default class BandstandCardPlayer extends React.Component {
   render() {
     const item = this.props.item;
     return (
-      <View>
-        <Text>Duration: {item.song.duration}</Text>
-        <TouchableHighlight onPress={this._onPlayPausePressed}>
-        <Image
-            style={styles.icon}
-            source={
-            this.state.isPlaying
-                ? require("../assets/images/icon_pause.png")
-                : require("../assets/images/icon_play.png")
-            }
-        />
-        </TouchableHighlight>
-      </View>
+      <TouchableHighlight onPress={this._onPlayPausePressed}>
+      <Image
+          style={styles.icon}
+          source={
+          this.state.isPlaying
+              ? require("../assets/images/icons/icon_pause.png")
+              : require("../assets/images/icons/icon_play.png")
+          }
+      />
+      </TouchableHighlight>
     );
   }
 }
 
 const styles = StyleSheet.create({
   icon: {
-    width: 34,
-    height: 34,
-    marginLeft: 10
+    width: 56,
+    height: 56,
   }
 });

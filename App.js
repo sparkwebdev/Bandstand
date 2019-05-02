@@ -1,9 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage, Image } from 'react-native';
 import { AppLoading, Asset, Font, Notifications, Audio } from 'expo';
-import Nav from "./navigation/Nav";
+import Screens from "./navigation/Screens";
 import LoadingIndicator from "./navigation/LoadingIndicator";
-import NavButton from "./navigation/NavButton";
+import Colours from './constants/Colors';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    visited = [7,8];
+    visited = [1, 7,8];
     const visitedStr = JSON.stringify(visited);
     AsyncStorage.setItem("visited", visitedStr);
     AsyncStorage.getItem("visited").then((value) => {
@@ -43,8 +43,10 @@ export default class App extends React.Component {
       return (
         <View style={styles.container} visited={this.state.visited}>
           {/* {Platform.OS === 'ios' && <StatusBar hidden />} */}
-          {Platform.OS === 'ios'}
-          <Nav />
+          {Platform.OS === 'ios' && <StatusBar />}
+
+
+          <Screens />
         </View>
       );
     }
@@ -59,19 +61,28 @@ export default class App extends React.Component {
         require('./assets/images/screens/welcome-02.png'),
         require('./assets/images/screens/welcome-03.png'),
         require('./assets/images/screens/welcome-04.png'),
-        require('./assets/images/icon_bandstand_marker.png'),
-        require('./assets/images/icon_menu.png'),
-        require('./assets/images/icon_close.png'),
-        require('./assets/images/icon_marker.png'),
-        require('./assets/images/icon_info.png'),
-        require('./assets/images/icon_playlist.png'),
-        require('./assets/images/icon_bandstand.png'),
-        require('./assets/images/icon_bandstand_alt.png'),
-        require('./assets/images/icon_bandstand_alt_2.png'),
-        require('./assets/images/icon_bandstand_alt_3.png'),
-        require('./assets/images/icon_play.png'),
-        require('./assets/images/icon_pause.png'),
-        require('./assets/images/buttons/btn-choose.png'),
+
+        // Icons - Main Menu
+        require('./assets/images/icons/icon_menu.png'),
+        require('./assets/images/icons/icon_menu_close.png'),
+        require('./assets/images/icons/icon_menu_bandstand.png'),
+        require('./assets/images/icons/icon_menu_marker.png'),
+        require('./assets/images/icons/icon_menu_playlist.png'),
+        require('./assets/images/icons/icon_menu_info.png'),
+
+        // Icons - Media Player
+        require('./assets/images/icons/icon_play.png'),
+        require('./assets/images/icons/icon_pause.png'),
+
+        // Icons - Bandstand Markers
+        require('./assets/images/icons/icon_bandstand_hollow_grey.png'),
+        require('./assets/images/icons/icon_bandstand_marker.png'),
+        require('./assets/images/icons/icon_bandstand_hollow_green.png'),
+
+        // Icons - Interface
+        require('./assets/images/icons/icon_tick_key.png'),
+        require('./assets/images/icons/icon_tick_corner.png'),
+        require('./assets/images/icons/icon_back.png'),
       ]),
       Font.loadAsync({
         // ...Icon.Ionicons.font, // This is the font that we are using for our tab bar
@@ -94,6 +105,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colours.brandGreen,
+    // paddingTop: 20,
   }
 });
