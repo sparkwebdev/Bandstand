@@ -211,7 +211,7 @@ const slides = [
           8 locations of bandstand soundspaces across Edinburgh and Musselburgh, with commissioned music and archival imagery.{"\n"}{"\n"}
           </MonoTextBold>
           <MonoText>
-          Find music once again as we stroll our public parks by visiting each location where bandstands once stood. Look out for the marker at each to unlock the melody and imagery. Visit 3 and you can gain access to the full composition.
+          Discover music once again as we stroll our public parks. As you walk closer to the location of each bandstand area the sound will increase in volume to help you find your way.
           </MonoText>
           {/* <MonoText style={styles.textSmall}>
           {"\n"}{"\n"}Each location contains a marker representing as near as possible the location of the original bandstand. By visiting each of these, you can unlock the melody relating to that site, along with archive imagery and historical info. Visit 3 locations and you can access the complete composition.

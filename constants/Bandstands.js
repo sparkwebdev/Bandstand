@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { MonoText } from "../components/StyledText";
 import { MonoTextBold } from "../components/StyledTextBold";
 import Colours from '../constants/Colors';
+import NavigationHelpers from '../helpers/NavigationHelpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -140,6 +141,43 @@ const bandStands = [{
         key: '5',
         image: require('../assets/images/bandstand-01-03.jpg'),
         imageResizeMode: 'cover',
+      },
+      {
+        key: '6',
+        image: require('../assets/images/bandstand-01-04.jpg'),
+        content: (
+          <View style={styles.contentContainer}>
+            <MonoText style={styles.text}>
+              <MonoTextBold style={styles.textBold}>
+              The current Ross Theatre is over 80 years old and is now awaiting its next chapter with plans for the new Ross Pavilion, a unique, world-class performance facility. {"\n"}{"\n"}
+              </MonoTextBold>
+              <MonoText style={styles.textSmall}>Find out more at{"\n"}</MonoText>
+              <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('http://wwww.thequaichproject.org')}>thequaichproject.org</MonoTextBold>
+            </MonoText>
+          </View>
+        )
+      },
+      {
+        key: '7',
+        image: require('../assets/images/bandstand-01-05.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '8',
+        image: require('../assets/images/bandstand-01-06.jpg'),
+        content: (
+          <View style={styles.contentContainer}>
+            <MonoText style={styles.text}>
+              <MonoTextBold style={styles.textBold}>
+              Listen to 'Auntie Moira' who played piano for BBC Children's Hour at the Ross Bandstand for over 30 years. {"\n"}{"\n"}
+              </MonoTextBold>
+              <MonoTextBold style={styles.textLink} onPress={() => NavigationHelpers.openWebPage('https://www.thequaichproject.org/your-gardens/moiras-story')}>Visit 'Moira's Story'{"\n"}{"\n"}</MonoTextBold>
+              {/* <Image onPress={() => NavigationHelpers.openWebPage('https://www.thequaichproject.org/your-gardens/moiras-story')}
+                source={require("../assets/images/bandstand-01-06b.jpg")}
+              /> */}
+            </MonoText>
+          </View>
+        )
       },
     ]
   },
@@ -287,7 +325,7 @@ const bandStands = [{
         content: (
           <View style={styles.contentContainer}>
             <MonoTextBold style={[styles.textBold, styles.textLarge]}>
-              Im returning{"\n"}Back from{"\n"}30 years away
+              Returning back{"\n"}after{"\n"}30 years away
             </MonoTextBold>
           </View>
         )
@@ -315,25 +353,34 @@ const bandStands = [{
             <MonoTextBold style={styles.textBold}>
             The Scottish National Exhibition took place at Saughton Park from May-Oct 1908, after which time the prefabricated buildings (and two bandstands) were dismantled, with many being relocated to form Portobello’s Marine Gardens. 
             </MonoTextBold>
-            <MonoText>
-            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park.
-            </MonoText>
           </MonoText>
         </View>
         )
       },
       {
         key: '6',
-        image: require('../assets/images/bandstand-03-04.jpg'),
-        imageResizeMode: 'cover',
-      },
-      {
-        key: '7',
         content: (
           <View style={styles.contentContainer}>
           <MonoText style={styles.text}>
             <MonoTextBold style={styles.textBold}>
-            This bandstand was eventually dismantled in 1986 and kept in storage. It has been completely refurbished and rebuilt in the park as part of their ongoing redevelopment project, which opens to the public in 2019.
+            The Edinburgh Corporation felt the bandstands were so successful, that they purchased two Cast Iron Lion Foundry No. 23 bandstands in 1909 (different from the Exhibition’s mainly timber ones), one of these would sit in the Meadows, the other being in Saughton Park.
+            </MonoTextBold>
+          </MonoText>
+        </View>
+        )
+      },
+      {
+        key: '7',
+        image: require('../assets/images/bandstand-03-04.jpg'),
+        imageResizeMode: 'cover',
+      },
+      {
+        key: '8',
+        content: (
+          <View style={styles.contentContainer}>
+          <MonoText style={styles.text}>
+            <MonoTextBold style={styles.textBold}>
+            The bandstand was eventually dismantled in 1986 and kept in storage until recently, when it was restored as part of the Saughton Park restoration project reopening in 2019.
             </MonoTextBold>
             <MonoText>
             Although access to the bandstand is currently not possible, it is visible from various points outside the Walled Garden including the Stevenson Drive entrance that leads you towards the Walled Garden.

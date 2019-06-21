@@ -1,6 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 import AppIntroSlider from "react-native-app-intro-slider";
+// import { Constants, WebBrowser } from 'expo';
+import NavigationHelpers from '../helpers/NavigationHelpers';
 
 import Colours from '../constants/Colors';
 import { MonoText } from "../components/StyledText";
@@ -67,8 +69,8 @@ const styles = StyleSheet.create({
       fontSize: 15
     },
     textLarge: {
-      fontSize: 25,
-      lineHeight: 50,
+      fontSize: 24,
+      lineHeight: 24,
       textAlign: "center"
     },
     textLarger: {
@@ -116,52 +118,85 @@ const slides = [
     )
   },
   {
-    key: '2',
+    key: '1',
     image: require('../assets/images/screens/events-01.jpg'),
     content: () => (
       <View style={styles.contentContainer}>
         <MonoText style={styles.text}>
           <MonoTextBold style={styles.textBold}>
-          Sat 1st Sept{"\n"}3pm</MonoTextBold>
+          The Great Exhibition</MonoTextBold>
           <MonoTextBold>
-          {"\n"}{"\n"}Ross Whyte and Portobello Community Choir
-          perform the complete work ‘The Great Exhibition’
-          at Portobello Prom old bandstand space
-          (Community Garden, by John Street){"\n"}{"\n"}</MonoTextBold>
+          {"\n"}{"\n"}composed by Ross Whyte{"\n"}
+          &amp; performed by Portobello Community Choir{"\n"}{"\n"}</MonoTextBold>
+          <MonoTextBold>A series of live performances took place during Art Walk Porty Festival 2018 and at the reopening of Saughton Park in 2019.{"\n"}</MonoTextBold>
+        </MonoText>
+      </View>
+    )
+  },
+  {
+    key: '2',
+    image: require('../assets/images/screens/events-02.jpg'),
+    content: () => (
+      <View style={styles.contentContainer}>
+        <MonoText style={styles.text}>
+          <MonoTextBold style={styles.textLarge}>
+          Listen:{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textBold} onPress={() => NavigationHelpers.openWebPage('https://soundcloud.com/rosswhyte/the-great-exhibition')}>
+          Ross Whyte{"\n"}
+          'The Great Exhibition'{"\n"}
+          </MonoTextBold>
+          <MonoTextBold>
+          [soundcloud.com]{"\n"}{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textLarge}>
+          Watch:{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textBold} onPress={() => NavigationHelpers.openWebPage('https://vimeo.com/315866291')}>
+          'The BandStand Project'{"\n"}
+          </MonoTextBold>
+          <MonoTextBold>
+          [vimeo.com]{"\n"}{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textLarge}>
+          Read:{"\n"}
+          </MonoTextBold>
+          <MonoTextBold style={styles.textBold} onPress={() => NavigationHelpers.openWebPage('https://www.artwalkporty.co.uk/2018/Bandstand/Bandstand-newspaper.pdf')}>
+          The Bandstand{"\n"}
+          Project Newspaper{"\n"}
+          </MonoTextBold>
+          <MonoTextBold>
+          [PDF]
+          </MonoTextBold>
         </MonoText>
       </View>
     )
   },
   {
     key: '3',
-    image: require('../assets/images/screens/events-02.jpg'),
+    image: require('../assets/images/bandstand-01-06.jpg'),
     content: () => (
       <View style={styles.contentContainer}>
-        <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>
-          Wed 5th Sept{"\n"}8.30-10pm</MonoTextBold>
-          <MonoTextBold>
-          {"\n"}{"\n"}Ross Whyte performs a live mix of sound recordings together with archival material relating to the project.
-          {"\n"}The Skylark, 243 Portobello High Street, Edinburgh EH15 2AW
-          (to accompany project exhibition){"\n"}</MonoTextBold>
-        </MonoText>
+      <MonoText style={styles.text}>
+        <MonoTextBold style={styles.textLarge}>
+        Visit:{"\n"}
+        </MonoTextBold>
+        <MonoTextBold style={styles.textBold} onPress={() => NavigationHelpers.openWebPage('https://www.thequaichproject.org/your-gardens/moiras-story')}>
+        'Moira's Story'{"\n"}{"\n"}
+        </MonoTextBold>
+        <MonoTextBold onPress={() => NavigationHelpers.openWebPage('https://www.thequaichproject.org/your-gardens/moiras-story')}>
+        Auntie Moira, Ross Theatre{"\n"} pianist for Children’s Hour{"\n"}{"\n"}
+        [thequaichproject.org]
+        </MonoTextBold>
+      </MonoText>
       </View>
     )
   },
   {
     key: '4',
-    image: require('../assets/images/screens/events-03.jpg'),
+    image: require('../assets/images/screens/events-04.jpg'),
     content: () => (
       <View style={styles.contentContainer}>
-        <MonoText style={styles.text}>
-          <MonoTextBold style={styles.textBold}>
-          Sat 8th Sept{"\n"}3pm</MonoTextBold>
-          <MonoTextBold>
-          {"\n"}{"\n"}Ross Whyte and Portobello Community Choir
-          perform the complete work ‘The Great Exhibition’
-          at Ross Theatre Bandstand, Princes Street Gardens, Edinburgh
-          {"\n"}{"\n"}All events are free.</MonoTextBold>
-        </MonoText>
       </View>
     )
   },

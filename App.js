@@ -56,9 +56,10 @@ export default class App extends React.Component {
     // this.resetWelcomed();
     // Notifications.setBadgeNumberAsync(visited.length);
     try {
-      const value = await AsyncStorage.getItem('visited');
-      const valueParsed = JSON.parse(value);
-      this.setState({visited: valueParsed || []});
+      // const value = await AsyncStorage.getItem('visited');
+      // const valueParsed = JSON.parse(value);
+      // this.setState({visited: valueParsed || this.state.visited});
+      this.setState({visited: [1,2,3,4,5,6,7,8,9]}); // Set all as 'visited'
     } catch (error) {
       console.log("Error retrieving data" + error);
     }
@@ -137,56 +138,69 @@ export default class App extends React.Component {
 
         // Banstand Screens
         require('./assets/images/bandstand-01-00.jpg'),
-        require('./assets/images/bandstand-02-00.jpg'),
-        require('./assets/images/bandstand-03-00.jpg'),
-        require('./assets/images/bandstand-04-00.jpg'),
-        require('./assets/images/bandstand-05-00.jpg'),
-        require('./assets/images/bandstand-06-00.jpg'),
-        require('./assets/images/bandstand-07-00.jpg'),
-        require('./assets/images/bandstand-08-00.jpg'),
         require('./assets/images/bandstand-01-01.jpg'),
-        require('./assets/images/bandstand-02-01.jpg'),
-        require('./assets/images/bandstand-03-01.jpg'),
-        require('./assets/images/bandstand-04-01.jpg'),
-        require('./assets/images/bandstand-05-01.jpg'),
-        require('./assets/images/bandstand-06-01.jpg'),
-        require('./assets/images/bandstand-07-01.jpg'),
-        require('./assets/images/bandstand-08-01.jpg'),
         require('./assets/images/bandstand-01-02.jpg'),
-        require('./assets/images/bandstand-02-02.jpg'),
-        require('./assets/images/bandstand-03-02.jpg'),
-        require('./assets/images/bandstand-04-02.jpg'),
-        require('./assets/images/bandstand-05-02.jpg'),
-        require('./assets/images/bandstand-06-02.jpg'),
-        require('./assets/images/bandstand-07-02.jpg'),
-        require('./assets/images/bandstand-08-02.jpg'),
         require('./assets/images/bandstand-01-03.jpg'),
+        require('./assets/images/bandstand-01-04.jpg'),
+        require('./assets/images/bandstand-01-05.jpg'),
+        require('./assets/images/bandstand-01-06.jpg'),
+
+        require('./assets/images/bandstand-02-00.jpg'),
+        require('./assets/images/bandstand-02-01.jpg'),
+        require('./assets/images/bandstand-02-02.jpg'),
         require('./assets/images/bandstand-02-03.jpg'),
-        require('./assets/images/bandstand-03-03.jpg'),
-        require('./assets/images/bandstand-04-03.jpg'),
-        require('./assets/images/bandstand-05-03.jpg'),
-        require('./assets/images/bandstand-06-03.jpg'),
-        require('./assets/images/bandstand-07-03.jpg'),
-        require('./assets/images/bandstand-08-03.jpg'),
         require('./assets/images/bandstand-02-04.jpg'),
-        require('./assets/images/bandstand-03-04.jpg'),
-        require('./assets/images/bandstand-04-04.jpg'),
-        require('./assets/images/bandstand-05-04.jpg'),
-        require('./assets/images/bandstand-06-04.jpg'),
-        require('./assets/images/bandstand-07-04.jpg'),
         require('./assets/images/bandstand-02-05.jpg'),
+
+        require('./assets/images/bandstand-03-00.jpg'),
+        require('./assets/images/bandstand-03-01.jpg'),
+        require('./assets/images/bandstand-03-02.jpg'),
+        require('./assets/images/bandstand-03-03.jpg'),
+        require('./assets/images/bandstand-03-04.jpg'),
+
+        require('./assets/images/bandstand-04-00.jpg'),
+        require('./assets/images/bandstand-04-01.jpg'),
+        require('./assets/images/bandstand-04-02.jpg'),
+        require('./assets/images/bandstand-04-03.jpg'),
+        require('./assets/images/bandstand-04-04.jpg'),
+
+        require('./assets/images/bandstand-05-00.jpg'),
+        require('./assets/images/bandstand-05-01.jpg'),
+        require('./assets/images/bandstand-05-02.jpg'),
+        require('./assets/images/bandstand-05-03.jpg'),
+        require('./assets/images/bandstand-05-04.jpg'),
+
+        require('./assets/images/bandstand-06-00.jpg'),
+        require('./assets/images/bandstand-06-01.jpg'),
+        require('./assets/images/bandstand-06-02.jpg'),
+        require('./assets/images/bandstand-06-03.jpg'),
+        require('./assets/images/bandstand-06-04.jpg'),
         require('./assets/images/bandstand-06-05.jpg'),
-        require('./assets/images/bandstand-07-05.jpg'),
         require('./assets/images/bandstand-06-06.jpg'),
-        require('./assets/images/bandstand-07-06.jpg'),
         require('./assets/images/bandstand-06-07.jpg'),
-        require('./assets/images/bandstand-07-07.jpg'),
         require('./assets/images/bandstand-06-08.jpg'),
+
+        require('./assets/images/bandstand-07-00.jpg'),
+        require('./assets/images/bandstand-07-01.jpg'),
+        require('./assets/images/bandstand-07-02.jpg'),
+        require('./assets/images/bandstand-07-03.jpg'),
+        require('./assets/images/bandstand-07-04.jpg'),
+        require('./assets/images/bandstand-07-05.jpg'),
+        require('./assets/images/bandstand-07-06.jpg'),
+        require('./assets/images/bandstand-07-07.jpg'),
         require('./assets/images/bandstand-07-08.jpg'),
+
+        require('./assets/images/bandstand-08-00.jpg'),
+        require('./assets/images/bandstand-08-01.jpg'),
+        require('./assets/images/bandstand-08-02.jpg'),
+        require('./assets/images/bandstand-08-03.jpg'),
 
         // Events Screens
         require('./assets/images/screens/events-00.jpg'),
         require('./assets/images/screens/events-01.jpg'),
+        require('./assets/images/screens/events-02.jpg'),
+        require('./assets/images/screens/events-03.jpg'),
+        require('./assets/images/screens/events-04.jpg'),
 
         // Icons - Main Menu
         require('./assets/images/icons/icon_menu.png'),
