@@ -6,7 +6,7 @@
     "privacy": "public",
     "sdkVersion": "28.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.0.8",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icons/icon.png",
     "splash": {
@@ -23,6 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.stevenpark.bandstand",
+      "buildNumber": "1.1.0",
       "infoPlist": {
         "NSCameraUsageDescription": "Bandstands would like to access your camera to allow you to scan QR Codes. We do not store or share any data.",
         "NSLocationWhenInUseUsageDescription": "Bandstands would like to use your current location to direct you to the bandstand locations. We do not store or share any location data.",
