@@ -31,7 +31,9 @@
       }
     },
     "android": {
-      "package": "com.stevenpark.bandstand"
+      "versionCode": 2,
+      "package": "com.stevenpark.bandstand",
+      "permissions": []
     }
   }
 }
